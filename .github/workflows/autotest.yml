@@ -29,18 +29,18 @@ jobs:
       - name: Running tests
         run: npm test
 
-checkstyle:
-  runs-on: windows-latest
-  steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Install and check code style
-      run: |
-        npm ci
-        npm run codestyle
-      env:
-        CI: true
+  checkstyle:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      - name: Install and check code style
+        run: |
+          npm ci
+          npm run codestyle
+        env:
+          CI: true
