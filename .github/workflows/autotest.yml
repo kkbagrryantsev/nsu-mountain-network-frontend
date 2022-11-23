@@ -42,5 +42,7 @@ jobs:
         run: |
           npm ci
           npm run codestyle
+          with:
+            reporter: 'github-pr-check'
         env:
           CI: true
