@@ -1,0 +1,59 @@
+.topBarWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: content-box;
+}
+
+.logoWrapper {
+    height: 40px;
+    margin: 10px;
+}
+
+.logo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.pages {
+}
+
+.login {
+    margin: 15px 15px 15px auto;
+}
+
+.login button {
+    margin: 0 5px;
+    background: #467474;
+    padding: 7px 17px;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 0 solid lightgray;
+    -webkit-text-fill-color: aliceblue;
+    gap: 8px;
+}
+
+.login button:hover {
+    cursor: pointer;
+    background: #568484;
+}
+
+.singleLink {
+    margin: 8px;
+    text-decoration: none;
+}
+
+.singleLink button {
+    background: #467474;
+    padding: 7px 17px;
+    font-size: 14px;
+    border-radius: 100px;
+    border: 0 solid lightgray;
+    -webkit-text-fill-color: aliceblue;
+    gap: 8px;
+}
+
+.singleLink .active {
+    color: #467474;
+}
