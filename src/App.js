@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import Default from "./layouts/Default";
 import NotFound from "./components/NotFound";
 import "./App.css";
 import Modal from "./components/Modal";
-import { useState } from "react";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/SignIn";
 import useToken from "./components/useToken";
