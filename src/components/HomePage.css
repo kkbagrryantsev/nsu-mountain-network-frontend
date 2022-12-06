@@ -1,0 +1,15 @@
+.mountain__wrapper {
+    margin: 0;
+    padding: 0;
+    display: table-row;
+    font-size: 70px;
+}
+
+.mountain__wrapper h1 {
+    max-width: 60vw;
+}
+
+.mountain {
+    margin-left: 60vw;
+    margin-top: 0;
+}

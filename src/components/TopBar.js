@@ -1,40 +1,47 @@
-import { NavLink } from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
+import {activatePopUp} from "../slices/modalsSlice";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import Modal from "./Modal";
 import styles from "./TopBar.module.css";
 import logo from "../resources/logo.png";
 
-const TopBar = ({ loggedIn, setModalSignUp, setModalSignIn }) => {
-  return (
-    <header>
-      <div className={styles.topBarWrapper}>
-        <div className={styles.logoWrapper}>
-          <img className={styles.logo} src={logo} alt="logo.svg" />
+function TopBar() {
+    const isSignedIn = !useSelector((state) => state.token.value)
+    const dispatch = useDispatch()
+    return (<header>
+        <Modal name='signIn'>
+            <SignIn/>
+        </Modal>
+        <Modal name='signUp'>
+            <SignUp/>
+        </Modal>
+        <div className={styles.topBarWrapper}>
+            <div className={styles.logoWrapper}>
+                <img className={styles.logo} src={logo} alt="logo.svg"/>
+            </div>
+            <div className={styles.pages}>
+                <NavLink className={styles.singleLink} to="." end>
+                    Главная
+                </NavLink>
+                <NavLink className={styles.singleLink} to="expeditions">
+                    Походы
+                </NavLink>
+                <NavLink className={styles.singleLink} to="equipment">
+                    Снаряжение
+                </NavLink>
+            </div>
+            {isSignedIn ? (<div className={styles.login}>
+                <button onClick={() => dispatch(activatePopUp('signIn'))}>Войти</button>
+                <button onClick={() => dispatch(activatePopUp('signUp'))}>
+                    Зарегистрироваться
+                </button>
+            </div>) : (<div className={styles.login}>
+                <button>Моя страница</button>
+            </div>)}
         </div>
-        <div className={styles.pages}>
-          <NavLink className={styles.singleLink} to="." end>
-            Главная
-          </NavLink>
-          <NavLink className={styles.singleLink} to="expeditions">
-            Походы
-          </NavLink>
-          <NavLink className={styles.singleLink} to="equipment">
-            Снаряжение
-          </NavLink>
-        </div>
-        {loggedIn ? (
-          <div className={styles.login}>
-            <button onClick={() => setModalSignIn(true)}>Войти</button>
-            <button onClick={() => setModalSignUp(true)}>
-              Зарегистрироваться
-            </button>
-          </div>
-        ) : (
-          <div className={styles.login}>
-            <button>Моя страница</button>
-          </div>
-        )}
-      </div>
-    </header>
-  );
-};
+    </header>);
+}
 
 export default TopBar;

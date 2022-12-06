@@ -1,76 +1,39 @@
-import { useState } from "react";
+import {useState} from "react";
 import "./SignUp.css";
+import {signUp} from "../api/Queries";
+import {CiCircleCheck} from "react-icons/ci";
+import Formsy from "formsy-react";
+import Input from "./Input";
 
 function SignUp() {
-  const [data, setData] = useState({
-    names: "",
-    email: "",
-    phone: "",
-    login: "",
-    password: "",
-    repeatPassword: "",
-  });
+    const [signedUp, setSignedUp] = useState(false)
+    const [active, setActive] = useState(false)
+    const handleSignUpSubmit = async (e) => {
+        console.log(e.login)
+        const status = await signUp({name: e.text, email: e.email, phone: e.phone, login: e.login, password: e.password});
+        if (status === 200) {
+            setSignedUp(true)
+        }
+    };
 
-  function handleInputChange(e, name) {
-    setData({ ...data, [name]: e.target.value });
-  }
-
-  return (
-    <div className="signUpContainer">
-      <h1>Регистрация</h1>
-      <form>
-        <label>
-          Фамилия, имя, отчество:
-          <input
-            type="text"
-            value={data.names}
-            onChange={(e) => handleInputChange(e, "names")}
-          />
-        </label>
-        <label>
-          Электронная почта:
-          <input
-            type="text"
-            value={data.email}
-            onChange={(e) => handleInputChange(e, "email")}
-          />
-        </label>
-        <label>
-          Номер телефона:
-          <input
-            type="text"
-            value={data.phone}
-            onChange={(e) => handleInputChange(e, "phone")}
-          />
-        </label>
-        <label>
-          Логин:
-          <input
-            type="text"
-            value={data.login}
-            onChange={(e) => handleInputChange(e, "login")}
-          />
-        </label>
-        <label>
-          Пароль:
-          <input
-            type="password"
-            value={data.password}
-            onChange={(e) => handleInputChange(e, "password")}
-          />
-        </label>
-        <label>
-          Повторите пароль:
-          <input
-            type="password"
-            value={data.repeatPassword}
-            onChange={(e) => handleInputChange(e, "repeatPassword")}
-          />
-        </label>
-        <button type="submit">Отправить</button>
-      </form>
-    </div>
-  );
+    return !signedUp ? (<div className="signUpContainer">
+        <h1>Регистрация</h1>
+        <Formsy
+            onValidSubmit={handleSignUpSubmit}
+            onValid={() => setActive(true)}
+            onInvalid={() => setActive(false)}
+        >
+                <Input title="Фамилия, имя, отчество" name="text" />
+                <Input title="Электронная почта" name="email" validations="isEmail" validationError="Некорректный почтовый адрес" />
+                <Input title="Номер телефона" name="phone" validationError="Некорректный номер телефона" />
+                <Input title="Логин" name="login" validations="isAlpha" validationError="Некорректный логин" />
+                <Input title="Пароль" name="password" />
+            <button type="submit" disabled={!active}>Отправить</button>
+        </Formsy>
+    </div>) : (<div className="signUpContainer success">
+        <CiCircleCheck color="green" size={70} />
+        <h2>На вашу почту отправлено письмо для подтверждения заявки</h2>
+    </div>);
 }
 
 export default SignUp;
