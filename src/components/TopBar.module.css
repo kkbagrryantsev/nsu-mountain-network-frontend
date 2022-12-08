@@ -1,8 +1,8 @@
 .topBarWrapper {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: content-box;
 }
 
 .logoWrapper {
@@ -16,9 +16,6 @@
     object-fit: cover;
 }
 
-.pages {
-}
-
 .login {
     margin: 15px 15px 15px auto;
 }
@@ -26,11 +23,10 @@
 .login button {
     margin: 0 5px;
     background: #467474;
-    padding: 7px 17px;
-    font-size: 14px;
+    padding: 9px 19px;
+    font-size: 15px;
     border-radius: 100px;
     border: 0 solid lightgray;
-    -webkit-text-fill-color: aliceblue;
     gap: 8px;
 }
 
@@ -42,16 +38,6 @@
 .singleLink {
     margin: 8px;
     text-decoration: none;
-}
-
-.singleLink button {
-    background: #467474;
-    padding: 7px 17px;
-    font-size: 14px;
-    border-radius: 100px;
-    border: 0 solid lightgray;
-    -webkit-text-fill-color: aliceblue;
-    gap: 8px;
 }
 
 .singleLink .active {
