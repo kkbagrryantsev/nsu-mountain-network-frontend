@@ -1,7 +1,7 @@
 import {useState} from "react";
-import "./SignUp.css";
 import {signUp} from "../api/Queries";
 import {CiCircleCheck} from "react-icons/ci";
+import "./SignUp.css";
 import Formsy from "formsy-react";
 import Input from "./Input";
 
