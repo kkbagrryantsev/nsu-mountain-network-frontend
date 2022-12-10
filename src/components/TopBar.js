@@ -6,6 +6,7 @@ import SignUp from "./SignUp";
 import Modal from "./Modal";
 import styles from "./TopBar.module.css";
 import logo from "../resources/logo.png";
+import {CiUser} from "react-icons/ci";
 
 function TopBar() {
     const isSignedIn = !useSelector((state) => state.token.value)
@@ -38,7 +39,7 @@ function TopBar() {
                     Зарегистрироваться
                 </button>
             </div>) : (<div className={styles.login}>
-                <button>Моя страница</button>
+                <button style={{padding: "5px 7px", background: "transparent", border: "2px #467474 solid"}}>{<CiUser size={"20px"} color={"#467474"}/>}</button>
             </div>)}
         </div>
     </header>);

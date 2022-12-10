@@ -1,0 +1,102 @@
+.ware__wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.warehouse__wrapper {
+    width: 85%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: start;
+    padding: 20px;
+}
+
+.filter__wrapper {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 20px 0 0 20px;
+}
+
+.filter__wrapper button {
+    all: initial;
+    background-color: #28A999;
+    border-radius: 15px;
+    padding: 10px;
+    color: white;
+    margin: 7px;
+    width: border-box;
+    text-align: center;
+    font-family: inherit;
+}
+
+.filter__wrapper button:hover {
+    cursor: pointer;
+    background-color: #189989;
+}
+
+.singleFilter__wrapper {
+    margin: 7px;
+    padding: 7px 7px 3px 10px;
+    width: border-box;
+    background-color: #DADADA;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.singleFilter__wrapper button {
+    all: initial;
+}
+
+.singleFilter__wrapper button:hover {
+    all: initial;
+    cursor: pointer;
+}
+
+.bookedItem__wrapper {
+    position: relative;
+    background-color: #DADADA;
+    border-radius: 9px;
+    width: border-box;
+    display: flex;
+    flex-direction: row;
+    padding: 7px 10px 10px;
+    margin: 7px;
+    border: 2px #949494 solid;
+}
+
+.bookedItem__wrapper button {
+    all: initial;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.bookedItem__wrapper button:hover {
+    background-color: initial;
+    cursor: pointer;
+}
+
+.text__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    max-width: border-box;
+    font-size: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text__wrapper h2 {
+    font-weight: 600;
+}
+
+.text__wrapper p {
+    font-size: 10px;
+    font-weight: 400;
+}

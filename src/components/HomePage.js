@@ -51,7 +51,7 @@ function HomePage() {
                 description="Мероприятия для всех членов секции по отработке навыков первой необходимости"
                 image={pros2}
             />
-            <button onClick={() => dispatch(activatePopUp('signUp'))}>Оставить заявку</button>
+            <button className="default" onClick={() => dispatch(activatePopUp('signUp'))}>Оставить заявку</button>
         </div>
     </div>)
 }
