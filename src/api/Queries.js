@@ -15,3 +15,13 @@ export async function signUp(credentials) {
         .then((res) => res.status)
 }
 
+export async function getItems(token) {
+    return fetch("https://nsumount-nocarend.amvera.io/api/models/items",
+        {
+            method: "GET", headers: {
+                "Authorization" : "Bearer " + token,
+                "Content-Type": "application/json",
+            }})
+        .then((res) => res.json())
+}
+

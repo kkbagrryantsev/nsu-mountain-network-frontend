@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 
 const modalsSlice = createSlice({
-    name: 'token', initialState: {
+    name: 'modals', initialState: {
         signIn: false,
         signUp: false,
     }, reducers: {

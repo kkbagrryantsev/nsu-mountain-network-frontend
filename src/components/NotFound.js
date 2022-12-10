@@ -1,7 +1,9 @@
+import notFound from "../resources/404.png"
+
 const NotFound = () => {
     return (
         <>
-            <h1>Not Found</h1>
+            <img src={notFound} alt="404" />
         </>
     )
 }
