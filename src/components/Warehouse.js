@@ -16,9 +16,8 @@ const SORT_KEYS = ['item_name']
 
 function BookedItem(props) {
     const [isDeleted, setIsDeleted] = useState(false)
-    useEffect(() => {
-        isDeleted && props.handler(props.item_id)
-    }, [isDeleted])
+    // eslint-disable-next-line
+    useEffect(() => {isDeleted && props.handler(props.item_id)}, [isDeleted])
 
     return <div className="bookedItem__wrapper">
         <div className="text__wrapper" style={{fontSize: "+5"}}>
@@ -88,12 +87,14 @@ function Warehouse() {
     const token = useSelector((token) => token.token.value)
     useEffect(() => {
         getItems(token).then(res => res.items ? setItems(res.items) : setItems([]))
+    // eslint-disable-next-line
     }, [])
     const [items, setItems] = useState([])
 
     useEffect(() => {
         const sortedItems = sortItems(items.filter((item) => item.isFiltered !== true), sortKey)
         setItems(sortedItems)
+    // eslint-disable-next-line
     }, [sortKey])
 
     const selectItem = (id) => {
