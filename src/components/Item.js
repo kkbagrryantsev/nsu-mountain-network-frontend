@@ -7,7 +7,7 @@ const mapQuantity = (quantity) => {
 }
 
 function Item(props) {
-    const {handler, item_name, category_name, category_id, item_quantity_current} = props
+    const {handler, item_name, category, item_quantity_current} = props
     const [{isDragging}, drag] = useDrag({
         item: {name: 'Any'},
         type: 'ITEM',
@@ -28,14 +28,14 @@ function Item(props) {
 
     return (<div ref={drag} className="item__wrapper" style={{opacity}}>
         <div className="pics__wrapper">
-            <img src={mapCategory(category_id).img} alt="Error"/>
+            <img src={mapCategory(category.category_id).img} alt="Error"/>
             <div className="quantity__wrapper">
                 <small>{mapQuantity(item_quantity_current)}</small>
             </div>
         </div>
         <div className="text__wrapper">
             <h2>{item_name}</h2>
-            <p>{category_name.category_name}</p>
+            <p>{category.category_name}</p>
         </div>
 
     </div>)

@@ -20,7 +20,7 @@ function BookedItem(props) {
     useEffect(() => {isDeleted && props.handler(props.item_id)}, [isDeleted])
 
     return <div className="bookedItem__wrapper">
-        <div className="text__wrapper" style={{fontSize: "+5"}}>
+        <div className="text__wrapper">
             <h2>{props.item_name}</h2>
             <p>{props.category_name.category_name}</p>
             <button onClick={() => setIsDeleted(true)}><BiX size={"20px"} color={"#949494"}/></button>
