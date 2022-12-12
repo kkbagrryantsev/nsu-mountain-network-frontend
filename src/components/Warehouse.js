@@ -22,7 +22,7 @@ function BookedItem(props) {
     return <div className="bookedItem__wrapper">
         <div className="text__wrapper">
             <h2>{props.item_name}</h2>
-            <p>{props.category_name.category_name}</p>
+            <p>{props.category.category_name}</p>
             <button onClick={() => setIsDeleted(true)}><BiX size={"20px"} color={"#949494"}/></button>
         </div>
     </div>
@@ -112,11 +112,15 @@ function Warehouse() {
     return (<div className="ware__wrapper">
         <DndProvider backend={HTML5Backend}>
             <Filter setSortKey={setSortKey}>
-                {items.filter((item) => item.isFiltered).map((i) => {
+                {items
+                    .filter((item) => item.isFiltered)
+                    .map((i) => {
                     return <BookedItem key={i.item_id} handler={deselectItem} {...i}/>
                 })}</Filter>
             <div className="warehouse__wrapper">
-                {items.filter((item) => item.isFiltered !== true).map((i) => {
+                {items
+                    .filter((item) => item.isFiltered !== true)
+                    .map((i) => {
                     return <Item key={i.item_id} handler={selectItem} {...i}/>
                 })}
             </div>
