@@ -20,9 +20,9 @@ const SORT_KEYS = ['item_name']
 
 function BookedItem(props) {
     const [isDeleted, setIsDeleted] = useState(false)
-    // eslint-disable-next-line
     useEffect(() => {
         isDeleted && props.handler(props.item_id)
+    // eslint-disable-next-line
     }, [isDeleted])
 
     return <div className="bookedItem__wrapper">
