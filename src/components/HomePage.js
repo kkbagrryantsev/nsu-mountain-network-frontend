@@ -35,7 +35,7 @@ function HomePage() {
                 <GrValidate style={{marginTop: "50px"}} color="green" size={100}/>
             </div>
             <ProsCard
-                title="Походы от I до IV уровня сложности"
+                title="Походы от I до VI уровня сложности"
                 description="Мероприятия доступные людям любого уровня физической подготовки.
                 Групповые экспедиции, как способ очистить свой разум и отдохнуть"
                 image={pros1}

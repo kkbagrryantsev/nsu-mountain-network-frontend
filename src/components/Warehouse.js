@@ -1,7 +1,7 @@
 // noinspection JSUnresolvedVariable
 
 import {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {DndProvider, useDrop} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {BiChevronUp, BiX} from "react-icons/bi"
@@ -9,15 +9,21 @@ import {BiChevronDown} from "react-icons/bi";
 import {useLocation} from "react-router-dom";
 import queryString from "query-string";
 import Item from "./Item";
-import {getItems} from "../api/Queries";
+import {bookItems, getItems} from "../api/Queries";
 import "./Warehouse.css"
+import SuccessModal from "./SuccessModal";
+import Modal from "./Modal";
+import {activatePopUp} from "../slices/modalsSlice";
+import FailureModal from "./FailureModal";
 
 const SORT_KEYS = ['item_name']
 
 function BookedItem(props) {
     const [isDeleted, setIsDeleted] = useState(false)
     // eslint-disable-next-line
-    useEffect(() => {isDeleted && props.handler(props.item_id)}, [isDeleted])
+    useEffect(() => {
+        isDeleted && props.handler(props.item_id)
+    }, [isDeleted])
 
     return <div className="bookedItem__wrapper">
         <div className="text__wrapper">
@@ -28,7 +34,7 @@ function BookedItem(props) {
     </div>
 }
 
-function Filter({setSortKey, children}) {
+function Filter({bookHandler, setSortKey, children}) {
     const [nameOrder, setNameOrder] = useState(true)
 
     function SingleFilter(props) {
@@ -59,7 +65,7 @@ function Filter({setSortKey, children}) {
     return (<div ref={drop} className="filter__wrapper">
         <SingleFilter order={nameOrder} setOrder={setNameOrder} sortKey="item_name" name="Название"/>
         {children}
-        {children.length > 0 && <button>Забронировать</button>}
+        {children.length > 0 && <button onClick={() => bookHandler()}>Забронировать</button>}
     </div>)
 }
 
@@ -68,6 +74,7 @@ function sortItems(items, key) {
     if (!key.key || !SORT_KEYS.includes(key.key)) {
         return sortedItems
     }
+
     function sortByOrder(a, b) {
         if (a[key.key] <= b[key.key]) {
             return key.ascending ? 1 : -1
@@ -75,31 +82,47 @@ function sortItems(items, key) {
             return key.ascending ? -1 : 1
         }
     }
+
     sortedItems.sort((a, b) => sortByOrder(a, b))
     return sortedItems
 }
 
 function Warehouse() {
     const location = useLocation()
+    const dispatch = useDispatch()
     const query = queryString.parse(location.search)
     const [sortKey, setSortKey] = useState({key: query.sort, ascending: true})
 
     const token = useSelector((token) => token.token.value)
     useEffect(() => {
         getItems(token).then(res => res.items ? setItems(res.items) : setItems([]))
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [])
     const [items, setItems] = useState([])
 
     useEffect(() => {
         const sortedItems = sortItems(items.filter((item) => item.isFiltered !== true), sortKey)
         setItems(sortedItems)
-    // eslint-disable-next-line
+        // eslint-disable-next-line
     }, [sortKey])
 
     const selectItem = (id) => {
         setItems(items.map((item) => {
-            return id === item.item_id ? {...item, isFiltered: true} : {...item}
+            if (item.item_quantity_current === undefined || item.item_quantity_current === 1) {
+                return id === item.item_id ? {...item, item_quantity_current: 0, isFiltered: true} : {...item}
+            } else {
+                if (id === item.item_id) {
+                    return {
+                        ...item,
+                        booked_amount: item.booked_amount + 1,
+                        item_quantity_current: item.item_quantity_current - item.booked_amount,
+                        isFiltered: true
+                    }
+                } else {
+                    return {...item}
+                }
+
+            }
         }))
     }
 
@@ -109,20 +132,43 @@ function Warehouse() {
         }))
     }
 
+    const bookingItems = () => {
+        function toCorrect(item) {
+            return {item_id: item.item_id, quantity: 1}
+        }
+        const bookedItems = {items: items
+            .filter((i) => i.isFiltered)
+            .map((i) => toCorrect(i))}
+        console.log(bookedItems)
+        let status = 404
+        bookItems(token, bookedItems).then(res => status = res)
+        if (status === 200) {
+            dispatch(activatePopUp("successBooking"))
+        } else {
+            dispatch(activatePopUp("failureBooking"))
+        }
+    }
+
     return (<div className="ware__wrapper">
+        <Modal name="successBooking">
+            <SuccessModal text='Вещи успешно забронированы, можете получить их в ближайщем складе' />
+        </Modal>
+        <Modal name="failureBooking">
+            <FailureModal text='Произошла ошибка' />
+        </Modal>
         <DndProvider backend={HTML5Backend}>
-            <Filter setSortKey={setSortKey}>
+            <Filter bookHandler={bookingItems} setSortKey={setSortKey}>
                 {items
                     .filter((item) => item.isFiltered)
                     .map((i) => {
-                    return <BookedItem key={i.item_id} handler={deselectItem} {...i}/>
-                })}</Filter>
+                        return <BookedItem key={i.item_id} handler={deselectItem} {...i}/>
+                    })}</Filter>
             <div className="warehouse__wrapper">
                 {items
-                    .filter((item) => item.isFiltered !== true)
+                    .filter((item) => !item.isFiltered)
                     .map((i) => {
-                    return <Item key={i.item_id} handler={selectItem} {...i}/>
-                })}
+                        return <Item key={i.item_id} handler={selectItem} {...i}/>
+                    })}
             </div>
         </DndProvider>
     </div>)

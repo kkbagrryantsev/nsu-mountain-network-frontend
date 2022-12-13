@@ -1,9 +1,9 @@
 import {useState} from "react";
 import {signUp} from "../api/Queries";
-import {CiCircleCheck} from "react-icons/ci";
 import "./SignUp.css";
 import Formsy from "formsy-react";
 import Input from "./Input";
+import SuccessModal from "./SuccessModal";
 
 function SignUp() {
     const [signedUp, setSignedUp] = useState(false)
@@ -33,10 +33,7 @@ function SignUp() {
             <Input title="Пароль" name="password"/>
             <button type="submit" disabled={!active}>Отправить</button>
         </Formsy>
-    </div>) : (<div className="signUpContainer success">
-        <CiCircleCheck color="green" size={70}/>
-        <h2>На вашу почту отправлено письмо для подтверждения заявки</h2>
-    </div>);
+    </div>) : (<SuccessModal text="На вашу почту отправлено письмо для подтверждения заявки"/>);
 }
 
 export default SignUp;

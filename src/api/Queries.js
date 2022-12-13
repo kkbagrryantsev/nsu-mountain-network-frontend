@@ -19,9 +19,18 @@ export async function getItems(token) {
     return fetch("https://nsumount-nocarend.amvera.io/api/models/items",
         {
             method: "GET", headers: {
-                "Authorization" : "Bearer " + token,
                 "Content-Type": "application/json",
+                "Authorization" : "Bearer " + token,
             }})
         .then((res) => res.json())
 }
 
+export async function bookItems(token, items) {
+    return fetch("https://nsumount-nocarend.amvera.io/api/models/items",
+        {
+            method: "POST", headers: {
+                "Content-Type": "application/json",
+                "Authorization" : "Bearer " + token,
+            }, body: items})
+        .then((res) => res.status)
+}
