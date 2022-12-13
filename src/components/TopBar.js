@@ -1,16 +1,58 @@
-import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
-import {activatePopUp} from "../slices/modalsSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {CiUser} from "react-icons/ci";
+import Modal from "./Modal";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import Modal from "./Modal";
-import styles from "./TopBar.module.css";
+import {activatePopUp} from "../slices/modalsSlice";
+import "./TopBar.css";
 import logo from "../resources/logo.png";
-import {CiUser} from "react-icons/ci";
+import {updateToken} from "../slices/tokenSlice";
+
+function AuthButtons() {
+    const dispatch = useDispatch()
+    return <div className="authButtons__wrapper">
+        <button onClick={() => dispatch(activatePopUp('signIn'))}>
+            Войти
+        </button>
+        <button onClick={() => dispatch(activatePopUp('signUp'))}>
+            Зарегистрироваться
+        </button>
+    </div>
+}
+
+function Profile() {
+    const dispatch = useDispatch()
+    return (<div className="profile__wrapper">
+        <button
+            onClick={() => dispatch(updateToken({"access_token": ''}))}
+            style={{padding: "5px 7px", background: "transparent", border: "2px #467474 solid"}}>
+            {<CiUser size={"20px"} color={"#467474"}/>}
+        </button>
+    </div>)
+}
+
+function Sections() {
+    const isSignedIn = useSelector((state) => state.token.value)
+    if (isSignedIn) {
+        return (<div className="sections__wrapper">
+            <NavLink to="." end>
+                Главная
+            </NavLink>
+            <NavLink to="expeditions">
+                Походы
+            </NavLink>
+            <NavLink to="equipment">
+                Снаряжение
+            </NavLink>
+        </div>)
+    } else {
+        return <div className="sections__wrapper"></div>
+    }
+}
 
 function TopBar() {
-    const isSignedIn = !useSelector((state) => state.token.value)
-    const dispatch = useDispatch()
+    const isSignedIn = useSelector((state) => state.token.value)
     return (<header>
         <Modal name='signIn'>
             <SignIn/>
@@ -18,31 +60,13 @@ function TopBar() {
         <Modal name='signUp'>
             <SignUp/>
         </Modal>
-        <div className={styles.topBarWrapper}>
-            <div className={styles.logoWrapper}>
-                <img className={styles.logo} src={logo} alt="logo.svg"/>
-            </div>
-            <div className={styles.pages}>
-                <NavLink className={styles.singleLink} to="." end>
-                    Главная
-                </NavLink>
-                <NavLink className={styles.singleLink} to="expeditions">
-                    Походы
-                </NavLink>
-                <NavLink className={styles.singleLink} to="equipment">
-                    Снаряжение
-                </NavLink>
-            </div>
-            {isSignedIn ? (<div className={styles.login}>
-                <button onClick={() => dispatch(activatePopUp('signIn'))}>Войти</button>
-                <button onClick={() => dispatch(activatePopUp('signUp'))}>
-                    Зарегистрироваться
-                </button>
-            </div>) : (<div className={styles.login}>
-                <button style={{padding: "5px 7px", background: "transparent", border: "2px #467474 solid"}}>{<CiUser size={"20px"} color={"#467474"}/>}</button>
-            </div>)}
+
+        <div className="topBar__wrapper">
+            <img style={{maxHeight: "100%"}} src={logo} alt="Error"/>
+            <Sections/>
+            {isSignedIn ? <Profile/> : <AuthButtons/>}
         </div>
-    </header>);
+    </header>)
 }
 
 export default TopBar;

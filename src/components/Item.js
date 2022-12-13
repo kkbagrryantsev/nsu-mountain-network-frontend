@@ -1,5 +1,5 @@
 import "./Item.css"
-import {mapCategory} from "../api/Category";
+import {mapCategory} from "../api/categoryMap";
 import {useDrag} from "react-dnd";
 
 const mapQuantity = (quantity) => {
