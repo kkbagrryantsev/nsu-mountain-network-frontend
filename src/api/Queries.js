@@ -26,7 +26,7 @@ export async function getItems(token) {
 }
 
 export async function bookItems(token, items) {
-    return fetch("https://nsumount-nocarend.amvera.io/api/models/items",
+    return fetch("https://nsumount-nocarend.amvera.io/api/models/items/use/book",
         {
             method: "POST", headers: {
                 "Content-Type": "application/json",

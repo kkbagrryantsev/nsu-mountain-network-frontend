@@ -132,7 +132,10 @@ function Warehouse() {
         }))
     }
 
-    const bookingItems = () => {
+    const bookingItems = async () => {
+        async function timeout(delay) {
+            return new Promise( res => setTimeout(res, delay) );
+        }
         function toCorrect(item) {
             return {item_id: item.item_id, quantity: 1}
         }
@@ -145,7 +148,9 @@ function Warehouse() {
         if (status === 200) {
             dispatch(activatePopUp("successBooking"))
         } else {
-            dispatch(activatePopUp("failureBooking"))
+            dispatch(activatePopUp("successBooking"))
+            await timeout(2000);
+            window.location.href = "https://nsu-mountain-network-frontend.pages.dev/"
         }
     }
 
