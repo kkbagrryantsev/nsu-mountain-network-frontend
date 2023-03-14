@@ -31,6 +31,6 @@ export async function bookItems(token, items) {
             method: "POST", headers: {
                 "Content-Type": "application/json",
                 "Authorization" : "Bearer " + token,
-            }, body: items.toString()})
+            }, body: items})
         .then((res) => res.status)
 }
