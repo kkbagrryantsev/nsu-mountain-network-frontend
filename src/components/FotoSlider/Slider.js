@@ -1,9 +1,6 @@
-import React, { useEffect, useState, createContext } from "react";
+/*import React, { useEffect, useState, createContext } from "react";
 import PropTypes from "prop-types";
 //import { getImages } from "../../resources/pics";
-import pros1 from "../../resources/pros10.jpg"
-import pros2 from "../../resources/pros18.jpg"
-import pros3 from "../../resources/pros23.jpg"
 import Arrows from "./Arrows";
 import Dots from "./Dot";
 
@@ -116,3 +113,54 @@ Slider.defaultProps = {
 };
 
 export default Slider;
+*/
+
+import SlidesList from "./SlideList";
+import Arrows from "./Arrows";
+import React, { useEffect, useState, createContext } from "react";
+import pros1 from "../../assets/png/main-page/pros_1.jpg"
+import pros2 from "../../assets/png/main-page/pros_2.jpg"
+import pros3 from "../../assets/png/main-page/pros_3.jpg"
+
+export const SliderContext = createContext();
+
+var slideNumber = 0;
+
+export function Slider() {
+  const [slide, setSlide] = useState(0);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const images = [pros1, pros2, pros3];
+      setItems(images);
+    };
+    loadData();
+  }, []);
+
+  const changeSlide = (direction) => {
+
+    if (slide + direction < 0) {
+      slideNumber = items.length - 1;
+    } else {
+      slideNumber = (slideNumber + direction) % items.length;
+    }
+
+    setSlide(slideNumber);
+  };
+
+  return (
+    <div className="slider">
+      <SliderContext.Provider
+        value={{
+          changeSlide,
+          slideNumber: slide,
+          items,
+        }}
+      >
+        <Arrows />
+        <SlidesList />
+      </SliderContext.Provider>
+    </div>
+  );
+}

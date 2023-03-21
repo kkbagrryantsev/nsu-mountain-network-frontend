@@ -1,4 +1,4 @@
-test('Renders default text', () => {
-    const test = true;
-    expect(test).toBe(true);
-})
+test("Renders default text", () => {
+  const test = true;
+  expect(test).toBe(true);
+});
