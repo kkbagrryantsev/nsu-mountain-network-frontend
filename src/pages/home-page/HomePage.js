@@ -6,7 +6,6 @@ import mountain from "../../assets/mountain.png";
 import pros_1 from "../../assets/png/main-page/pros_1.jpg";
 import pros_2 from "../../assets/png/main-page/pros_2.jpg";
 import pros_3 from "../../assets/png/main-page/pros_3.jpg";
-import SlidesList from "../../components/FotoSlider/SlideList";
 import { Slider } from "../../components/FotoSlider/Slider";
 
 function HomePage() {

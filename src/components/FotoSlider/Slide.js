@@ -5,11 +5,11 @@ import SlideImage from "./SlideImage";
 import "./Slider.css";
 
 //export default function Slide({ data: { url, title } }) {
-  export default function Slide({ url, title }) {
+  export default function Slide({ url, title, description }) {
   return (
     <div className="slide">
       <SlideImage src={url} alt={title} />
-      <SlideTitle title={title} />
+      <SlideTitle title={title} description = {description}/>
     </div>
   );
 }
