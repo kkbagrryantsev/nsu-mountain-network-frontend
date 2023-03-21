@@ -1,0 +1,72 @@
+.banner__wrapper {
+    margin-top: 55px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.banner__wrapper img.text {
+    width: 800px;
+}
+
+.mountain__wrapper {
+    position: relative;
+}
+
+.mountain__wrapper img.mountain {
+    width: 350px;
+    height: auto;
+}
+
+.mountain__wrapper img.shadow {
+    position: absolute;
+    top: 280px;
+    left: 30px;
+    width: 400px;
+}
+
+.pros__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pros__wrapper h3 {
+    margin-top: 55px;
+    font-size: 24px;
+    font-weight: 400;
+    max-width: 700px;
+}
+
+.pros__wrapper button {
+    margin-bottom: 55px;
+}
+
+.prosCard__wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 60px;
+}
+
+.prosText__wrapper {
+    padding: 20px;
+    text-align: left;
+}
+
+.prosCard__wrapper img {
+    width: 470px;
+    height: 300px;
+}
+
+.prosCard__wrapper h2 {
+    max-width: 500px;
+    font-size: 36px;
+    font-weight: 450;
+}
+
+.prosCard__wrapper p {
+    max-width: 500px;
+    font-size: 20px;
+    font-weight: 200;
+}

@@ -1,23 +1,21 @@
-import React, { useContext, useState, useEffect, setState } from "react";
+import React, { useContext, useState, useEffect, createContext } from "react";
 import Slide from "./Slide";
 import pros1 from "../../resources/pros10.jpg"
 import pros2 from "../../resources/pros18.jpg"
 import pros3 from "../../resources/pros23.jpg"
-import { SliderContext } from "./Slider";
+//import { SliderContext } from "./Slider";
 import "./Slider.css";
 import "./Arrows.css";
-import SignIn from "../SignIn";
-import SignUp from "../SignUp";
-import {activatePopUp} from "../../slices/modalsSlice";
-import {useDispatch, useSelector} from "react-redux";
+
+import Arrows from "./Arrows";
 
 var slideNumber = 0;
 
-
+export const SliderContext = createContext();
 
 export default function SlidesList() {
   const [slide, setSlide] = useState(0);
-  const dispatch = useDispatch();
+  
  // const { slideNumber, items } = useContext(SliderContext);
   const [items, setItems] = useState([]);
   
@@ -39,29 +37,25 @@ export default function SlidesList() {
     };
     loadData();
   }, []);
-
-/*
-return (
-  <div 
-      className="slide-list"
-      style={{ transform: `translateX(-${slideNumber * 100}%)` }}
-      >
-    <Slide url={pros1} title="titlee" />
-  </div>
-)
-}*/
+  
   return (
     <div
       className="slide-list"
       style={{ transform: `translateX(-${slideNumber * 100}%)` }}
     >
-      <div className="arrows">
-        <arrow className="arrow left" onClick={() => changeSlide(-1)}  />
-        <arrow className="arrow right" onClick={() => changeSlide(1)} />
-      </div>
+      
+      <SliderContext.Provider
+        value={{
+          changeSlide,
+        }}
+      >
+        <Arrows />
+      </SliderContext.Provider>
+
       {items.map( (slide, index) => (
         <Slide url={slide} title={"Slide " + index} />
       ) )}
+      
     </div>
   );
 }
@@ -70,6 +64,4 @@ return (
         <Slide key={index} data={slide} />
       ))}
 
-      () => slideNumber++
-      
-      style={{ transform: `translateX(-${slideNumber * 100}%)` }}*/
+      */
