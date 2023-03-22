@@ -1,4 +1,4 @@
-import { picts } from "../resources/picts/picts";
+import { picts } from "../assets/png/item-categories/picts";
 
 const getImg = (key) => {
   return picts.find((item) => item.categoryName === key);

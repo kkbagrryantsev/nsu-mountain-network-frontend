@@ -1,0 +1,166 @@
+[
+	{
+		"key": [
+			1,
+			30
+		],
+		"blobName": "cats"
+	},
+	{
+		"key": [
+			4,
+			20,
+			21,
+			22,
+			23,
+			24,
+			25,
+			31
+		],
+		"blobName": "ropes"
+	},
+	{
+		"key": [
+			5
+		],
+		"blobName": "sleepingBag"
+	},
+	{
+		"key": [
+			6,
+			7
+		],
+		"blobName": "tent"
+	},
+	{
+		"key": [
+			8
+		],
+		"blobName": "arbor"
+	},
+	{
+		"key": [
+			9
+		],
+		"blobName": "strapping"
+	},
+	{
+		"key": [
+			10
+		],
+		"blobName": "iceDrill"
+	},
+	{
+		"key": [
+			11
+		],
+		"blobName": "carbine"
+	},
+	{
+		"key": [
+			12
+		],
+		"blobName": "zhumary"
+	},
+	{
+		"key": [
+			13
+		],
+		"blobName": "clip"
+	},
+	{
+		"key": [
+			14
+		],
+		"blobName": "trigger"
+	},
+	{
+		"key": [
+			15
+		],
+		"blobName": "iceAxe"
+	},
+	{
+		"key": [
+			16,
+			27,
+			28
+		],
+		"blobName": "boots"
+	},
+	{
+		"key": [
+			16,
+			27,
+			28
+		],
+		"blobName": "boots"
+	},
+	{
+		"key": [
+			17,
+			36
+		],
+		"blobName": "clothes"
+	},
+	{
+		"key": [
+			18
+		],
+		"blobName": "backpack"
+	},
+	{
+		"key": [
+			19
+		],
+		"blobName": "hooks"
+	},
+	{
+		"key": [
+			26
+		],
+		"blobName": "loops"
+	},
+	{
+		"key": [
+			29
+		],
+		"blobName": "helmets"
+	},
+	{
+		"key": [
+			32
+		],
+		"blobName": "snowShoes"
+	},
+	{
+		"key": [
+			33
+		],
+		"blobName": "awning"
+	},
+	{
+		"key": [
+			34
+		],
+		"blobName": "burner"
+	},
+	{
+		"key": [
+			35
+		],
+		"blobName": "radio"
+	},
+	{
+		"key": [
+			37
+		],
+		"blobName": "trench"
+	},
+	{
+		"key": [
+			38
+		],
+		"blobName": "pot"
+	}
+]

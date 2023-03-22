@@ -1,8 +1,14 @@
 import { getAccessToken } from "../../api/Cookie";
 import {
+  MDBBadge,
   MDBBtn,
   MDBCollapse,
   MDBContainer,
+  MDBDropdown,
+  MDBDropdownItem,
+  MDBDropdownMenu,
+  MDBDropdownToggle,
+  MDBIcon,
   MDBNavbar,
   MDBNavbarBrand,
   MDBNavbarItem,
@@ -15,12 +21,15 @@ import { useState } from "react";
 import LoginModal from "../../pages/home-page/components/LoginModal";
 import RegisterModal from "../../pages/home-page/components/RegisterModal";
 import { showModal } from "../modals/ModalProviderSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 
 function TopBar() {
   const dispatch = useDispatch();
   const [loginModal, setLoginModal] = useState(false);
   const [registerModal, setRegisterModal] = useState(false);
+  const cartLength = useSelector((state) => state.storagePage.cart.length);
+  const isLogged = !!getAccessToken();
 
   const onOpenModalClicked = () => {
     dispatch(showModal({ modalType: "TestModal", modalProps: { a: 42 } }));
@@ -57,16 +66,50 @@ function TopBar() {
               </MDBNavbarItem>
             </MDBNavbarNav>
             <div className={"d-flex flex-fill gap-2"}>
-              <MDBBtn rounded onClick={() => setRegisterModal(!registerModal)}>
-                Зарегистрироваться
-              </MDBBtn>
-              <MDBBtn
-                rounded
-                onClick={() => setLoginModal(!loginModal)}
-                outline
-              >
-                Войти
-              </MDBBtn>
+              {isLogged ? (
+                <>
+                  <MDBBtn className={"p-2 overflow-visible"} color={"tertiary"}>
+                    <NavLink>
+                      <MDBIcon fas size={"xl"} icon={"shopping-cart"}></MDBIcon>
+                      <MDBBadge
+                        pill
+                        color={"warning"}
+                        className="position-absolute translate-middle-x"
+                      >
+                        {cartLength}
+                      </MDBBadge>
+                    </NavLink>
+                  </MDBBtn>
+                  <MDBDropdown>
+                    <MDBDropdownToggle outline>
+                      <MDBIcon far size={"xl"} icon={"user"} />
+                    </MDBDropdownToggle>
+                    <MDBDropdownMenu>
+                      <MDBDropdownItem link>Настройки</MDBDropdownItem>
+                      <MDBDropdownItem divider />
+                      <MDBDropdownItem link>
+                        <h7 className={"text-danger"}>Выйти</h7>
+                      </MDBDropdownItem>
+                    </MDBDropdownMenu>
+                  </MDBDropdown>
+                </>
+              ) : (
+                <>
+                  <MDBBtn
+                    rounded
+                    onClick={() => setRegisterModal(!registerModal)}
+                  >
+                    Зарегистрироваться
+                  </MDBBtn>
+                  <MDBBtn
+                    rounded
+                    onClick={() => setLoginModal(!loginModal)}
+                    outline
+                  >
+                    Войти
+                  </MDBBtn>
+                </>
+              )}
             </div>
           </MDBCollapse>
         </MDBContainer>
