@@ -1,19 +1,23 @@
 /* ARROWS */
 
+/*flex box*/
+
  .arrows {
     color: rgb(255, 255, 255);
     display: flex;
     font-size: 30px;
     justify-content: space-between;
     height: 100%;
-    position: absolute;
-    top: 30%;
+    position: absolute; 
+    top: 13%;
     width: 100%;
     z-index: 1;
+    max-height: 32%;
+  
  }
      .arrow {
-      height: 100px;
-      width: 550px;
+      height: 35%;
+      width: 100% ;
      }
       .hover {
         cursor: pointer;
@@ -23,16 +27,15 @@
         background-image: url(../../resources/Arrow.png);
         background-repeat: no-repeat;
         background-size: contain;
-        margin-left: 5px;
-        transform: rotate(
-180deg);
+        margin-right: 25%;
+        transform: rotate(180deg);
       }
 
       .right {
         background-image: url(../../resources/Arrow.png);
         background-repeat: no-repeat;
         background-size: contain;
-        margin-right: 5px;
+        margin-left: 25%;
       }
     
   

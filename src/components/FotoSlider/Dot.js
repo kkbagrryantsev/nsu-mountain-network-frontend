@@ -8,8 +8,22 @@ export default function Dot({ number }) {
 
   return (
     <div
+    className={`dot ${slideNumber === number ? "selected" : ""}`}
+    onClick={() => goToSlide(number)}
+  />
+  );
+}
+
+
+
+/*
+    <div
       className={`dot ${slideNumber === number ? "selected" : ""}`}
       onClick={() => goToSlide(number)}
     />
-  );
-}
+
+<div>
+      <dot className={`dot ${slideNumber === number ? "selected" : ""}`} onClick={() => goToSlide(number)}  />
+    </div>
+
+*/

@@ -117,10 +117,13 @@ export default Slider;
 
 import SlidesList from "./SlideList";
 import Arrows from "./Arrows";
+import Dots from "./Dots";
 import React, { useEffect, useState, createContext } from "react";
 import pros1 from "../../assets/png/main-page/pros_1.jpg"
 import pros2 from "../../assets/png/main-page/pros_2.jpg"
 import pros3 from "../../assets/png/main-page/pros_3.jpg"
+import PropTypes from "prop-types";
+import "./Slider.css";
 
 export const SliderContext = createContext();
 
@@ -138,6 +141,10 @@ export function Slider() {
     loadData();
   }, []);
 
+  const goToSlide = (number) => {
+    setSlide(number % items.length);
+  };
+
   const changeSlide = (direction) => {
 
     if (slide + direction < 0) {
@@ -153,14 +160,37 @@ export function Slider() {
     <div className="slider">
       <SliderContext.Provider
         value={{
+          goToSlide,
+          slidesCount: items.length,
           changeSlide,
           slideNumber: slide,
           items,
         }}
       >
         <Arrows />
-        <SlidesList />
+        <SlidesList  />
+        
       </SliderContext.Provider>
     </div>
   );
 }
+
+/*
+
+<Dots />
+
+Slider.propTypes = {
+  autoPlay: PropTypes.bool,
+  autoPlayTime: PropTypes.number,
+  width: PropTypes.string,
+  height: PropTypes.string
+};
+
+Slider.defaultProps = {
+  autoPlay: false,
+  autoPlayTime: 5000,
+  width: "100%",
+  height: "100%"
+};
+
+*/
