@@ -1,6 +1,5 @@
 /*import React, { useEffect, useState, createContext } from "react";
 import PropTypes from "prop-types";
-//import { getImages } from "../../resources/pics";
 import Arrows from "./Arrows";
 import Dots from "./Dot";
 
@@ -125,11 +124,12 @@ import pros3 from "../../assets/png/main-page/pros_3.jpg"
 import PropTypes from "prop-types";
 import "./Slider.css";
 
+
 export const SliderContext = createContext();
 
 var slideNumber = 0;
 
-export function Slider() {
+export function Slider({autoPlay, autoPlayTime}) {
   const [slide, setSlide] = useState(0);
   const [items, setItems] = useState([]);
 
@@ -156,6 +156,18 @@ export function Slider() {
     setSlide(slideNumber);
   };
 
+  useEffect(() => {
+    if (!autoPlay) return;
+
+    const interval = setInterval(() => {
+      changeSlide(1);
+    }, autoPlayTime);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [items.length, slide]);
+
   return (
     <div className="slider">
       <SliderContext.Provider
@@ -167,13 +179,24 @@ export function Slider() {
           items,
         }}
       >
-        <Arrows />
         <SlidesList  />
+        <Arrows />
+        
         
       </SliderContext.Provider>
     </div>
   );
 }
+
+Slider.propTypes = {
+  autoPlay: PropTypes.bool,
+  autoPlayTime: PropTypes.number,
+};
+
+Slider.defaultProps = {
+  autoPlay: true,
+  autoPlayTime: 9000,
+};
 
 /*
 
