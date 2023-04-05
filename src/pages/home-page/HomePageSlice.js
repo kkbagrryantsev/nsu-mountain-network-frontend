@@ -7,7 +7,11 @@ const initialState = {
 export const homePageSlice = createSlice({
   name: "HomePage",
   initialState,
-  reducers: {},
+  reducers: {
+    updateIgnore: (state, action) => {
+      state.ignore = action.payload;
+    },
+  },
 });
 
-export const {} = homePageSlice.actions;
+export const { updateIgnore } = homePageSlice.actions;
