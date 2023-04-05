@@ -39,10 +39,34 @@ export async function apiGetItems() {
   }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
 }
 
-export async function apiBookItems(items) {
-  return fetch(apiAddress + "/api/models/items/use/book", {
+export async function apiBookItems(credentials) {
+  console.log(credentials);
+  return fetch(apiAddress + "/api/models/items/book", {
     method: "POST",
     headers: getAccessTokenHeader(),
-    body: items.toString(),
+    body: JSON.stringify(credentials),
   }).then((r) => ({ status: r.status }));
+}
+
+export async function apiReturnItem(credentials) {
+  console.log(credentials);
+  return fetch(apiAddress + "/api/models/items/use/return", {
+    method: "POST",
+    headers: getAccessTokenHeader(),
+    body: JSON.stringify(credentials),
+  }).then((r) => ({ status: r.status }));
+}
+
+export async function apiGetUserData() {
+  return fetch(apiAddress + "/api/auth/my_profile/", {
+    method: "GET",
+    headers: getAccessTokenHeader(),
+  }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
+}
+
+export async function apiGetItemData(credentials) {
+  return fetch(apiAddress + `/api/models/items/${credentials.item_id}`, {
+    method: "GET",
+    headers: getAccessTokenHeader(),
+  }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
 }

@@ -8,13 +8,15 @@ import {
   MDBCardText,
   MDBCardTitle,
   MDBIcon,
-  MDBTextArea,
 } from "mdb-react-ui-kit";
 import { getItemCategory } from "../../../utils/ImageUtils";
 import styles from "../styles/StoragePage.module.scss";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart, removeFromCart } from "../StoragePageSlice";
+import { importAllImages } from "utils/ImageUtils";
+
+const images = importAllImages();
 
 /**
  * Storage item card.
@@ -40,7 +42,8 @@ function ItemCard(props) {
     dispatch(removeFromCart(i));
     setCartQuantity(cartQuantity - 1);
   };
-  const image = getItemCategory(item.category.category_id);
+  const category_name = getItemCategory(item.category_id);
+  const image = images[`${category_name}.png`];
 
   return (
     <MDBCard className={styles.itemCard}>
@@ -55,7 +58,7 @@ function ItemCard(props) {
           {item.item_name}
         </MDBCardTitle>
         <MDBCardText className={"text-truncate"}>
-          {item.category.category_name}
+          {item.category_id}
         </MDBCardText>
       </MDBCardBody>
       <MDBCardFooter className={"d-flex"}>

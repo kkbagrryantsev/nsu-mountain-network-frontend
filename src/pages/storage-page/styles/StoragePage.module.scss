@@ -5,6 +5,9 @@
 
   .itemCard {
     margin: 1rem;
+    @media (min-width: 100px) {
+      width: calc(100%/16*6 - 8px);
+    }
     @media (min-width: 400px) {
       width: calc(100%/16*6 - 8px);
     }
@@ -20,6 +23,7 @@
 
     img {
       padding: 1rem 1rem;
+      aspect-ratio: 1/1;
     }
   }
 }

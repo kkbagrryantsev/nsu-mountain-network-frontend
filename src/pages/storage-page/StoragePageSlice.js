@@ -47,6 +47,9 @@ export const storagePageSlice = createSlice({
         }
       }
     },
+    clearCart: (state) => {
+      state.cart = [];
+    },
   },
 });
 
@@ -56,4 +59,5 @@ export const {
   setErrorLoadingItems,
   addToCart,
   removeFromCart,
+  clearCart,
 } = storagePageSlice.actions;

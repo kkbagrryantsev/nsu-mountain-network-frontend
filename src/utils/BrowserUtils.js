@@ -1,7 +1,7 @@
-import { apiAddress } from "../api/BackendSettings";
+import { appAddress } from "../api/BackendSettings";
 
 export const redirect = (path) =>
-  (window.location.href = `${apiAddress}/${path}`);
+  (window.location.href = `${appAddress}/${path}`);
 
 export const downloadFile = (data, fileName) => {
   //Make file URL

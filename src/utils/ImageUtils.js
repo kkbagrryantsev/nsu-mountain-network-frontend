@@ -1,8 +1,21 @@
-import categories from "../assets/png/item-categories/category_map.json";
-import image from "../assets/png/item-categories/ropes.png";
+import categories from "assets/png/item-categories/category_map.json";
+
+export function importAllImages() {
+  const context = require.context("assets/png/item-categories", true, /\.png$/);
+  const images = {};
+
+  context.keys().forEach((item) => {
+    images[item.replace("./", "")] = context(item);
+  });
+
+  return images;
+}
 
 export const getItemCategory = (id) => {
-  const category = categories.find((category) => category.key.includes(id));
-  //return `src/assets/png/item-categories/${category.blobName}.png`;
-  return image;
+  const item = categories.find((category) => category.key.includes(id));
+  if (item) {
+    return item.blobName;
+  } else {
+    return "cats";
+  }
 };

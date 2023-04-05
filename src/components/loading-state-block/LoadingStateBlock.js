@@ -11,7 +11,7 @@ function LoadingStateBlock({ loadingState, children }) {
   } else if (loadingState.loading === LoadingState.LOADING) {
     block = (
       <div className={styles.root}>
-        <HashLoader loading={true} size={75} color={"black"} />
+        <HashLoader loading={true} size={75} color={"#0d6efd"} />
       </div>
     );
   } else if (loadingState.loading === LoadingState.ERROR) {
