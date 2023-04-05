@@ -3,7 +3,7 @@ import Footer from "./Footer";
 import TopBar from "./TopBar";
 import styles from "./styles/Page.module.scss";
 
-function Page(props) {
+function Page() {
   return (
     <div className={styles.root}>
       <TopBar />
