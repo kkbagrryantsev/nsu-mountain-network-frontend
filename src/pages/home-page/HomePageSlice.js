@@ -1,6 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+const initialState = {
+  ignore: true,
+};
 
 export const homePageSlice = createSlice({
   name: "HomePage",

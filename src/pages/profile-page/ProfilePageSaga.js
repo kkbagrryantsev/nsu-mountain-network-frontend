@@ -24,7 +24,7 @@ function* sagaUpdateData(action) {
 function* sagaReturnItem(action) {
   yield call(execApiCall, {
     mainCall: () => apiReturnItem(action.payload),
-    *onSuccess() {
+    onSuccess() {
       createSuccessToast("Предметы возвращены успешно");
     },
     onAnyError() {
