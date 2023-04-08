@@ -1,4 +1,4 @@
-name: Node.js CI
+name: NodeJS CI
 
 on:
   pull_request:
@@ -20,6 +20,6 @@ jobs:
         run: npm ci
       - name: Building an application
         run: |
-          npm run build
+          CI="" npm run build
       - name: Running tests
         run: npm test
