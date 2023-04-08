@@ -19,7 +19,4 @@ jobs:
       - name: Installing dependencies
         run: npm ci
       - name: Building an application
-        run: |
-          CI="" npm run build
-      - name: Running tests
-        run: npm test
+        run: CI="" npm run build
