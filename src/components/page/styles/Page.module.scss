@@ -1,0 +1,17 @@
+@import 'src/styles/_mixins';
+
+.root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.outlet {
+  display: flex;
+  flex-grow: 2;
+}
+
+.footer {
+  @include row-leftmost;
+  background-color: #222222;
+}
