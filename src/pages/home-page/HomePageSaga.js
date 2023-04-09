@@ -1,15 +1,12 @@
 import { authorizeUser, fetchUserData, registerUser } from "./HomePageActions";
 import { call, takeEvery, put } from "redux-saga/effects";
-import { execApiCall } from "../../utils/ApiUtils";
-import { apiGetUserData, apiLogin } from "../../api/ApiCalls";
-import {
-  saveAccessToken,
-  saveRefreshToken,
-  saveUserRoles,
-} from "../../api/Cookie";
-import { createErrorToast, createSuccessToast } from "../../models/ToastModel";
-import { redirect } from "../../utils/BrowserUtils";
+import { execApiCall } from "utils/ApiUtils";
+import { apiGetUserData, apiLogin } from "api/ApiCalls";
+import { saveAccessToken, saveRefreshToken, saveUserRoles } from "api/Cookie";
+import { createErrorToast, createSuccessToast } from "models/ToastModel";
 import { updateUserData } from "../profile-page/ProfilePageSlice";
+import { paths } from "routePaths";
+import { redirect } from "../../utils/RedirectUtils";
 
 export function* homePageSagaWatcher() {
   yield takeEvery(authorizeUser, sagaLoginUser);
@@ -25,7 +22,7 @@ function* sagaLoginUser(action) {
       saveRefreshToken(response.data.refresh_token);
       createSuccessToast(`Вы успешно вошли в аккаунт`);
       yield put(fetchUserData());
-      redirect("");
+      yield put(redirect(paths.INDEX));
     },
     onFail401() {
       createErrorToast(`Неверный логин или пароль`);

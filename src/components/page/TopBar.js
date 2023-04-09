@@ -3,7 +3,7 @@ import {
   deleteRefreshToken,
   deleteUserRoles,
   getAccessToken,
-} from "../../api/Cookie";
+} from "api/Cookie";
 import {
   MDBBadge,
   MDBBtn,
@@ -26,9 +26,9 @@ import { paths } from "routePaths";
 import { useState } from "react";
 import LoginModal from "pages/home-page/components/LoginModal";
 import RegisterModal from "pages/home-page/components/RegisterModal";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { redirect } from "utils/BrowserUtils";
+import { redirect } from "../../utils/RedirectUtils";
 
 function Cart({ className }) {
   const isLogged = !!getAccessToken();
@@ -54,13 +54,14 @@ function Cart({ className }) {
 }
 
 function ProfileDropdownMenu() {
+  const dispatch = useDispatch();
   const isLogged = !!getAccessToken();
 
   const logoutUser = () => {
     deleteAccessToken();
     deleteRefreshToken();
     deleteUserRoles();
-    redirect("");
+    dispatch(redirect(paths.INDEX));
   };
 
   return (

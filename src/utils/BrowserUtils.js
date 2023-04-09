@@ -1,8 +1,3 @@
-import { appAddress } from "../api/BackendSettings";
-
-export const redirect = (path) =>
-  (window.location.href = `${appAddress}/${path}`);
-
 export const downloadFile = (data, fileName) => {
   //Make file URL
   const blob = new Blob([data], { type: "application/octet-stream" });
