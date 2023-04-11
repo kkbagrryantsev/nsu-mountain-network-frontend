@@ -4,8 +4,6 @@ import NotificationContainer from "./components/notification/base/NotificationCo
 import "react-toastify/dist/ReactToastify.css";
 import ModalManager from "./components/modals/ModalManager";
 
-import SlidesList from "./components/FotoSlider/SlideList";
-
 function App() {
   return (
     <BrowserRouter>
@@ -13,7 +11,6 @@ function App() {
       <ModalManager />
       <NotificationContainer />
     </BrowserRouter>
-    
   );
 }
 

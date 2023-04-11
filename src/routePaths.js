@@ -1,5 +1,8 @@
 export const paths = {
-  INDEX: "/",
+  INDEX: "",
   EQUIPMENT: "equipment",
+  EXPEDITIONS: "expeditions",
+  CART: "cart",
+  PROFILE: "profile",
   ANY: "*",
 };

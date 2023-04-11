@@ -1,23 +1,33 @@
 import styles from "./styles/Footer.module.scss";
 import logoGray from "../../assets/logo-gray.png";
 import { IoLogoVk, IoLogoYoutube } from "react-icons/io5";
+import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 
 function Footer() {
   return (
-    <>
-      <div className={styles.companyBlock}>
-        <img className={styles.logo} src={logoGray} alt="Error" />
-        <div className={styles.links}>
-          <a href="https://vk.com/mountainnsu">
-            <IoLogoVk color={"white"} size={"40"} />
-          </a>
-          <a href="https://www.youtube.com/c/MountainNSUclub">
-            <IoLogoYoutube color={"white"} size={"36"} />
-          </a>
-        </div>
-        <p className={styles.copyright}>©NSU mountain network</p>
-      </div>
-    </>
+    <MDBContainer fluid>
+      <MDBRow>
+        <MDBCol md={"4"} className={"p-3"}>
+          <img src={logoGray} alt="Error" />
+          <MDBRow>
+            <MDBCol className={"me-2"} md={"1"}>
+              <a href="https://vk.com/mountainnsu">
+                <IoLogoVk color={"white"} size={"40"} />
+              </a>
+            </MDBCol>
+            <MDBCol md={"1"}>
+              <a href="https://www.youtube.com/c/MountainNSUclub">
+                <IoLogoYoutube color={"white"} size={"40"} />
+              </a>
+            </MDBCol>
+          </MDBRow>
+          <p className={styles.copyright}>©NSU mountain network</p>
+        </MDBCol>
+        <MDBCol className={"p-3"} offsetMd={"4"} md={"4"}>
+
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
   );
 }
 

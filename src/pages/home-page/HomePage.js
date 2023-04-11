@@ -6,7 +6,6 @@ import mountain from "../../assets/mountain.png";
 import pros_1 from "../../assets/png/main-page/pros_1.jpg";
 import pros_2 from "../../assets/png/main-page/pros_2.jpg";
 import pros_3 from "../../assets/png/main-page/pros_3.jpg";
-import { Slider } from "../../components/FotoSlider/Slider";
 
 function HomePage() {
   return (
@@ -30,9 +29,6 @@ function HomePage() {
           </h3>
           <GrValidate size={200} />
         </div>
-
-        <Slider />
-
         <ProsCard
           img={pros_1}
           title="Походы от I до VI уровня сложности"
