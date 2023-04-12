@@ -24,15 +24,6 @@ function Footer() {
           <p className={styles.copyright}>©NSU mountain network</p>
         </MDBCol>
         <MDBCol className={"p-3"} offsetMd={"4"} md={"4"}>
-          <a
-            className={"float-end"}
-            href="https://www.flaticon.com/"
-            title="Freepik Flaticons"
-          >
-            <MDBBadge color={"danger"}>
-              Icons created by Freepik - Flaticon
-            </MDBBadge>
-          </a>
         </MDBCol>
       </MDBRow>
     </MDBContainer>
