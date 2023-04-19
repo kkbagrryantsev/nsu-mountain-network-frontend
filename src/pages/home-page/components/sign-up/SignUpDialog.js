@@ -12,9 +12,9 @@ import {
 } from "mdb-react-ui-kit";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { registerUser } from "../HomePageActions";
+import { signUpAction } from "../../HomePageActions";
 
-function RegisterModal({ isActive, setIsActive }) {
+function SignUpDialog({ isActive, setIsActive }) {
   const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
@@ -31,7 +31,7 @@ function RegisterModal({ isActive, setIsActive }) {
 
   const onSubmit = () => {
     dispatch(
-      registerUser(
+      signUpAction(
         {
           ...formValue,
         } || null
@@ -116,4 +116,4 @@ function RegisterModal({ isActive, setIsActive }) {
   );
 }
 
-export default RegisterModal;
+export default SignUpDialog;

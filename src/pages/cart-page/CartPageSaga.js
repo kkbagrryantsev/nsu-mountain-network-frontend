@@ -1,10 +1,10 @@
 import { call, takeEvery, put } from "redux-saga/effects";
 import { execApiCall } from "../../utils/ApiUtils";
-import { apiBookItems } from "../../api/ApiCalls";
 import { bookItems } from "./CartPageActions";
 import { createErrorToast, createSuccessToast } from "../../models/ToastModel";
 import { clearCart } from "../storage-page/StoragePageSlice";
 import { store } from "../../store/PersistedStore";
+import { apiBookItems } from "api/models/ApiCalls";
 
 export function* cartPageSagaWatcher() {
   yield takeEvery(bookItems, sagaBookItems);

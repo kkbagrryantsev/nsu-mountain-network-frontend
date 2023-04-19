@@ -12,9 +12,9 @@ import {
 } from "mdb-react-ui-kit";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { authorizeUser } from "../HomePageActions";
+import { signInAction } from "../../HomePageActions";
 
-function LoginModal({ isActive, setIsActive }) {
+function SignInDialog({ isActive, setIsActive }) {
   const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
@@ -45,7 +45,7 @@ function LoginModal({ isActive, setIsActive }) {
               className={"d-flex flex-column align-items-center gap-1"}
               onSubmit={() => {
                 setIsActive();
-                dispatch(authorizeUser(formValue || null));
+                dispatch(signInAction(formValue || null));
               }}
               isValidated
             >
@@ -80,4 +80,4 @@ function LoginModal({ isActive, setIsActive }) {
   );
 }
 
-export default LoginModal;
+export default SignInDialog;

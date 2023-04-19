@@ -6,7 +6,6 @@ import {
 } from "mdb-react-ui-kit";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { registerUser } from "../../home-page/HomePageActions";
 
 function UserDataChangeTab() {
   const dispatch = useDispatch();
@@ -22,23 +21,12 @@ function UserDataChangeTab() {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = () => {
-    dispatch(
-      registerUser(
-        {
-          ...formValue,
-        } || null
-      )
-    );
-  };
-
   return (
     <div className={"d-flex flex-column gap-3 p-3"}>
       <h3>Изменить данные</h3>
       <MDBValidation
         isValidated
         className={"d-flex flex-column align-items-start gap-1"}
-        onSubmit={onSubmit}
       >
         <MDBValidationItem feedback>
           <MDBInput

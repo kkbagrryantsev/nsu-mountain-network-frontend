@@ -1,46 +1,21 @@
-import { call, takeEvery, put } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { execApiCall } from "../../utils/ApiUtils";
 import { updateUserData } from "./ProfilePageSlice";
-import { getItemData, returnItem, updateData } from "./ProfilePageActions";
-import { apiGetItemData, apiLogin, apiReturnItem } from "../../api/ApiCalls";
-import { createErrorToast, createSuccessToast } from "../../models/ToastModel";
+import { saveUserRoles } from "../../api/Cookie";
+import { getMyProfileAction } from "./ProfilePageActions";
+import { apiGetMyProfile } from "../../api/auth/ApiCalls";
 
 export function* profilePageSagaWatcher() {
-  yield takeEvery(updateData, sagaUpdateData);
-  yield takeEvery(returnItem, sagaReturnItem);
-  yield takeEvery(getItemData, sagaGetItemData);
+  yield takeEvery(getMyProfileAction, sagaGetMyProfile);
 }
 
-function* sagaUpdateData(action) {
+function* sagaGetMyProfile(action) {
   yield call(execApiCall, {
-    mainCall: () => apiLogin(action.payload),
+    mainCall: () => apiGetMyProfile(),
     *onSuccess(response) {
-      console.log(response.data);
-      yield put(updateUserData(response.data.items));
-    },
-  });
-}
-
-function* sagaReturnItem(action) {
-  yield call(execApiCall, {
-    mainCall: () => apiReturnItem(action.payload),
-    onSuccess() {
-      createSuccessToast("Предметы возвращены успешно");
-    },
-    onAnyError() {
-      createErrorToast("Предметы возвращены успешно");
-    },
-  });
-}
-
-function* sagaGetItemData(action) {
-  yield call(execApiCall, {
-    mainCall: () => apiGetItemData(action.payload),
-    onSuccess(response) {
-      return response.data;
-    },
-    onAnyError() {
-      createErrorToast("Ошибка сервера");
+      // TODO Will be deprecated when user roles api call is patched
+      saveUserRoles(response.data.user.user_roles);
+      yield put(updateUserData(response.data.user));
     },
   });
 }

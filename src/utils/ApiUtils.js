@@ -1,12 +1,33 @@
 import { call } from "redux-saga/effects";
 import { createErrorToast } from "../models/ToastModel";
+import { getAccessToken } from "../api/Cookie";
+
+// TODO Add headers object
+export const getAccessTokenHeader = () => {
+  const token = getAccessToken();
+
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+  };
+};
+
+export const getJSONHeader = () => {
+  return {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+};
 
 export function* execApiCall(args) {
   const {
     mainCall,
     onSuccess,
-    onFail400,
     onFail403,
+    onFail400,
     onFailException,
     onAnyError,
     additionalAnyErrorHandling,
@@ -18,19 +39,8 @@ export function* execApiCall(args) {
 
     if (withoutHandlingResponseStatus) {
       yield call(onSuccess, response);
-    } else if (response.status === 200) {
+    } else if (response.status >= 200 && response.status < 300) {
       yield call(onSuccess, response);
-    } else if (response.status === 400) {
-      if (onAnyError) {
-        yield call(onAnyError);
-      } else if (onFail400) {
-        yield call(onFail400, response.data);
-      } else {
-        createErrorToast(`Возникла неизвестная ошибка`);
-        if (additionalAnyErrorHandling) {
-          yield call(additionalAnyErrorHandling);
-        }
-      }
     } else if (response.status === 403) {
       if (selectPriority(onAnyError, onFail403)) {
         yield call(selectPriority(onAnyError, onFail403));
@@ -38,6 +48,17 @@ export function* execApiCall(args) {
         createErrorToast(
           `Возникла ошибка: ${response.data.message}. Повторите запрос`
         );
+        if (additionalAnyErrorHandling) {
+          yield call(additionalAnyErrorHandling);
+        }
+      }
+    } else if (response.status >= 400 && response.status < 500) {
+      if (onFail400) {
+        yield call(onFail400, response);
+      } else if (onAnyError) {
+        yield call(onAnyError);
+      } else {
+        createErrorToast(`Возникла неизвестная ошибка`);
         if (additionalAnyErrorHandling) {
           yield call(additionalAnyErrorHandling);
         }

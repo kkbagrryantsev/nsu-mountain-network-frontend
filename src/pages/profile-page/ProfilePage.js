@@ -14,20 +14,20 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import UserDataChangeTab from "./content/UserDataChangeTab";
 import ItemsManagementTab from "./content/items-management-tab/ItemsManagementTab";
-import { fetchUserData } from "../home-page/HomePageActions";
+import { getMyProfileAction } from "./ProfilePageActions";
 
-function ProfileTab({ tabName, tabHref }) {
+function ProfileTab({ tabName, hidden, tabHref }) {
   return (
     <MDBRipple
-      rippleTag={"div"}
+      rippleTag={"a"}
       rippleColor={"light"}
       className={"hover-overlay"}
+      href={`?tab=${tabHref}`}
+      hidden={hidden}
     >
-      <a href={`?tab=${tabHref}`}>
-        <MDBCard background={"danger"} className={"p-5 text-white"}>
-          <MDBCardTitle>{tabName}</MDBCardTitle>
-        </MDBCard>
-      </a>
+      <MDBCard background={"danger"} className={`h-100 p-5 text-white`}>
+        <MDBCardTitle>{tabName}</MDBCardTitle>
+      </MDBCard>
     </MDBRipple>
   );
 }
@@ -35,7 +35,7 @@ function ProfileTab({ tabName, tabHref }) {
 function ProfilePage() {
   const dispatch = useDispatch();
   window.onload = () => {
-    dispatch(fetchUserData());
+    dispatch(getMyProfileAction());
   };
   const user = useSelector((state) => state.profilePage.user);
   console.log(user);
@@ -45,8 +45,8 @@ function ProfilePage() {
 
   return (
     <MDBContainer fluid>
-      <MDBRow>
-        <MDBCol className={"p-5"} sm={"5"} md={"4"} lg={"3"}>
+      <MDBRow center>
+        <MDBCol className={"ps-5 pt-5"} sm={"4"} md={"4"} lg={"3"}>
           <MDBCard>
             <MDBContainer>
               <MDBRow className={"p-3"}>
@@ -70,7 +70,7 @@ function ProfilePage() {
                     {user.user_roles.split(", ").map((r, index) => {
                       return (
                         <MDBBadge color={"dark"} key={index}>
-                          <h7>{r.toUpperCase()}</h7>
+                          <label>{r.toUpperCase()}</label>
                         </MDBBadge>
                       );
                     })}
@@ -80,7 +80,8 @@ function ProfilePage() {
             </MDBContainer>
           </MDBCard>
         </MDBCol>
-        <MDBCol className={"p-5"} sm={"6"} lg={"9"}>
+
+        <MDBCol className={"pt-5 pe-5 pb-5"} sm={"6"} md={"6"} lg={"5"}>
           <MDBCard className={"p-3"}>
             <MDBRow>
               <MDBCol md={"5"}>
@@ -102,26 +103,33 @@ function ProfilePage() {
                 </a>
               </MDBCol>
             </MDBRow>
+
             <MDBRow>
-              {!!!activeTab && (
-                <span className={"d-flex gap-3 flex-wrap"} hidden={!!activeTab}>
-                  <ProfileTab tabName={"Личные данные"} tabHref={"credits"} />
+              <MDBCol>
+                <ProfileTab
+                  hidden={!!activeTab}
+                  tabName={"Личные данные"}
+                  tabHref={"credits"}
+                />
+              </MDBCol>
+              <MDBCol>
+                <MDBRow>
                   <ProfileTab
+                    hidden={!!activeTab}
                     tabName={"Забронированные предметы"}
                     tabHref={"items"}
                   />
-                </span>
-              )}
+                </MDBRow>
+              </MDBCol>
+            </MDBRow>
 
+            <MDBRow>
               <MDBTabsContent>
                 <MDBTabsPane show={activeTab === "credits"}>
                   <UserDataChangeTab />
                 </MDBTabsPane>
                 <MDBTabsPane show={activeTab === "items"}>
                   <ItemsManagementTab />
-                </MDBTabsPane>
-                <MDBTabsPane show={activeTab === "tab3"}>
-                  Tab 3 content
                 </MDBTabsPane>
               </MDBTabsContent>
             </MDBRow>

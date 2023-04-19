@@ -1,25 +1,10 @@
 import { apiAddress } from "./BackendSettings";
-import { getAccessToken } from "./Cookie";
-
-const getAccessTokenHeader = () => {
-  const token = getAccessToken();
-
-  return {
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json",
-  };
-};
-
-const getDefaultHeader = () => {
-  return {
-    "Content-Type": "application/json",
-  };
-};
+import { getAccessTokenHeader, getJSONHeader } from "../utils/ApiUtils";
 
 export async function apiLogin(credentials) {
   return fetch(apiAddress + "/api/auth/login", {
     method: "POST",
-    headers: getDefaultHeader(),
+    headers: getJSONHeader(),
     body: JSON.stringify(credentials),
   }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
 }
@@ -27,7 +12,7 @@ export async function apiLogin(credentials) {
 export async function apiRegister(credentials) {
   return fetch(apiAddress + "/api/auth/signup", {
     method: "POST",
-    headers: getDefaultHeader(),
+    headers: getJSONHeader(),
     body: credentials,
   }).then((r) => ({ status: r.status }));
 }
