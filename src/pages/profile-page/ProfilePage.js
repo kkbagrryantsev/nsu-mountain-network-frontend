@@ -77,6 +77,11 @@ function ProfilePage() {
                   </span>
                 </MDBCol>
               </MDBRow>
+              <MDBRow>
+                <MDBCol className={"d-flex justify-content-center"}>
+                  <h5>Ваш баланс: {user.user_money}</h5>
+                </MDBCol>
+              </MDBRow>
             </MDBContainer>
           </MDBCard>
         </MDBCol>
