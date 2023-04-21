@@ -79,6 +79,11 @@ function ProfilePage() {
                   </span>
                 </MDBCol>
               </MDBRow>
+              <MDBRow>
+                <MDBCol className={"d-flex justify-content-center"}>
+                  <h5>Ваш баланс: {user.user_money}</h5>
+                </MDBCol>
+              </MDBRow>
             </MDBContainer>
           </MDBCard>
         </MDBCol>
@@ -108,7 +113,7 @@ function ProfilePage() {
               {!!!activeTab && (
                 <span className={"d-flex gap-3 flex-wrap"} hidden={!!activeTab}>
                   <ProfileTab tabName={"Личные данные"} tabHref={"credits"} haveToHide={false}/>
-                  <ProfileTab tabName={"Заявки на бронирование"} tabHref={"tab3"} haveToHide = {!(user.user_roles === "warehouseman")} />
+                  <ProfileTab tabName={"Заявки на бронирование"} tabHref={"requests"} haveToHide = {!(user.user_roles === "warehouseman")} />
                   <ProfileTab
                     tabName={"Забронированные предметы"}
                     tabHref={"items"}
@@ -124,7 +129,7 @@ function ProfilePage() {
                 <MDBTabsPane show={activeTab === "items"}>
                   <ItemsManagementTab />
                 </MDBTabsPane>
-                <MDBTabsPane show={activeTab === "tab3"}>
+                <MDBTabsPane show={activeTab === "requests"}>
                   <BookingRequestTab />
                 </MDBTabsPane>
               </MDBTabsContent>
@@ -137,3 +142,5 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+
+/*<BookingRequestTab />       */

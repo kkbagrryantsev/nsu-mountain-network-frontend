@@ -1,5 +1,6 @@
 import { apiAddress } from "./BackendSettings";
 import { getAccessToken } from "./Cookie";
+import axios from "axios";
 
 const getAccessTokenHeader = () => {
   const token = getAccessToken();
@@ -38,6 +39,21 @@ export async function apiGetItems() {
     headers: getAccessTokenHeader(),
   }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
 }
+
+export async function apiGetRequests(type) {
+  if (type === undefined) {
+    type = "all";
+  }
+
+  return fetch(apiAddress + `/api/models/item_in_use/${type}`, {
+    method: "GET",
+    headers: getAccessTokenHeader(),
+  }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
+}
+
+/*export const apiGetRequests = (type) =>
+  axios.get(`/api/models/item_in_use/${type}`, getAccessTokenHeader());
+*/
 
 export async function apiBookItems(credentials) {
   console.log(credentials);

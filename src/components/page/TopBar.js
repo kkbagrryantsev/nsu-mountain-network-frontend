@@ -21,7 +21,8 @@ import {
   MDBNavbarNav,
   MDBNavbarToggler,
 } from "mdb-react-ui-kit";
-import logo from "assets/logo.png";
+//import logo from "assets/logo.png";
+import logo from "assets/logo.svg";
 import { paths } from "routePaths";
 import { useState } from "react";
 import LoginModal from "pages/home-page/components/LoginModal";

@@ -1,5 +1,6 @@
 import styles from "./styles/Footer.module.scss";
-import logoGray from "../../assets/logo-gray.png";
+//import logoGray from "../../assets/logo-gray.png";
+import logoGray from "../../assets/gray_logo_icon 2.svg";
 import { IoLogoVk, IoLogoYoutube } from "react-icons/io5";
 import { MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 
@@ -8,7 +9,7 @@ function Footer() {
     <MDBContainer fluid>
       <MDBRow>
         <MDBCol md={"4"} className={"p-3"}>
-          <img src={logoGray} alt="Error" />
+          <img src={logoGray} height={120} alt="Error" />
           <MDBRow>
             <MDBCol className={"me-2"} md={"1"}>
               <a href="https://vk.com/mountainnsu">

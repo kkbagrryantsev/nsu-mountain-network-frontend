@@ -1,8 +1,0 @@
-
-function BookReq() {
-        <h3 className={"text-secondary"}>
-            Y вас нет входящих заявок
-        </h3>
-}
-
-export default BookReq;
