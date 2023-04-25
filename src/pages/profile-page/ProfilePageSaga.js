@@ -1,46 +1,33 @@
-import { call, takeEvery, put } from "redux-saga/effects";
+import { call, put, takeEvery } from "redux-saga/effects";
 import { execApiCall } from "../../utils/ApiUtils";
 import { updateUserData } from "./ProfilePageSlice";
-import { getItemData, returnItem, updateData } from "./ProfilePageActions";
-import { apiGetItemData, apiLogin, apiReturnItem } from "../../api/ApiCalls";
-import { createErrorToast, createSuccessToast } from "../../models/ToastModel";
+import { saveUserRoles } from "../../api/Cookie";
+import { getMyProfileAction } from "./ProfilePageActions";
+import { apiGetMyProfile } from "../../api/auth/ApiCalls";
+import { apiGetRequests } from "api/ApiCalls";
+import { updateItems } from "pages/storage-page/StoragePageSlice";
+
 
 export function* profilePageSagaWatcher() {
-  yield takeEvery(updateData, sagaUpdateData);
-  yield takeEvery(returnItem, sagaReturnItem);
-  yield takeEvery(getItemData, sagaGetItemData);
+  yield takeEvery(getMyProfileAction, sagaGetMyProfile, sagaGetRequests);
 }
 
-function* sagaUpdateData(action) {
+function* sagaGetMyProfile(action) {
   yield call(execApiCall, {
-    mainCall: () => apiLogin(action.payload),
+    mainCall: () => apiGetMyProfile(),
     *onSuccess(response) {
-      console.log(response.data);
-      yield put(updateUserData(response.data.items));
+      // TODO Will be deprecated when user roles api call is patched
+      saveUserRoles(response.data.user.user_roles);
+      yield put(updateUserData(response.data.user));
     },
   });
 }
 
-function* sagaReturnItem(action) {
+function* sagaGetRequests(type) {
   yield call(execApiCall, {
-    mainCall: () => apiReturnItem(action.payload),
-    onSuccess() {
-      createSuccessToast("Предметы возвращены успешно");
-    },
-    onAnyError() {
-      createErrorToast("Предметы возвращены успешно");
-    },
-  });
-}
-
-function* sagaGetItemData(action) {
-  yield call(execApiCall, {
-    mainCall: () => apiGetItemData(action.payload),
-    onSuccess(response) {
-      return response.data;
-    },
-    onAnyError() {
-      createErrorToast("Ошибка сервера");
+    mainCall: () => apiGetRequests(type),
+    *onSuccess(response) {
+      yield put(updateItems(response.data.item_in_use));
     },
   });
 }

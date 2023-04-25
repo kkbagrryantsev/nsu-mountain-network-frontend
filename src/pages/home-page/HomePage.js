@@ -1,11 +1,11 @@
 import { GrValidate } from "react-icons/gr";
 import ProsCard from "./components/ProsCard";
 import styles from "./styles/HomePage.module.scss";
-import slogan from "../../assets/slogan.png";
-import mountain from "../../assets/mountain.png";
-import pros_1 from "../../assets/png/main-page/pros_1.jpg";
-import pros_2 from "../../assets/png/main-page/pros_2.jpg";
-import pros_3 from "../../assets/png/main-page/pros_3.jpg";
+import slogan from "assets/slogan.png";
+import mountain from "assets/mountain.png";
+import pros_1 from "assets/png/main-page/pros_1.jpg";
+import pros_2 from "assets/png/main-page/pros_2.jpg";
+import pros_3 from "assets/png/main-page/pros_3.jpg";
 
 function HomePage() {
   return (
@@ -18,6 +18,7 @@ function HomePage() {
           <img src={mountain} alt="..." />
         </div>
       </header>
+
       <main className={styles.outlet}>
         <div
           className={"d-flex flex-row align-items-center"}

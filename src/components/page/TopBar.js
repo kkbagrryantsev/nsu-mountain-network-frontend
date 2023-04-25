@@ -1,9 +1,4 @@
-import {
-  deleteAccessToken,
-  deleteRefreshToken,
-  deleteUserRoles,
-  getAccessToken,
-} from "api/Cookie";
+import { deleteAccessToken, deleteUserRoles, getAccessToken } from "api/Cookie";
 import {
   MDBBadge,
   MDBBtn,
@@ -21,12 +16,11 @@ import {
   MDBNavbarNav,
   MDBNavbarToggler,
 } from "mdb-react-ui-kit";
-//import logo from "assets/logo.png";
-import logo from "assets/logo.svg";
+import logo from "assets/logo.png";
 import { paths } from "routePaths";
 import { useState } from "react";
-import LoginModal from "pages/home-page/components/LoginModal";
-import RegisterModal from "pages/home-page/components/RegisterModal";
+import SignInDialog from "../../pages/home-page/components/sign-in/SignInDialog";
+import SignUpDialog from "../../pages/home-page/components/sign-up/SignUpDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { redirect } from "../../utils/RedirectUtils";
@@ -60,7 +54,6 @@ function ProfileDropdownMenu() {
 
   const logoutUser = () => {
     deleteAccessToken();
-    deleteRefreshToken();
     deleteUserRoles();
     dispatch(redirect(paths.INDEX));
   };
@@ -81,8 +74,12 @@ function ProfileDropdownMenu() {
             </MDBDropdownItem>
             <MDBDropdownItem link>Настройки</MDBDropdownItem>
             <MDBDropdownItem divider />
-            <MDBDropdownItem link onClick={() => logoutUser()}>
-              <h7 className={"text-danger"}>Выйти</h7>
+            <MDBDropdownItem
+              className={"text-danger"}
+              link
+              onClick={() => logoutUser()}
+            >
+              <span className={"text-danger"}>Выйти</span>
             </MDBDropdownItem>
           </MDBDropdownMenu>
         </MDBDropdown>
@@ -100,8 +97,8 @@ function TopBar() {
 
   return (
     <header>
-      <LoginModal isActive={loginModal} setIsActive={setLoginModal} />
-      <RegisterModal isActive={registerModal} setIsActive={setRegisterModal} />
+      <SignInDialog isActive={loginModal} setIsActive={setLoginModal} />
+      <SignUpDialog isActive={registerModal} setIsActive={setRegisterModal} />
       <MDBNavbar expand={"sm"} light bgColor="light">
         <MDBContainer fluid>
           <MDBNavbarBrand href={window.location.origin}>

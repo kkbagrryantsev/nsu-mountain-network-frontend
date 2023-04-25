@@ -1,13 +1,11 @@
 import { call, takeEvery, put } from "redux-saga/effects";
 import { execApiCall } from "../../utils/ApiUtils";
 import { apiGetItems } from "../../api/ApiCalls";
-import { apiGetRequests } from "../../api/ApiCalls";
-import { getItems, getRequests } from "./StoragePageActions";
+import { getItems } from "./StoragePageActions";
 import { updateItems } from "./StoragePageSlice";
 
 export function* storagePageSagaWatcher() {
-  yield takeEvery(getItems, sagaGetItems); 
-  yield takeEvery(getRequests, sagaGetRequests);
+  yield takeEvery(getItems, sagaGetItems);
 }
 
 function* sagaGetItems(action) {
@@ -18,14 +16,3 @@ function* sagaGetItems(action) {
     },
   });
 }
-
-function* sagaGetRequests(action) {
-  yield call(execApiCall, {
-    mainCall: () => apiGetRequests(action.payload),
-    *onSuccess(response) {
-      yield put(updateItems(response.data.item_in_use));
-      return response.data;
-    },
-  });
-}
-

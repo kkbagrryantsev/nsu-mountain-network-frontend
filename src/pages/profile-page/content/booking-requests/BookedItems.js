@@ -1,15 +1,14 @@
 import { MDBBadge, MDBContainer, MDBIcon, MDBRow } from "mdb-react-ui-kit";
 import { useSelector } from "react-redux";
 import ItemCard from "./ItemCard";
-import { apiGetRequests } from "api/ApiCalls";
 
 function BookedItems() {
-  //const items = useSelector((state) => state.profilePage.user.items);
-  const items = useSelector((state) => state.profilePage.user.item_in_use);
+  const items = useSelector((state) => state.profilePage.user.items);
+  //const items = useSelector((state) => state.profilePage.user.item_in_use);  //models/item_in_use/type
   //const items = apiGetRequests("booked");
   const filteredItems = items.filter((i) => i.is_confirm === 0);
   //const filteredItems = items;
-  
+
   return (
     <MDBContainer>
       {filteredItems.length === 0 && (
