@@ -3,11 +3,9 @@ import { useSelector } from "react-redux";
 import ItemCard from "./ItemCard";
 
 function BookedItems() {
-  const items = useSelector((state) => state.profilePage.user.items);
-  //const items = useSelector((state) => state.profilePage.user.item_in_use);  //models/item_in_use/type
-  //const items = apiGetRequests("booked");
+  //const items = useSelector((state) => state.profilePage.user.items);
+  const items = useSelector((state) => state.profileYPage.items_in_use);  //models/item_in_use/type
   const filteredItems = items.filter((i) => i.is_confirm === 0);
-  //const filteredItems = items;
 
   return (
     <MDBContainer>

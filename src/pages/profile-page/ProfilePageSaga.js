@@ -5,7 +5,7 @@ import { saveUserRoles } from "../../api/Cookie";
 import { getMyProfileAction } from "./ProfilePageActions";
 import { apiGetMyProfile } from "../../api/auth/ApiCalls";
 import { apiGetRequests } from "api/ApiCalls";
-import { updateItems } from "pages/storage-page/StoragePageSlice";
+import { updateItems } from "pages/profile-page/RequestsSlice";
 
 
 export function* profilePageSagaWatcher() {
@@ -27,7 +27,7 @@ function* sagaGetRequests(type) {
   yield call(execApiCall, {
     mainCall: () => apiGetRequests(type),
     *onSuccess(response) {
-      yield put(updateItems(response.data.item_in_use));
+      yield put(updateItems(response.data.items));
     },
   });
 }
