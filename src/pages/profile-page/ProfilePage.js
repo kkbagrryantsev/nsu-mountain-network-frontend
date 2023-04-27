@@ -37,7 +37,7 @@ function ProfileTab({ tabName, hidden, tabHref }) {
 function ProfilePage() {
   const dispatch = useDispatch();
   window.onload = () => {
-    dispatch(getMyProfileAction(), getItemsInUseHistoryAction());
+    dispatch(getMyProfileAction());
   };
   const user = useSelector((state) => state.profilePage.user);
   //console.log(user);

@@ -24,7 +24,7 @@ function* sagaGetMyProfile(action) {
 
 function* sagaGetItemsInUse(action) {
   yield call(execApiCall, {
-    mainCall: () => apiGetRequests(action),
+    mainCall: () => apiGetRequests(action.payload),
     *onSuccess(response) {
       yield put(updateItems(response.data.item_in_use));
     },

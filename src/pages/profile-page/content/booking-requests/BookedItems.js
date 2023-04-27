@@ -1,10 +1,16 @@
 import { MDBBadge, MDBContainer, MDBIcon, MDBRow } from "mdb-react-ui-kit";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ItemCard from "./ItemCard";
+import { getItemsInUseHistoryAction } from "pages/profile-page/ProfilePageActions";
+
 
 function BookedItems() {
-  // const items = useSelector((state) => state.profilePage.user.items);
-  const items = useSelector((state) => state.requestsPage.items_in_use);  //models/item_in_use/type
+  const dispatch = useDispatch();
+  window.onload = () => {
+    dispatch(getItemsInUseHistoryAction('booked'));
+  };
+  
+  const items = useSelector((state) => state.requestsPage.items_in_use.booked);  //models/item_in_use/type
   console.log(items.value);
   const filteredItems = items.value.filter((i) => i.is_confirm === 0);
 
