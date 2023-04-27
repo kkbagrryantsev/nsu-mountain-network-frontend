@@ -14,7 +14,8 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import UserDataChangeTab from "./content/UserDataChangeTab";
 import ItemsManagementTab from "./content/items-management-tab/ItemsManagementTab";
-import { getItemsInUseHistoryAction, getMyProfileAction } from "./ProfilePageActions";
+import { getMyProfileAction } from "./ProfilePageActions";
+import { getItemsInUseHistoryAction } from "./ProfilePageActions";
 import BookingRequestTab from "./content/booking-requests/BookingRequestTab";
 
 function ProfileTab({ tabName, hidden, tabHref }) {
@@ -36,10 +37,10 @@ function ProfileTab({ tabName, hidden, tabHref }) {
 function ProfilePage() {
   const dispatch = useDispatch();
   window.onload = () => {
-    dispatch(getMyProfileAction(), getItemsInUseHistoryAction('booked'));
+    dispatch(getMyProfileAction(), getItemsInUseHistoryAction());
   };
   const user = useSelector((state) => state.profilePage.user);
-  console.log(user);
+  //console.log(user);
   const search = window.location.search;
   const params = new URLSearchParams(search);
   const activeTab = params.get("tab");

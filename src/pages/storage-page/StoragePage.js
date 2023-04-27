@@ -31,10 +31,9 @@ function StoragePage() {
   };
 
   return (
-    <div>
     <LoadingStateBlock loadingState={items}>
       <div className={"d-flex flex-row w-100 p-4"}>
-      <Sidebar />
+        <Sidebar />
         <div className={"d-flex flex-column align-items-center w-100"}>
           <MDBInputGroup
             className="mb-3"
@@ -64,7 +63,6 @@ function StoragePage() {
         </div>
       </div>
     </LoadingStateBlock>
-    </div>
   );
 }
 

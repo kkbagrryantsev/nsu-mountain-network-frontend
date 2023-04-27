@@ -24,6 +24,17 @@ export async function apiGetItems() {
   }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
 }
 
+export async function apiGetRequests(type) {
+  if (type === undefined) {
+    type = "all";
+  }
+
+  return fetch(apiAddress + `/api/models/item_in_use/${type}`, {
+    method: "GET",
+    headers: getAccessTokenHeader(),
+  }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
+}
+
 export async function apiBookItems(credentials) {
   console.log(credentials);
   return fetch(apiAddress + "/api/models/items/book", {
@@ -55,15 +66,3 @@ export async function apiGetItemData(credentials) {
     headers: getAccessTokenHeader(),
   }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
 }
-
-export async function apiGetRequests(type) {
-  if (type === undefined) {
-    type = "all";
-  }
-
-  return fetch(apiAddress + `/api/models/item_in_use/${type}`, {
-    method: "GET",
-    headers: getAccessTokenHeader(),
-  }).then((r) => r.json().then((data) => ({ status: r.status, data: data })));
-}
-

@@ -5,11 +5,10 @@ import { saveUserRoles } from "../../api/Cookie";
 import { getMyProfileAction } from "./ProfilePageActions";
 import { apiGetMyProfile } from "../../api/auth/ApiCalls";
 import { apiGetRequests } from "api/ApiCalls";
-import { updateItems } from "pages/profile-page/RequestsSlice";
-
+import { updateItems } from "./RequestsSlice";
 
 export function* profilePageSagaWatcher() {
-  yield takeEvery(getMyProfileAction, sagaGetMyProfile, sagaGetRequests);
+  yield takeEvery(getMyProfileAction, sagaGetMyProfile, sagaGetItemsInUse);
 }
 
 function* sagaGetMyProfile(action) {
@@ -23,11 +22,11 @@ function* sagaGetMyProfile(action) {
   });
 }
 
-function* sagaGetRequests(type) {
+function* sagaGetItemsInUse(action) {
   yield call(execApiCall, {
-    mainCall: () => apiGetRequests(type),
+    mainCall: () => apiGetRequests(action),
     *onSuccess(response) {
-      yield put(updateItems(response.data.items));
+      yield put(updateItems(response.data.item_in_use));
     },
   });
 }

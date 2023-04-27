@@ -1,6 +1,6 @@
 import { call, takeEvery, put } from "redux-saga/effects";
 import { execApiCall } from "../../utils/ApiUtils";
-import { apiGetItems } from "../../api/ApiCalls";
+import { apiGetAvailableItems } from "../../api/models/ApiCalls";
 import { getItems } from "./StoragePageActions";
 import { updateItems } from "./StoragePageSlice";
 
@@ -10,7 +10,7 @@ export function* storagePageSagaWatcher() {
 
 function* sagaGetItems(action) {
   yield call(execApiCall, {
-    mainCall: () => apiGetItems(action.payload),
+    mainCall: () => apiGetAvailableItems(action.payload),
     *onSuccess(response) {
       yield put(updateItems(response.data.items));
     },

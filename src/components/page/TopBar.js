@@ -55,6 +55,7 @@ function ProfileDropdownMenu() {
   const logoutUser = () => {
     deleteAccessToken();
     deleteUserRoles();
+    //localStorage.clear();
     dispatch(redirect(paths.INDEX));
   };
 
@@ -78,8 +79,9 @@ function ProfileDropdownMenu() {
               className={"text-danger"}
               link
               onClick={() => logoutUser()}
+              //onClick={() => deleteAccessToken()}
             >
-              <span className={"text-danger"}>Выйти</span>
+              <span className={"text-danger"} >Выйти</span>
             </MDBDropdownItem>
           </MDBDropdownMenu>
         </MDBDropdown>

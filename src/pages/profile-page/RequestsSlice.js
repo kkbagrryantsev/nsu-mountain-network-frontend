@@ -4,16 +4,14 @@ import LoadingState from "../../enums/LoadingState";
 
 const initialState = {
   items_in_use: new StateWithLoader([], LoadingState.LOADING),
-  //items_in_use: {}
 };
 
 export const requestsPageSlice = createSlice({
-  name: "requestsPage",
+  name: "RequestsPage",
   initialState,
   reducers: {
     updateItems: (state, action) => {
-      state.items_in_use = new StateWithLoader(action.payload, LoadingState.LOADED);
-      //state.items_in_use = action;
+        state.items_in_use = new StateWithLoader(action.payload, LoadingState.LOADED);
     },
   },
 });
