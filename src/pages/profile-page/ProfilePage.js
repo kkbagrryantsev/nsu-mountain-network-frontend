@@ -2,11 +2,9 @@ import {
   MDBBadge,
   MDBBtn,
   MDBCard,
-  MDBCardTitle,
   MDBCol,
   MDBContainer,
   MDBIcon,
-  MDBRipple,
   MDBRow,
   MDBTabsContent,
   MDBTabsPane,
@@ -15,22 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import UserDataChangeTab from "./content/UserDataChangeTab";
 import ItemsManagementTab from "./content/items-management-tab/ItemsManagementTab";
 import { getMyProfileAction } from "./ProfilePageActions";
-
-function ProfileTab({ tabName, hidden, tabHref }) {
-  return (
-    <MDBRipple
-      rippleTag={"a"}
-      rippleColor={"light"}
-      className={"hover-overlay"}
-      href={`?tab=${tabHref}`}
-      hidden={hidden}
-    >
-      <MDBCard background={"danger"} className={`h-100 p-5 text-white`}>
-        <MDBCardTitle>{tabName}</MDBCardTitle>
-      </MDBCard>
-    </MDBRipple>
-  );
-}
+import Sections from "./content/sections/Sections";
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -81,7 +64,7 @@ function ProfilePage() {
           </MDBCard>
         </MDBCol>
 
-        <MDBCol className={"pt-5 pe-5 pb-5"} sm={"6"} md={"6"} lg={"5"}>
+        <MDBCol className={"pt-5 pe-5 pb-5"} md={"6"}>
           <MDBCard className={"p-3"}>
             <MDBRow>
               <MDBCol md={"5"}>
@@ -104,24 +87,7 @@ function ProfilePage() {
               </MDBCol>
             </MDBRow>
 
-            <MDBRow>
-              <MDBCol>
-                <ProfileTab
-                  hidden={!!activeTab}
-                  tabName={"Личные данные"}
-                  tabHref={"credits"}
-                />
-              </MDBCol>
-              <MDBCol>
-                <MDBRow>
-                  <ProfileTab
-                    hidden={!!activeTab}
-                    tabName={"Забронированные предметы"}
-                    tabHref={"items"}
-                  />
-                </MDBRow>
-              </MDBCol>
-            </MDBRow>
+            <Sections />
 
             <MDBRow>
               <MDBTabsContent>
