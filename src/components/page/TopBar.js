@@ -26,11 +26,8 @@ import { NavLink } from "react-router-dom";
 import { redirect } from "../../utils/RedirectUtils";
 import { getMyProfileAction } from "pages/profile-page/ProfilePageActions";
 import items from "assets/png/profile-page/items.jpg";
-import { MDBCard } from "mdb-react-ui-kit";
-import { MDBRipple } from "mdb-react-ui-kit";
-import { MDBCardImage } from "mdb-react-ui-kit";
-import { MDBCardOverlay } from "mdb-react-ui-kit";
-import { MDBCardTitle } from "mdb-react-ui-kit";
+import money from "assets/png/main-page/money2.svg";
+import "./styles/HelveticText.css";
 
 function Cart({ className }) {
   const isLogged = !!getAccessToken();
@@ -151,8 +148,6 @@ function TopBar() {
                 </MDBNavbarLink>
               </MDBNavbarItem>
 
-          
-          
               <MDBNavbarItem className={"d-sm-none"}>
                 <MDBNavbarLink
                   hidden={isLogged}
@@ -172,30 +167,16 @@ function TopBar() {
               </MDBNavbarItem>
             </MDBNavbarNav>
 
-            <MDBCard hidden={!(isLogged)} style={{marginRight: "3%"}}>
-                <MDBRipple
-                  hidden={false}
-                  rippleTag={"a"}
-                  rippleColor={"light"}
-                  className={"hover-zoom border rounded-5"}
-                  style={{ height: "37px", width: "138px"}}
+            <div class="d-inline-flex position-relative" hidden={!(isLogged)} style={{marginRight: "1%"}}>            
+            <img class="rounded-5 shadow-4" src={items} alt="Avatar" style={{width: "98px", height: "35px"}}></img>
+            <div class="rounded-5 mask text-light d-flex justify-content-center flex-column text-center" style={{backgroundColor: "rgba(0, 0, 0, 0.3)"}}>
+                  </div>
+                  <div class="mask text-light d-flex flex-column text-center" style={{justifyContent: "space-between"}}>
+                    <h5 className="helvetic-text" style={{position: "absolute", marginLeft: "10%", marginTop: "5%", }}>{"50" + user.user_money}</h5> 
+                  </div> 
                   
-                >
-                  <MDBCardImage
-                    className={"h-100 w-100"}
-                    style={{ objectFit: "cover" }}
-                    position={"top"}
-                    src={items}
-                  >
-                  </MDBCardImage>
-                  <div class="mask text-light d-flex justify-content-center flex-column text-center" style={{backgroundColor: "rgba(0, 0, 0, 0.3)"}}>
-                  </div>
-                  <div class="mask text-light d-flex justify-content-center flex-column text-center" style={{backgroundColor: "rgba(0, 0, 0, 0)", marginTop: "1%"}}>
-                    <h5>{"Баланс: " + user.user_money}</h5>
-                  </div>
-
-                </MDBRipple>
-              </MDBCard>
+            </div>
+            <img class="icon" src={money} alt="Money" style={{width: "48px", height: "48px", position: "absolute", marginLeft: "84.6%", marginBottom: "0.5%"}}></img>
 
             <span className={"d-none d-sm-flex flex-row"}>
               <Cart />
