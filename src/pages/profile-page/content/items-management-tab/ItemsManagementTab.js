@@ -25,12 +25,7 @@ function ItemsManagementTab() {
     <>
       <MDBTabs pills className="mb-3">
         <MDBTabsItem>
-          <MDBTabsLink
-            onClick={() => handleBasicClick("pending")}
-            active={basicActive === "pending"}
-          >
-            Поданные заявки
-          </MDBTabsLink>
+          <MDBTabsLink>??</MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
           <MDBTabsLink

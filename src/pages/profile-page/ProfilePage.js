@@ -2,11 +2,9 @@ import {
   MDBBadge,
   MDBBtn,
   MDBCard,
-  MDBCardTitle,
   MDBCol,
   MDBContainer,
   MDBIcon,
-  MDBRipple,
   MDBRow,
   MDBTabsContent,
   MDBTabsPane,
@@ -15,24 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import UserDataChangeTab from "./content/UserDataChangeTab";
 import ItemsManagementTab from "./content/items-management-tab/ItemsManagementTab";
 import { getMyProfileAction } from "./ProfilePageActions";
-import { getItemsInUseHistoryAction } from "./ProfilePageActions";
+import Sections from "./content/sections/Sections";
 import BookingRequestTab from "./content/booking-requests/BookingRequestTab";
-
-function ProfileTab({ tabName, hidden, tabHref }) {
-  return (
-    <MDBRipple
-      rippleTag={"a"}
-      rippleColor={"light"}
-      className={"hover-overlay"}
-      href={`?tab=${tabHref}`}
-      hidden={hidden}
-    >
-      <MDBCard background={"danger"} className={`h-100 p-5 text-white`}>
-        <MDBCardTitle>{tabName}</MDBCardTitle>
-      </MDBCard>
-    </MDBRipple>
-  );
-}
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -40,7 +22,7 @@ function ProfilePage() {
     dispatch(getMyProfileAction());
   };
   const user = useSelector((state) => state.profilePage.user);
-  //console.log(user);
+  console.log(user);
   const search = window.location.search;
   const params = new URLSearchParams(search);
   const activeTab = params.get("tab");
@@ -88,7 +70,7 @@ function ProfilePage() {
           </MDBCard>
         </MDBCol>
 
-        <MDBCol className={"pt-5 pe-5 pb-5"} sm={"6"} md={"6"} lg={"5"}>
+        <MDBCol className={"pt-5 pe-5 pb-5"} md={"6"}>
           <MDBCard className={"p-3"}>
             <MDBRow>
               <MDBCol md={"5"}>
@@ -111,34 +93,7 @@ function ProfilePage() {
               </MDBCol>
             </MDBRow>
 
-            <MDBRow>
-              <MDBCol>
-                <ProfileTab
-                  hidden={!!activeTab}
-                  tabName={"Личные данные"}
-                  tabHref={"credits"}
-                />
-              </MDBCol>
-              <MDBCol>
-                <MDBRow>
-                  <ProfileTab
-                    hidden={!!activeTab}
-                    tabName={"Забронированные предметы"}
-                    tabHref={"items"}
-                  />
-                </MDBRow>
-              </MDBCol>
-              <MDBCol>
-                <MDBRow>
-                  <ProfileTab 
-                    hidden={(!!activeTab) | !(user.user_roles === "warehouseman")}
-                    tabName={"Заявки на бронирование"} 
-                    tabHref={"requests"} 
-                    haveToHide = {!(user.user_roles === "warehouseman")} 
-                  />
-                </MDBRow>
-              </MDBCol>
-            </MDBRow>
+            <Sections />
 
             <MDBRow>
               <MDBTabsContent>

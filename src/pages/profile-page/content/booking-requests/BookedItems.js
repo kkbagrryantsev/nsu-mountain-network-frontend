@@ -7,12 +7,13 @@ import { getItemsInUseHistoryAction } from "pages/profile-page/ProfilePageAction
 function BookedItems() {
   const dispatch = useDispatch();
   window.onload = () => {
-    dispatch(getItemsInUseHistoryAction('booked'));
+    dispatch(getItemsInUseHistoryAction("booked"));
   };
   
-  const items = useSelector((state) => state.requestsPage.items_in_use.booked);  //models/item_in_use/type
+  const items = useSelector((state) => state.requestsPage.items_in_use);  //models/item_in_use/type
   console.log(items.value);
-  const filteredItems = items.value.filter((i) => i.is_confirm === 0);
+  //const filteredItems = items.value.filter((i) => i.is_confirm === 0);
+  const filteredItems = items.value;
 
   return (
     <MDBContainer>
