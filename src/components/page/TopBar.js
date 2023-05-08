@@ -24,6 +24,9 @@ import SignUpDialog from "../../pages/home-page/components/sign-up/SignUpDialog"
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { redirect } from "../../utils/RedirectUtils";
+import { getMyProfileAction } from "pages/profile-page/ProfilePageActions";
+import balanceBageImage from "assets/png/main-page/balance.jpg";
+import money from "assets/png/main-page/money.png";
 
 function Cart({ className }) {
   const isLogged = !!getAccessToken();
@@ -95,6 +98,12 @@ function TopBar() {
   const isLogged = !!getAccessToken();
   const [showBasic, setShowBasic] = useState(false);
 
+  const dispatch = useDispatch();
+  window.onload = () => {
+   dispatch(getMyProfileAction());
+  };
+  const user = useSelector((state) => state.profilePage.user);
+
   return (
     <header>
       <SignInDialog isActive={loginModal} setIsActive={setLoginModal} />
@@ -152,6 +161,15 @@ function TopBar() {
                 </MDBNavbarLink>
               </MDBNavbarItem>
             </MDBNavbarNav>
+            
+            <MDBBadge class="badge rounded-5 badge-dark fs-5" 
+              hidden={!(isLogged)}  
+              style={{marginRight: "1%", backgroundImage: `url(${balanceBageImage})`, backgroundBlendMode: "exclusion", height: "35px"}}
+            >
+              <text style={{position: "relative", bottom: "50%"}}>{user.user_money}</text>
+              <img src={money} alt="Money" style={{position: "relative", marginLeft: "8%", bottom: "96%"}}></img>
+            </MDBBadge>
+            
             <span className={"d-none d-sm-flex flex-row"}>
               <Cart />
               <ProfileDropdownMenu />
