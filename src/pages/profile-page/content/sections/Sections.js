@@ -9,7 +9,6 @@ import {
 } from "mdb-react-ui-kit";
 import items from "assets/png/profile-page/items.jpg";
 import credits from "assets/png/profile-page/credits.jpg";
-import requests from "assets/png/profile-page/empty-box.png"
 
 function Section({ title, href, image }) {
   const search = window.location.search;
@@ -23,7 +22,7 @@ function Section({ title, href, image }) {
         rippleTag={"a"}
         rippleColor={"light"}
         className={"hover-zoom border rounded-5"}
-        style={{ height: "125px", width: "190px"}}
+        style={{ height: "125px" }}
         href={`?tab=${href}`}
       >
         <MDBCardImage
@@ -33,7 +32,7 @@ function Section({ title, href, image }) {
           position={"top"}
           src={image}
         ></MDBCardImage>
-        <MDBCardOverlay style={{ backgroundColor: "rgba(0, 0, 0, 0.3)"}}>
+        <MDBCardOverlay style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}>
           <MDBCardTitle className={"text-white"}>{title}</MDBCardTitle>
         </MDBCardOverlay>
       </MDBRipple>
@@ -60,23 +59,8 @@ function Sections() {
           image={items}
         />
       </MDBCol>
-      <MDBCol>
-        <MDBRow>
-          <Section 
-            md={"8"}
-            title={"Заявки на бронирование"} 
-            href={"requests"} 
-            image={requests}
-          />
-        </MDBRow>
-      </MDBCol>
     </MDBRow>
   );
 }
 
 export default Sections;
-
-/*hidden={!(user.user_roles === "warehouseman")}
-
-
-*/

@@ -25,7 +25,7 @@ function ItemsManagementTab() {
     <>
       <MDBTabs pills className="mb-3">
         <MDBTabsItem>
-          <MDBTabsLink>??</MDBTabsLink>
+          <MDBTabsLink>Сгь</MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
           <MDBTabsLink

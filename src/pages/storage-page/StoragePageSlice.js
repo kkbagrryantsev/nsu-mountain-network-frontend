@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const storagePageSlice = createSlice({
-  name: "StoragePage",
+  name: "HomePage",
   initialState,
   reducers: {
     updateItems: (state, action) => {

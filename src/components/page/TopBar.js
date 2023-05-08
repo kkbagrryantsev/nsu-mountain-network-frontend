@@ -25,8 +25,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { redirect } from "../../utils/RedirectUtils";
 import { getMyProfileAction } from "pages/profile-page/ProfilePageActions";
-import items from "assets/png/profile-page/items.jpg";
-import money from "assets/png/main-page/money2.svg";
+import balanceBageImage from "assets/png/main-page/balance.jpg";
+import money from "assets/png/main-page/money.png";
 
 function Cart({ className }) {
   const isLogged = !!getAccessToken();
@@ -58,14 +58,12 @@ function ProfileDropdownMenu() {
   const logoutUser = () => {
     deleteAccessToken();
     deleteUserRoles();
-    //localStorage.clear();
     dispatch(redirect(paths.INDEX));
   };
 
   return (
     <>
-      {isLogged 
-      && (
+      {isLogged && (
         <MDBDropdown className={"d-none d-sm-block"}>
           <MDBDropdownToggle outline>
             <MDBIcon far size={"xl"} icon={"user"} />
@@ -83,9 +81,8 @@ function ProfileDropdownMenu() {
               className={"text-danger"}
               link
               onClick={() => logoutUser()}
-              //onClick={() => deleteAccessToken()}
             >
-              <span className={"text-danger"} >Выйти</span>
+              <span className={"text-danger"}>Выйти</span>
             </MDBDropdownItem>
           </MDBDropdownMenu>
         </MDBDropdown>
@@ -146,7 +143,6 @@ function TopBar() {
                   Походы
                 </MDBNavbarLink>
               </MDBNavbarItem>
-
               <MDBNavbarItem className={"d-sm-none"}>
                 <MDBNavbarLink
                   hidden={isLogged}
@@ -166,16 +162,14 @@ function TopBar() {
               </MDBNavbarItem>
             </MDBNavbarNav>
 
-            <div class="d-inline-flex position-relative" hidden={!(isLogged)} style={{marginRight: "1%"}}>            
-            <img class="rounded-5 shadow-4" hidden={!(isLogged)} src={items} alt="Avatar" style={{width: "102px", height: "35px"}}></img>
-            <div class="rounded-5 mask text-light d-flex justify-content-center flex-column text-center" style={{backgroundColor: "rgba(0, 0, 0, 0.3)"}}>
-                  </div>
-                  <div class="mask text-light d-flex flex-column text-center" style={{justifyContent: "space-between"}}>
-                    <h5 style={{position: "absolute", marginLeft: "10%", marginTop: "5%", }}>{"50" + user.user_money}</h5> 
-                  </div> 
-                  
-            </div>
-            <img class="icon" hidden={!(isLogged)} src={money} alt="Money" style={{width: "48px", height: "48px", position: "absolute", marginLeft: "84.1%", marginBottom: "0.5%"}}></img>
+            <MDBBadge class="badge rounded-5 badge-dark fs-5" 
+              hidden={!(isLogged)} 
+              color="transparent" 
+              style={{marginRight: "1%", backgroundImage: `url(${balanceBageImage})`, backgroundBlendMode: "exclusion", height: "35px"}}
+            >
+              <text style={{position: "relative", bottom: "50%"}}>{user.user_money}</text>
+              <img src={money} alt="Money" style={{position: "relative", marginLeft: "8%", bottom: "96%"}}></img>
+            </MDBBadge>
 
             <span className={"d-none d-sm-flex flex-row"}>
               <Cart />

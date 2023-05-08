@@ -17,7 +17,7 @@ function StoragePage() {
   const dispatch = useDispatch();
   window.onload = () => dispatch(getItems);
   const items = useSelector((state) => state.storagePage.items);
-  console.log(items.value);
+  console.log(items);
   const onSearchSubmit = (e) => {
     dispatch(
       updateItems(

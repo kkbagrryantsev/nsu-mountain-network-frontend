@@ -14,7 +14,6 @@ import UserDataChangeTab from "./content/UserDataChangeTab";
 import ItemsManagementTab from "./content/items-management-tab/ItemsManagementTab";
 import { getMyProfileAction } from "./ProfilePageActions";
 import Sections from "./content/sections/Sections";
-import BookingRequestTab from "./content/booking-requests/BookingRequestTab";
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -97,9 +96,6 @@ function ProfilePage() {
                 </MDBTabsPane>
                 <MDBTabsPane show={activeTab === "items"}>
                   <ItemsManagementTab />
-                </MDBTabsPane>
-                <MDBTabsPane show={activeTab === "requests"}>
-                  <BookingRequestTab />
                 </MDBTabsPane>
               </MDBTabsContent>
             </MDBRow>
