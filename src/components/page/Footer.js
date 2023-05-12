@@ -5,9 +5,9 @@ import { MDBBadge, MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 
 function Footer() {
   return (
-    <MDBContainer fluid>
+    <MDBContainer className={"p-3"} fluid>
       <MDBRow>
-        <MDBCol md={"4"} className={"p-3"}>
+        <MDBCol md={"4"}>
           <div className={"d-flex gap-2 align-items-center"}>
             <img src={logoGray} alt="Error" />
             <h1>|</h1>
@@ -20,7 +20,7 @@ function Footer() {
           </div>
           <p className={styles.copyright}>©NSU mountain network</p>
         </MDBCol>
-        <MDBCol className={"p-3"} offsetMd={"4"} md={"4"}>
+        <MDBCol offsetMd={"4"} md={"4"}>
           <a
             className={"float-end"}
             href="https://www.flaticon.com/"
@@ -30,7 +30,7 @@ function Footer() {
               Icons created by Freepik - Flaticon
             </MDBBadge>
           </a>
-          <a href={""} className={"float-end me-2"}>
+          <div className={"float-end me-2"}>
             <MDBBadge className={"text-dark"} color={"secondary"}>
               Illustrations by{" "}
               <a
@@ -47,7 +47,7 @@ function Footer() {
                 Ouch!
               </a>
             </MDBBadge>
-          </a>
+          </div>
         </MDBCol>
       </MDBRow>
     </MDBContainer>

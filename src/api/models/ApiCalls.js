@@ -22,6 +22,12 @@ export const apiUpdateUserData = (username, data) =>
 export const apiGetCategoriesList = () =>
   axios.get("/api/models/categories", getAccessTokenHeader());
 
+export const apiGetCategoryInfo = (id) =>
+  axios.get(`/api/models/categories/${id}`, getAccessTokenHeader());
+
+export const apiDeleteCategory = (id) =>
+  axios.delete(`/api/models/categories/${id}`, getAccessTokenHeader());
+
 export const apiProlongItemsInUse = (data) =>
   axios.post("/api/models/item_in_use/prolong", data, getAccessTokenHeader());
 
