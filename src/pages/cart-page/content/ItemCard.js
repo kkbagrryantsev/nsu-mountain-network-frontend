@@ -2,80 +2,103 @@ import {
   MDBBtn,
   MDBBtnGroup,
   MDBCard,
-  MDBCardBody,
   MDBCardImage,
   MDBCardText,
   MDBCardTitle,
-  MDBCheckbox,
   MDBCol,
   MDBIcon,
   MDBRow,
 } from "mdb-react-ui-kit";
 import { getItemCategory, importAllImages } from "../../../utils/ImageUtils";
-import { addToCart, removeFromCart } from "../../storage-page/StoragePageSlice";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { changeCartItemQuantity, removeFromCart } from "../CartPageSlice";
+import { apiGetCategoryInfo } from "../../../api/models/ApiCalls";
+import { createErrorToast } from "../../../models/ToastModel";
 
 const images = importAllImages();
 
 function ItemCard(props) {
   const dispatch = useDispatch();
   const item = props.item;
-  const category_name = getItemCategory(item.category_id);
-  const image = images[`${category_name}.png`];
-  const [quantity, setQuantity] = useState(item.item_quantity_current);
+  const [category, setCategory] = useState("-");
   const onClickAddToCart = (i) => {
-    dispatch(addToCart(i));
-    setQuantity(quantity + 1);
+    dispatch(
+      changeCartItemQuantity({
+        ...i,
+        quantity: i.quantity + 1,
+      })
+    );
+  };
+  const onClickDecreaseQuantity = (i) => {
+    dispatch(
+      changeCartItemQuantity({
+        item_id: i.item_id,
+        quantity: i.quantity - 1,
+      })
+    );
   };
   const onClickRemoveFromCart = (i) => {
-    dispatch(removeFromCart(i));
-    setQuantity(quantity - 1);
+    dispatch(removeFromCart(i.item_id));
   };
+
+  useEffect(() => {
+    apiGetCategoryInfo(item.category_id)
+      .then((r) => {
+        setCategory(r.data);
+      })
+      .catch(() => {
+        createErrorToast("Ошибка сервера");
+      });
+  }, []);
+
+  const category_name = getItemCategory(item.category_id);
+  const image = images[`${category_name}.png`];
+
   return (
-    <MDBCard className={"p-3 m-3 w-75"}>
-      <MDBRow className="g-0">
-        <MDBCol className={"d-flex justify-content-center"} md="4">
-          <MDBCardImage src={image} alt="..." fluid />
+    <MDBCard className={"h-100 p-3"}>
+      <MDBRow>
+        <MDBCol center size={"3"}>
+          <MDBCardImage fluid src={image} alt={item.item_name} />
         </MDBCol>
-        <MDBCol md="5">
-          <MDBCardBody>
-            <MDBCardTitle>{item.item_name}</MDBCardTitle>
-            <MDBCardText>{item.category_id}</MDBCardText>
-          </MDBCardBody>
-        </MDBCol>
-        <MDBCol
-          className={
-            "d-flex flex-column justify-content-between align-items-end"
-          }
-          md={"3"}
-        >
-          <MDBCheckbox disabled defaultChecked></MDBCheckbox>
-          <MDBBtnGroup shadow={"0"}>
-            {quantity === 1 ? (
-              <MDBBtn
-                onClick={() => onClickRemoveFromCart(item)}
-                outline
-                floating
-              >
-                <MDBIcon far icon={"trash-alt"} />
-              </MDBBtn>
-            ) : (
-              <MDBBtn
-                onClick={() => onClickRemoveFromCart(item)}
-                outline
-                floating
-              >
-                <MDBIcon fas icon={"minus"} />
-              </MDBBtn>
-            )}
-            <MDBBtn disabled outline>
-              <h6>{quantity}</h6>
+        <MDBCol size={"7"} className={"ps-0"}>
+          <MDBCardTitle className={"text-truncate"}>
+            {item.item_name}
+          </MDBCardTitle>
+          <MDBCardText className={"text-truncate"}>
+            {category.category_name}
+          </MDBCardText>
+          <MDBBtnGroup shadow={"0"} size={"sm"}>
+            <MDBBtn
+              className={"border border-2 border-dark"}
+              onClick={() => onClickDecreaseQuantity(item)}
+              disabled={item.quantity === 1}
+              color={"dark"}
+              outline
+            >
+              <MDBIcon fas icon={"minus"} />
             </MDBBtn>
-            <MDBBtn onClick={() => onClickAddToCart(item)} outline floating>
+            <MDBBtn noRipple color={"dark"} outline>
+              В корзине: {item.quantity}
+            </MDBBtn>
+            <MDBBtn
+              onClick={() => onClickAddToCart(item)}
+              color={"dark"}
+              outline
+            >
               <MDBIcon fas icon={"plus"} />
             </MDBBtn>
           </MDBBtnGroup>
+        </MDBCol>
+        <MDBCol className={"text-center"} size={"2"}>
+          <MDBBtn
+            onClick={() => onClickRemoveFromCart(item)}
+            floating
+            outline
+            color={"tertiary"}
+          >
+            <MDBIcon size={"lg"} far icon={"trash-alt"} />
+          </MDBBtn>
         </MDBCol>
       </MDBRow>
     </MDBCard>

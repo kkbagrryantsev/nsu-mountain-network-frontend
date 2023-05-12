@@ -1,18 +1,23 @@
 import { call, takeEvery, put } from "redux-saga/effects";
 import { execApiCall } from "../../utils/ApiUtils";
-import { apiGetItems } from "../../api/ApiCalls";
-import { getItems } from "./StoragePageActions";
-import { updateItems } from "./StoragePageSlice";
+import { setAllItems } from "./StoragePageSlice";
+import { getAvailableItemsAction } from "./StoragePageActions";
+import { apiGetAvailableItems } from "../../api/models/ApiCalls";
+import LoadingState from "../../enums/LoadingState";
 
 export function* storagePageSagaWatcher() {
-  yield takeEvery(getItems, sagaGetItems);
+  yield takeEvery(getAvailableItemsAction, sagaGetAvailableItems);
 }
 
-function* sagaGetItems(action) {
+function* sagaGetAvailableItems(action) {
   yield call(execApiCall, {
-    mainCall: () => apiGetItems(action.payload),
+    mainCall: () => apiGetAvailableItems(action.payload),
     *onSuccess(response) {
-      yield put(updateItems(response.data.items));
+      const data = response.data;
+      yield put(setAllItems({ data: data.items, status: LoadingState.LOADED }));
+    },
+    *onAnyError() {
+      yield put(setAllItems({ data: [], status: LoadingState.ERROR }));
     },
   });
 }

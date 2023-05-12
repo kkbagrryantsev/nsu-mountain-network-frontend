@@ -27,10 +27,11 @@ import { redirect } from "../../utils/RedirectUtils";
 import { getMyProfileAction } from "pages/profile-page/ProfilePageActions";
 import balanceBageImage from "assets/png/main-page/balance.jpg";
 import money from "assets/png/main-page/money.png";
+import { cartSelectors, clearCart } from "../../pages/cart-page/CartPageSlice";
 
 function Cart({ className }) {
   const isLogged = !!getAccessToken();
-  const cartLength = useSelector((state) => state.storagePage.cart.length);
+  const cartLength = useSelector(cartSelectors.selectTotal);
   return (
     <MDBBtn
       hidden={!isLogged || cartLength === 0}
@@ -58,6 +59,7 @@ function ProfileDropdownMenu() {
   const logoutUser = () => {
     deleteAccessToken();
     deleteUserRoles();
+    dispatch(clearCart());
     dispatch(redirect(paths.INDEX));
   };
 
@@ -69,13 +71,16 @@ function ProfileDropdownMenu() {
             <MDBIcon far size={"xl"} icon={"user"} />
           </MDBDropdownToggle>
           <MDBDropdownMenu>
-            <MDBDropdownItem
-              link
-              href={`${window.location.origin}/${paths.PROFILE}`}
-            >
+            <MDBDropdownItem link href={`${paths.PROFILE}`}>
               Профиль
             </MDBDropdownItem>
-            <MDBDropdownItem link>Настройки</MDBDropdownItem>
+            <MDBDropdownItem divider />
+            <MDBDropdownItem link href={`${paths.PROFILE}?tab=credits`}>
+              Мои данные
+            </MDBDropdownItem>
+            <MDBDropdownItem link href={`${paths.PROFILE}?tab=items`}>
+              Моё снаряжение
+            </MDBDropdownItem>
             <MDBDropdownItem divider />
             <MDBDropdownItem
               className={"text-danger"}
