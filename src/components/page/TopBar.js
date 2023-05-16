@@ -18,16 +18,46 @@ import {
 } from "mdb-react-ui-kit";
 import logo from "assets/logo.png";
 import { paths } from "routePaths";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignInDialog from "../../pages/home-page/components/sign-in/SignInDialog";
 import SignUpDialog from "../../pages/home-page/components/sign-up/SignUpDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { redirect } from "../../utils/RedirectUtils";
 import { getMyProfileAction } from "pages/profile-page/ProfilePageActions";
-import balanceBageImage from "assets/png/main-page/balance.jpg";
-import money from "assets/png/main-page/money.png";
+import coins from "assets/png/misc/coins.png";
 import { cartSelectors, clearCart } from "../../pages/cart-page/CartPageSlice";
+import LoadingState from "../../enums/LoadingState";
+
+function BalanceBadge() {
+  const isLogged = !!getAccessToken();
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isLogged) {
+      dispatch(getMyProfileAction());
+    }
+  }, []);
+  const user = useSelector((state) => state.profilePage.user);
+
+  let loadingClass = "";
+  if (user.loading === LoadingState.LOADING) {
+    loadingClass = "placeholder";
+  }
+
+  return (
+    <h5 hidden={!isLogged} className={"mb-0"}>
+      <MDBBadge
+        className={`d-flex align-items-center gap-1 ${loadingClass}`}
+        pill
+        color={"secondary"}
+      >
+        {user.value.user_money}
+        <img src={coins} alt="Баланс"></img>
+      </MDBBadge>
+    </h5>
+  );
+}
 
 function Cart({ className }) {
   const isLogged = !!getAccessToken();
@@ -35,7 +65,7 @@ function Cart({ className }) {
   return (
     <MDBBtn
       hidden={!isLogged || cartLength === 0}
-      className={`${className} overflow-visible me-3`}
+      className={`${className} overflow-visible me-2`}
       color="tertiary"
     >
       <NavLink to={`${window.location.origin}/${paths.CART}`}>
@@ -103,12 +133,6 @@ function TopBar() {
   const isLogged = !!getAccessToken();
   const [showBasic, setShowBasic] = useState(false);
 
-  const dispatch = useDispatch();
-  window.onload = () => {
-   dispatch(getMyProfileAction());
-  };
-  const user = useSelector((state) => state.profilePage.user);
-
   return (
     <header>
       <SignInDialog isActive={loginModal} setIsActive={setLoginModal} />
@@ -166,20 +190,12 @@ function TopBar() {
                 </MDBNavbarLink>
               </MDBNavbarItem>
             </MDBNavbarNav>
-            
-            <MDBBadge class="badge rounded-5 badge-dark fs-5" 
-              hidden={!(isLogged)}  
-              style={{marginRight: "1%", backgroundImage: `url(${balanceBageImage})`, backgroundBlendMode: "exclusion", height: "35px"}}
-            >
-              <text style={{position: "relative", bottom: "50%"}}>{user.user_money}</text>
-              <img src={money} alt="Money" style={{position: "relative", marginLeft: "8%", bottom: "96%"}}></img>
-            </MDBBadge>
-            
-            <span className={"d-none d-sm-flex flex-row"}>
+
+            <span className={`d-none d-sm-flex flex-row gap-2`}>
+              <BalanceBadge />
               <Cart />
               <ProfileDropdownMenu />
               <MDBBtn
-                className={"me-2"}
                 rounded
                 hidden={isLogged}
                 onClick={() => setRegisterModal(!registerModal)}
