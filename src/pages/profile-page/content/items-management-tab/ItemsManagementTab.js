@@ -6,12 +6,18 @@ import {
   MDBTabsPane,
 } from "mdb-react-ui-kit";
 import { useState } from "react";
-import PendingItems from "./PendingItems";
-import BookedItems from "./BookedItems";
-import LendItems from "./LendItems";
+import {
+  MyBookedItemsList,
+  MyRequestedItemsList,
+  MyTakenItemsList,
+} from "./ItemsList";
+import { useDispatch } from "react-redux";
+import { getMyItemsInUseHistoryAction } from "../../ProfilePageActions";
 
 function ItemsManagementTab() {
-  const [basicActive, setBasicActive] = useState("pending");
+  const dispatch = useDispatch();
+
+  const [basicActive, setBasicActive] = useState("requested");
 
   const handleBasicClick = (value) => {
     if (value === basicActive) {
@@ -26,39 +32,48 @@ function ItemsManagementTab() {
       <MDBTabs pills className="mb-3">
         <MDBTabsItem>
           <MDBTabsLink
-            onClick={() => handleBasicClick("pending")}
-            active={basicActive === "pending"}
+            onClick={() => {
+              handleBasicClick("requested");
+              dispatch(getMyItemsInUseHistoryAction("requested"));
+            }}
+            active={basicActive === "requested"}
           >
-            Поданные заявки
+            Заявки
           </MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
           <MDBTabsLink
-            onClick={() => handleBasicClick("booked")}
+            onClick={() => {
+              handleBasicClick("booked");
+              dispatch(getMyItemsInUseHistoryAction("booked"));
+            }}
             active={basicActive === "booked"}
           >
-            Забронированное снаряжение
+            Забронированное
           </MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
           <MDBTabsLink
-            onClick={() => handleBasicClick("lend")}
-            active={basicActive === "lend"}
+            onClick={() => {
+              handleBasicClick("taken");
+              dispatch(getMyItemsInUseHistoryAction("taken"));
+            }}
+            active={basicActive === "taken"}
           >
-            Выданное снаряжение
+            Выданное
           </MDBTabsLink>
         </MDBTabsItem>
       </MDBTabs>
 
       <MDBTabsContent>
-        <MDBTabsPane show={basicActive === "pending"}>
-          <PendingItems />
+        <MDBTabsPane show={basicActive === "requested"}>
+          <MyRequestedItemsList />
         </MDBTabsPane>
         <MDBTabsPane show={basicActive === "booked"}>
-          <BookedItems />
+          <MyBookedItemsList />
         </MDBTabsPane>
-        <MDBTabsPane show={basicActive === "lend"}>
-          <LendItems />
+        <MDBTabsPane show={basicActive === "taken"}>
+          <MyTakenItemsList />
         </MDBTabsPane>
       </MDBTabsContent>
     </>

@@ -1,64 +1,55 @@
-import { authorizeUser, fetchUserData, registerUser } from "./HomePageActions";
 import { call, takeEvery, put } from "redux-saga/effects";
-import { execApiCall } from "../../utils/ApiUtils";
-import { apiGetUserData, apiLogin } from "../../api/ApiCalls";
+import { execApiCall } from "utils/ApiUtils";
+import { apiSignIn, apiSignUp } from "api/auth/ApiCalls";
+import { saveAccessToken } from "api/Cookie";
 import {
-  saveAccessToken,
-  saveRefreshToken,
-  saveUserRoles,
-} from "../../api/Cookie";
-import { createErrorToast, createSuccessToast } from "../../models/ToastModel";
-import { redirect } from "../../utils/BrowserUtils";
-import { updateUserData } from "../profile-page/ProfilePageSlice";
+  createErrorToast,
+  createInfoToast,
+  createSuccessToast,
+} from "models/ToastModel";
+import { paths } from "routePaths";
+import { redirect } from "utils/RedirectUtils";
+import { signInAction, signUpAction } from "./HomePageActions";
 
 export function* homePageSagaWatcher() {
-  yield takeEvery(authorizeUser, sagaLoginUser);
-  yield takeEvery(registerUser, sagaRegisterUser);
-  yield takeEvery(fetchUserData, sagaFetchUserData);
+  yield takeEvery(signInAction, sagaSignIn);
+  yield takeEvery(signUpAction, sagaSignUp);
 }
 
-function* sagaLoginUser(action) {
+function* sagaSignIn(action) {
   yield call(execApiCall, {
-    mainCall: () => apiLogin(action.payload),
+    mainCall: () => apiSignIn(action.payload),
     *onSuccess(response) {
       saveAccessToken(response.data.access_token);
-      saveRefreshToken(response.data.refresh_token);
-      createSuccessToast(`Вы успешно вошли в аккаунт`);
-      yield put(fetchUserData());
-      redirect("");
+      yield put(redirect(paths.INDEX));
     },
-    onFail401() {
-      createErrorToast(`Неверный логин или пароль`);
+    *onFail403() {
+      createInfoToast(`Вы уже авторизованы`);
+      yield put(redirect(paths.INDEX));
     },
-    onAnyError() {
-      createErrorToast(`Неверный логин или пароль`);
+    onFail400(response) {
+      switch (response.status) {
+        case 401:
+          createErrorToast(`Неверный логин или пароль`);
+          break;
+        default:
+          createErrorToast(`Ошибка. Повторите попытку позже...`);
+      }
     },
   });
 }
 
-function* sagaRegisterUser(action) {
+function* sagaSignUp(action) {
   yield call(execApiCall, {
-    mainCall: () => apiLogin(action.payload),
+    mainCall: () => apiSignUp(action.payload),
     onSuccess() {
+      // TODO Add registration steps
       createSuccessToast(
         `Отправлена заявка на регистрацию. Проверьте свою почту`
       );
     },
-    onAnyError() {
-      createErrorToast(`Ошибка сервера`);
-    },
-  });
-}
-
-function* sagaFetchUserData() {
-  yield call(execApiCall, {
-    mainCall: () => apiGetUserData(),
-    *onSuccess(response) {
-      yield put(updateUserData(response.data.user));
-      saveUserRoles(response.data.user.user_roles);
-    },
-    onAnyError() {
-      createErrorToast(`Ошибка сервера`);
+    onFail403() {
+      createErrorToast(`Пользователь с такими данными уже существует`);
     },
   });
 }

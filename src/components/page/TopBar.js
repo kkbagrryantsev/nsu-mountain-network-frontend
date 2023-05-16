@@ -1,9 +1,4 @@
-import {
-  deleteAccessToken,
-  deleteRefreshToken,
-  deleteUserRoles,
-  getAccessToken,
-} from "../../api/Cookie";
+import { deleteAccessToken, deleteUserRoles, getAccessToken } from "api/Cookie";
 import {
   MDBBadge,
   MDBBtn,
@@ -23,20 +18,54 @@ import {
 } from "mdb-react-ui-kit";
 import logo from "assets/logo.png";
 import { paths } from "routePaths";
-import { useState } from "react";
-import LoginModal from "pages/home-page/components/LoginModal";
-import RegisterModal from "pages/home-page/components/RegisterModal";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import SignInDialog from "../../pages/home-page/components/sign-in/SignInDialog";
+import SignUpDialog from "../../pages/home-page/components/sign-up/SignUpDialog";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { redirect } from "utils/BrowserUtils";
+import { redirect } from "../../utils/RedirectUtils";
+import { getMyProfileAction } from "pages/profile-page/ProfilePageActions";
+import coins from "assets/png/misc/coins.png";
+import { cartSelectors, clearCart } from "../../pages/cart-page/CartPageSlice";
+import LoadingState from "../../enums/LoadingState";
+
+function BalanceBadge() {
+  const isLogged = !!getAccessToken();
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isLogged) {
+      dispatch(getMyProfileAction());
+    }
+  }, []);
+  const user = useSelector((state) => state.profilePage.user);
+
+  let loadingClass = "";
+  if (user.loading === LoadingState.LOADING) {
+    loadingClass = "placeholder";
+  }
+
+  return (
+    <h5 hidden={!isLogged} className={"mb-0"}>
+      <MDBBadge
+        className={`d-flex align-items-center gap-1 ${loadingClass}`}
+        pill
+        color={"secondary"}
+      >
+        {user.value.user_money}
+        <img src={coins} alt="Баланс"></img>
+      </MDBBadge>
+    </h5>
+  );
+}
 
 function Cart({ className }) {
   const isLogged = !!getAccessToken();
-  const cartLength = useSelector((state) => state.storagePage.cart.length);
+  const cartLength = useSelector(cartSelectors.selectTotal);
   return (
     <MDBBtn
       hidden={!isLogged || cartLength === 0}
-      className={`${className} overflow-visible me-3`}
+      className={`${className} overflow-visible me-2`}
       color="tertiary"
     >
       <NavLink to={`${window.location.origin}/${paths.CART}`}>
@@ -54,13 +83,14 @@ function Cart({ className }) {
 }
 
 function ProfileDropdownMenu() {
+  const dispatch = useDispatch();
   const isLogged = !!getAccessToken();
 
   const logoutUser = () => {
     deleteAccessToken();
-    deleteRefreshToken();
     deleteUserRoles();
-    redirect("");
+    dispatch(clearCart());
+    dispatch(redirect(paths.INDEX));
   };
 
   return (
@@ -71,16 +101,23 @@ function ProfileDropdownMenu() {
             <MDBIcon far size={"xl"} icon={"user"} />
           </MDBDropdownToggle>
           <MDBDropdownMenu>
-            <MDBDropdownItem
-              link
-              href={`${window.location.origin}/${paths.PROFILE}`}
-            >
+            <MDBDropdownItem link href={`${paths.PROFILE}`}>
               Профиль
             </MDBDropdownItem>
-            <MDBDropdownItem link>Настройки</MDBDropdownItem>
             <MDBDropdownItem divider />
-            <MDBDropdownItem link onClick={() => logoutUser()}>
-              <h7 className={"text-danger"}>Выйти</h7>
+            <MDBDropdownItem link href={`${paths.PROFILE}?tab=credits`}>
+              Мои данные
+            </MDBDropdownItem>
+            <MDBDropdownItem link href={`${paths.PROFILE}?tab=items`}>
+              Моё снаряжение
+            </MDBDropdownItem>
+            <MDBDropdownItem divider />
+            <MDBDropdownItem
+              className={"text-danger"}
+              link
+              onClick={() => logoutUser()}
+            >
+              <span className={"text-danger"}>Выйти</span>
             </MDBDropdownItem>
           </MDBDropdownMenu>
         </MDBDropdown>
@@ -98,8 +135,8 @@ function TopBar() {
 
   return (
     <header>
-      <LoginModal isActive={loginModal} setIsActive={setLoginModal} />
-      <RegisterModal isActive={registerModal} setIsActive={setRegisterModal} />
+      <SignInDialog isActive={loginModal} setIsActive={setLoginModal} />
+      <SignUpDialog isActive={registerModal} setIsActive={setRegisterModal} />
       <MDBNavbar expand={"sm"} light bgColor="light">
         <MDBContainer fluid>
           <MDBNavbarBrand href={window.location.origin}>
@@ -153,11 +190,12 @@ function TopBar() {
                 </MDBNavbarLink>
               </MDBNavbarItem>
             </MDBNavbarNav>
-            <span className={"d-none d-sm-flex flex-row"}>
+
+            <span className={`d-none d-sm-flex flex-row gap-2`}>
+              <BalanceBadge />
               <Cart />
               <ProfileDropdownMenu />
               <MDBBtn
-                className={"me-2"}
                 rounded
                 hidden={isLogged}
                 onClick={() => setRegisterModal(!registerModal)}

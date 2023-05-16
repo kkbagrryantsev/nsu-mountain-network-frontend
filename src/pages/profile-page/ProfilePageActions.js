@@ -1,11 +1,10 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const updateData = createAction("user/updateData");
-export const returnItem = createAction("user/returnItem", function (data) {
-  return {
-    payload: {
-      use_ids: [data],
-    },
-  };
-});
-export const getItemData = createAction("items/getItem");
+export const getMyProfileAction = createAction("auth/my_profile");
+export const unbookItemsAction = createAction("models/items/use/unbook");
+export const getItemsInUseHistoryAction = createAction(
+  "models/item_in_use/type"
+);
+export const getMyItemsInUseHistoryAction = createAction(
+  "models/my_item_in_use/type"
+);
