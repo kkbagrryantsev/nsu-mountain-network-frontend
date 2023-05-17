@@ -17,10 +17,13 @@ import { Chip } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { itemSelectors } from "./StoragePageSlice";
 import ItemCard from "./content/ItemCard";
+import { useEffect } from "react";
 
 function StoragePage() {
   const dispatch = useDispatch();
-  window.onload = () => dispatch(getAvailableItemsAction());
+  useEffect(() => {
+    dispatch(getAvailableItemsAction());
+  }, []);
 
   const items = useSelector((state) => state.storagePage.items.loading);
 

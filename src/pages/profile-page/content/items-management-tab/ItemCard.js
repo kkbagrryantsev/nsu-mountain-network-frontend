@@ -31,7 +31,7 @@ export function MyBookedItemCard(props) {
   useEffect(() => {
     apiGetItemData(bookingData.item_id)
       .then((response) => {
-        if (response.statusText === "OK") {
+        if (response.status === 200) {
           setItem(response.data.item);
           setLoading(LoadingState.LOADED);
           // Fetch category data
