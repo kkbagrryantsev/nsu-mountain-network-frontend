@@ -9,6 +9,7 @@ import {
 } from "mdb-react-ui-kit";
 import items from "assets/png/profile-page/items.jpg";
 import credits from "assets/png/profile-page/credits.jpg";
+import treasurer from "assets/png/profile-page/empty-box.png";
 
 function Section({ title, href, image }) {
   const search = window.location.search;
@@ -42,10 +43,11 @@ function Section({ title, href, image }) {
 
 function Sections() {
   return (
+    <div>
     <MDBRow>
-      <MDBCol md={"5"} lg={"4"}>
+      <MDBCol end>
         <Section
-          md={"4"}
+          md={"50%"}
           title={"Личные данные"}
           href={"credits"}
           image={credits}
@@ -53,13 +55,24 @@ function Sections() {
       </MDBCol>
       <MDBCol end>
         <Section
-          md={"8"}
+          md={"50%"}
           title={"Моё снаряжение"}
           href={"items"}
           image={items}
         />
       </MDBCol>
     </MDBRow>
+    <MDBRow style={{marginTop: "2%"}}>
+      <MDBCol>
+        <Section
+          md={"100%"}
+          title={"Опции казначея"}
+          href={"treasurer"}
+          image={treasurer}
+        />
+      </MDBCol>
+    </MDBRow>
+    </div>
   );
 }
 
