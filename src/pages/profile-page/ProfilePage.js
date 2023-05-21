@@ -94,6 +94,9 @@ function ProfilePage() {
                   <MDBTabsPane show={params.get("tab") === "items"}>
                     <ItemsManagementTab />
                   </MDBTabsPane>
+                  <MDBTabsPane show={params.get("tab") === "treasurer"}>
+                     <TreasurerPageTab />
+                  </MDBTabsPane>
                 </MDBTabsContent>
               </MDBRow>
             </MDBCard>
