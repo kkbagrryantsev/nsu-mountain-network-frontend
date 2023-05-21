@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import UserDataChangeTab from "./content/UserDataChangeTab";
 import ItemsManagementTab from "./content/items-management-tab/ItemsManagementTab";
+import TreasurerPageTab from "./content/treasurer-options/TreasurerPageTab"
 import { getMyProfileAction } from "./ProfilePageActions";
 import Sections from "./content/sections/Sections";
 import profilePic from "assets/png/profile-page/grinning-cat.png";
