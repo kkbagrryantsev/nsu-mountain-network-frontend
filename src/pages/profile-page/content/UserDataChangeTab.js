@@ -4,12 +4,11 @@ import {
   MDBValidation,
   MDBValidationItem,
 } from "mdb-react-ui-kit";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useState } from "react";
 
 function UserDataChangeTab() {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.profilePage.user);
+  const user = useSelector((state) => state.profilePage.user.value);
 
   const [formValue, setFormValue] = useState({
     name: user.user_name,

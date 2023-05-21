@@ -18,23 +18,56 @@ import {
 } from "mdb-react-ui-kit";
 import logo from "assets/logo.png";
 import { paths } from "routePaths";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignInDialog from "../../pages/home-page/components/sign-in/SignInDialog";
 import SignUpDialog from "../../pages/home-page/components/sign-up/SignUpDialog";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { redirect } from "../../utils/RedirectUtils";
 import { getMyProfileAction } from "pages/profile-page/ProfilePageActions";
+import { cartSelectors, clearCart } from "../../pages/cart-page/CartPageSlice";
+import LoadingState from "../../enums/LoadingState";
 import balanceBageImage from "assets/png/main-page/balance.jpg";
 import money from "assets/png/main-page/money.png";
 
+function BalanceBadge() {
+  const isLogged = !!getAccessToken();
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (isLogged) {
+      dispatch(getMyProfileAction());
+    }
+  }, []);
+  const user = useSelector((state) => state.profilePage.user);
+
+  let loadingClass = "";
+  if (user.loading === LoadingState.LOADING) {
+    loadingClass = "placeholder";
+  }
+
+  return (
+    <h5 hidden={!isLogged} className={"mb-0"}>
+      <MDBBadge
+        className={`d-flex align-items-center gap-1 ${loadingClass}`}
+        pill
+        color={"secondary"}
+        style={{backgroundImage: `url(${balanceBageImage})`, backgroundBlendMode: "exclusion"}}
+      >
+        {user.value.user_money}
+        <img src={money} alt="Баланс"></img>
+      </MDBBadge>
+    </h5> 
+  );
+}
+
 function Cart({ className }) {
   const isLogged = !!getAccessToken();
-  const cartLength = useSelector((state) => state.storagePage.cart.length);
+  const cartLength = useSelector(cartSelectors.selectTotal);
   return (
     <MDBBtn
       hidden={!isLogged || cartLength === 0}
-      className={`${className} overflow-visible me-3`}
+      className={`${className} overflow-visible me-2`}
       color="tertiary"
     >
       <NavLink to={`${window.location.origin}/${paths.CART}`}>
@@ -58,6 +91,7 @@ function ProfileDropdownMenu() {
   const logoutUser = () => {
     deleteAccessToken();
     deleteUserRoles();
+    dispatch(clearCart());
     dispatch(redirect(paths.INDEX));
   };
 
@@ -69,13 +103,16 @@ function ProfileDropdownMenu() {
             <MDBIcon far size={"xl"} icon={"user"} />
           </MDBDropdownToggle>
           <MDBDropdownMenu>
-            <MDBDropdownItem
-              link
-              href={`${window.location.origin}/${paths.PROFILE}`}
-            >
+            <MDBDropdownItem link href={`${paths.PROFILE}`}>
               Профиль
             </MDBDropdownItem>
-            <MDBDropdownItem link>Настройки</MDBDropdownItem>
+            <MDBDropdownItem divider />
+            <MDBDropdownItem link href={`${paths.PROFILE}?tab=credits`}>
+              Мои данные
+            </MDBDropdownItem>
+            <MDBDropdownItem link href={`${paths.PROFILE}?tab=items`}>
+              Моё снаряжение
+            </MDBDropdownItem>
             <MDBDropdownItem divider />
             <MDBDropdownItem
               className={"text-danger"}
@@ -97,12 +134,6 @@ function TopBar() {
 
   const isLogged = !!getAccessToken();
   const [showBasic, setShowBasic] = useState(false);
-
-  const dispatch = useDispatch();
-  window.onload = () => {
-    dispatch(getMyProfileAction());
-  };
-  const user = useSelector((state) => state.profilePage.user);
 
   return (
     <header>
@@ -162,20 +193,11 @@ function TopBar() {
               </MDBNavbarItem>
             </MDBNavbarNav>
 
-            <MDBBadge class="badge rounded-5 badge-dark fs-5" 
-              hidden={!(isLogged)} 
-              color="transparent" 
-              style={{marginRight: "1%", backgroundImage: `url(${balanceBageImage})`, backgroundBlendMode: "exclusion", height: "35px"}}
-            >
-              <text style={{position: "relative", bottom: "50%"}}>{user.user_money}</text>
-              <img src={money} alt="Money" style={{position: "relative", marginLeft: "8%", bottom: "96%"}}></img>
-            </MDBBadge>
-
-            <span className={"d-none d-sm-flex flex-row"}>
+            <span className={`d-none d-sm-flex flex-row gap-2`}>
+              <BalanceBadge />
               <Cart />
               <ProfileDropdownMenu />
               <MDBBtn
-                className={"me-2"}
                 rounded
                 hidden={isLogged}
                 onClick={() => setRegisterModal(!registerModal)}

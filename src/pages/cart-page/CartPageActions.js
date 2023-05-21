@@ -1,3 +1,3 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const bookItems = createAction("user/items/book");
+export const bookItemsAction = createAction("model/items/book");

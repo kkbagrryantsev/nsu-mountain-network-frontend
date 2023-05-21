@@ -1,0 +1,29 @@
+.userTable {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  .itemCard {
+    margin: 1rem;
+    @media (min-width: 100px) {
+      width: calc(100%/16*6 - 8px);
+    }
+    @media (min-width: 400px) {
+      width: calc(100%/16*6 - 8px);
+    }
+    @media (min-width: 600px) {
+      width: calc(100%/24*6 - 8px);
+    }
+    @media (min-width: 1000px) {
+      width: calc(100%/36*6 - 8px);
+    }
+    @media (min-width: 1200px) {
+      width: calc(100%/48*6 - 8px);
+    }
+
+    img {
+      padding: 1rem 1rem;
+      aspect-ratio: 1/1;
+    }
+  }
+}

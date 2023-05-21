@@ -4,6 +4,7 @@ import { storagePageSagaWatcher } from "../pages/storage-page/StoragePageSaga";
 import { cartPageSagaWatcher } from "../pages/cart-page/CartPageSaga";
 import { profilePageSagaWatcher } from "../pages/profile-page/ProfilePageSaga";
 import { redirectSagaWatcher } from "../utils/RedirectUtils";
+import { treasurerPageSagaWatcher } from "pages/profile-page/content/treasurer-options/TreasurerPageSaga";
 
 function getSagas() {
   return [
@@ -12,6 +13,7 @@ function getSagas() {
     cartPageSagaWatcher(),
     profilePageSagaWatcher(),
     redirectSagaWatcher(),
+    treasurerPageSagaWatcher(),
   ];
 }
 
