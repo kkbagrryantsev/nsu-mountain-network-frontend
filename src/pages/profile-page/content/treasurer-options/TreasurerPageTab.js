@@ -2,33 +2,28 @@ import LoadingStateBlock from "components/loading-state-block/LoadingStateBlock"
 import { useDispatch, useSelector } from "react-redux";
 import Sidebar from "./content/Sidebar";
 import {
-  MDBBtn,
   MDBCol,
   MDBContainer,
-  MDBIcon,
-  MDBInputGroup,
   MDBRow,
 } from "mdb-react-ui-kit";
 import { getAllUsersAction } from "./TreasurerPageActions";
 import { userSelectors } from "./TreasurerPageSlice";
 import UserCard from "./content/UserCard";
 import { useEffect } from "react";
-import { useResolvedPath } from "react-router";
-
 
 function TreasurerPageTab() {
   const dispatch = useDispatch();
+    
+  const usersLoading = useSelector((state) => state.treasurerPage.users.loading);
 
   useEffect(() => {
     dispatch(getAllUsersAction())
   }, [])
 
- 
-  const usersL = useSelector((state) => state.treasurerPage.users.loading);
-  const users = useSelector((state) => state.treasurerPage.users);
-
   return (
-    <LoadingStateBlock loadingState={usersL}>
+    <div>
+    
+    <LoadingStateBlock loadingState={usersLoading}>
       <MDBContainer fluid>
         <MDBRow center>
         <MDBCol md={"20"}>
@@ -42,6 +37,7 @@ function TreasurerPageTab() {
         </MDBRow>
       </MDBContainer>
     </LoadingStateBlock>
+    </div>
   );
 }
 
@@ -51,7 +47,7 @@ function UsersTable() {
     <MDBRow className={"row-cols-1 row-cols-lg-1 g-2"}>
       {users.map((i) => (
         <MDBCol >
-          <UserCard user={i} />
+          <UserCard user={i}/>
         </MDBCol>
       ))}
     </MDBRow>
@@ -59,6 +55,3 @@ function UsersTable() {
 }
 
 export default TreasurerPageTab;
-
-
-//<ItemCard item={i} />  <h5>{i.user.user_name + ": " + i.user.user_money}</h5>
