@@ -12,7 +12,8 @@ import {
   MDBRow,
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
-import { changeCartItemQuantity } from "../../../../cart-page/CartPageSlice"; 
+import ChangeBalanceDialog from "./ChangeBalanceDialog";
+//import { changeBalanceModal, setChangeBalanceModal } from "../TreasurerPageTab";
 
 /**
  * Storage item card.
@@ -25,25 +26,20 @@ import { changeCartItemQuantity } from "../../../../cart-page/CartPageSlice";
 function UserCard(props) {
   const dispatch = useDispatch();
   const user = props.user.user;
-  // Supports local quantity updates, but dispatches all cart changes to store.
   const [cartQuantity, setCartQuantity] = useState(0);
-  const onClickAddToCart = (i) => {
-    dispatch(
-      changeCartItemQuantity({
-        ...i,
-        quantity: cartQuantity + 1,
-      })
-    );
-    setCartQuantity(cartQuantity + 1);
-  };
+
+  const [changeBalanceModal, setChangeBalanceModal] = useState(false);
 
   return (
+    <div>
+    <ChangeBalanceDialog isActive={changeBalanceModal} setIsActive={setChangeBalanceModal}
+     currentUserName={user.user_name} currentUserID={user.user_id}/>
     <MDBCard className={"h-100 p-3"} >
       <MDBRow>
-        <MDBCol size={"100"} className={"ps-0"}>
+        <MDBCol size={"10"} className={"ps-0"}>
           <MDBCardTitle className={"text-truncate"}>
           
-    <h5 className={"mb-0 align-items-center gap-1"}>
+    <h5>
     {user.user_name + " "}
       <MDBBadge
         className={`bage`}
@@ -58,7 +54,7 @@ function UserCard(props) {
           <MDBBtn
             color={"dark"}
             hidden={cartQuantity !== 0}
-            onClick={() => onClickAddToCart(user)}
+            onClick={() => setChangeBalanceModal(!changeBalanceModal)}
           >
             Изменить баланс
             <MDBIcon className={"ps-2"} fas size={"lg"} icon={"coins"} />
@@ -66,6 +62,7 @@ function UserCard(props) {
         </MDBCol>
       </MDBRow>
     </MDBCard>
+    </div>
   );
 }
 
