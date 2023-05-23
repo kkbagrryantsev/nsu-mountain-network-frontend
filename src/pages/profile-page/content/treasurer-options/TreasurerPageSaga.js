@@ -2,11 +2,14 @@ import { call, takeEvery, put } from "redux-saga/effects";
 import { execApiCall } from "../../../../utils/ApiUtils";
 import { setAllUsers } from "./TreasurerPageSlice";
 import { getAllUsersAction } from "./TreasurerPageActions";
-import { apiGetAllUsers } from "../../../../api/models/ApiCalls";
+import { apiGetAllUsers, apiModifyUserBalance } from "../../../../api/models/ApiCalls";
 import LoadingState from "../../../../enums/LoadingState";
+import { createSuccessToast } from "models/ToastModel";
+import { modifyUserBalanceAction } from "./TreasurerPageActions";
 
 export function* treasurerPageSagaWatcher() {
   yield takeEvery(getAllUsersAction, sagaGetAllUsers);
+  yield takeEvery(modifyUserBalanceAction, sagaModifyUserBalance);
 }
 
 function* sagaGetAllUsers(action) {
@@ -18,6 +21,21 @@ function* sagaGetAllUsers(action) {
     },
     *onAnyError() {
       yield put(setAllUsers({ data: [], status: LoadingState.ERROR }));
+    },
+  });
+}
+
+function* sagaModifyUserBalance(action) {
+  
+  const requestBody = {
+      user_id: action.payload.uid,
+      newValue: action.payload.ubal.newBalance,
+  };
+  console.log(requestBody);
+  yield call(execApiCall, {
+    mainCall: () => apiModifyUserBalance(requestBody),
+    *onSuccess() {
+      createSuccessToast("Баланс обновлён");
     },
   });
 }
