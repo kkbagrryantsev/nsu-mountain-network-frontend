@@ -29,7 +29,7 @@ function* sagaModifyUserBalance(action) {
   
   const requestBody = {
       user_id: action.payload.uid,
-      newValue: action.payload.ubal.newBalance,
+      user_money: parseInt(action.payload.ubal.newBalance, 10),
   };
   console.log(requestBody);
   yield call(execApiCall, {
