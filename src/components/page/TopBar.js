@@ -45,7 +45,7 @@ function BalanceBadge() {
     loadingClass = "placeholder";
   }
 
-  return (
+  return ( //one second
     <h5 hidden={!isLogged} className={"mb-0"}>
       <MDBBadge
         className={`d-flex align-items-center gap-1 ${loadingClass}`}
