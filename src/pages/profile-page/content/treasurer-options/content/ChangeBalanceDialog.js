@@ -15,7 +15,7 @@ import { useState } from "react";
 import { modifyUserBalanceAction } from "../TreasurerPageActions";
 
 function ChangeBalanceDialog(props) {
-  const { isActive, setIsActive, currentUserName, currentUserID } = props;
+  const { isActive, setIsActive, currentUserName, currentUserLogin } = props;
   const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
@@ -45,7 +45,8 @@ function ChangeBalanceDialog(props) {
               className={"d-flex flex-column align-items-center gap-1"}
               onSubmit={() => {
                 setIsActive();
-                dispatch(modifyUserBalanceAction({currentUserID, formValue}));
+                var money = parseInt(formValue.newBalance, 10);
+                dispatch(modifyUserBalanceAction({user:{user_login: currentUserLogin, money}}));
                 props.setBalance(formValue.newBalance);
               }}
               isValidated
