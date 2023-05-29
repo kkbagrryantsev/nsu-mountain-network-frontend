@@ -9,7 +9,7 @@ import {
 } from "mdb-react-ui-kit";
 import items from "assets/png/profile-page/items.jpg";
 import credits from "assets/png/profile-page/credits.jpg";
-import treasurer from "assets/png/profile-page/empty-box.png";
+import treasurer from "assets/png/profile-page/treasurer.jpg";
 
 function Section({ title, href, image }) {
   const search = window.location.search;
@@ -41,9 +41,18 @@ function Section({ title, href, image }) {
   );
 }
 
-function Sections() {
+function RolesParser(roles, role) {
+  console.log(roles);
+  console.log(role);
+  if(roles.indexOf(role) == -1) {
+    return true;
+  }
+  return false;
+}
+
+function Sections(roles) {
   return (
-    <div>
+    <div className="d-grid gap-3">
     <MDBRow>
       <MDBCol end>
         <Section
@@ -62,7 +71,7 @@ function Sections() {
         />
       </MDBCol>
     </MDBRow>
-    <MDBRow style={{marginTop: "2%"}}>
+    <MDBRow hidden={RolesParser(roles.roles, "treasurer") }>
       <MDBCol>
         <Section
           md={"100%"}
