@@ -16,6 +16,7 @@ import { getMyProfileAction } from "./ProfilePageActions";
 import Sections from "./content/sections/Sections";
 import profilePic from "assets/png/profile-page/grinning-cat.png";
 import LoadingStateBlock from "../../components/loading-state-block/LoadingStateBlock";
+import TreasurerPageTab from "./content/treasurer-options/TreasurerPageTab"
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -93,6 +94,9 @@ function ProfilePage() {
                   </MDBTabsPane>
                   <MDBTabsPane show={params.get("tab") === "items"}>
                     <ItemsManagementTab />
+                  </MDBTabsPane>
+                  <MDBTabsPane show={params.get("tab") === "treasurer"}>
+                     <TreasurerPageTab />
                   </MDBTabsPane>
                 </MDBTabsContent>
               </MDBRow>

@@ -9,6 +9,8 @@ import {
 } from "mdb-react-ui-kit";
 import items from "assets/png/profile-page/items.jpg";
 import credits from "assets/png/profile-page/credits.jpg";
+import treasurer from "assets/png/profile-page/treasurer.jpg";
+import { useSelector } from "react-redux";
 
 function Section({ title, href, image }) {
   const search = window.location.search;
@@ -40,8 +42,17 @@ function Section({ title, href, image }) {
   );
 }
 
+function rolesParser(roles, role) {
+  if(roles.indexOf(role) == -1) {
+    return true;
+  }
+  return false;
+}
+
 function Sections() {
+  const user = useSelector((state) => state.profilePage.user.value);
   return (
+    <div className="d-grid gap-3">
     <MDBRow>
       <MDBCol md={"5"} lg={"4"}>
         <Section
@@ -51,7 +62,7 @@ function Sections() {
           image={credits}
         />
       </MDBCol>
-      <MDBCol end>
+      <MDBCol>
         <Section
           md={"8"}
           title={"Моё снаряжение"}
@@ -60,6 +71,17 @@ function Sections() {
         />
       </MDBCol>
     </MDBRow>
+    <MDBRow hidden={rolesParser(user.user_roles, "treasurer") }>
+      <MDBCol>
+        <Section
+          md={"100%"}
+          title={"Опции казначея"}
+          href={"treasurer"}
+          image={treasurer}
+        />
+      </MDBCol>
+    </MDBRow>
+    </div>
   );
 }
 
