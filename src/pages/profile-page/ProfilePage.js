@@ -12,11 +12,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import UserDataChangeTab from "./content/UserDataChangeTab";
 import ItemsManagementTab from "./content/items-management-tab/ItemsManagementTab";
-import TreasurerPageTab from "./content/treasurer-options/TreasurerPageTab"
 import { getMyProfileAction } from "./ProfilePageActions";
 import Sections from "./content/sections/Sections";
 import profilePic from "assets/png/profile-page/grinning-cat.png";
 import LoadingStateBlock from "../../components/loading-state-block/LoadingStateBlock";
+import TreasurerPageTab from "./content/treasurer-options/TreasurerPageTab"
 
 function ProfilePage() {
   const dispatch = useDispatch();
@@ -85,7 +85,7 @@ function ProfilePage() {
                 </MDBCol>
               </MDBRow>
 
-              <Sections roles = {user.user_roles}/>
+              <Sections />
 
               <MDBRow>
                 <MDBTabsContent>
