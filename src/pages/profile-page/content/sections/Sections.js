@@ -10,6 +10,7 @@ import {
 import items from "assets/png/profile-page/items.jpg";
 import credits from "assets/png/profile-page/credits.jpg";
 import treasurer from "assets/png/profile-page/treasurer.jpg";
+import { useSelector } from "react-redux";
 
 function Section({ title, href, image }) {
   const search = window.location.search;
@@ -48,7 +49,8 @@ function RolesParser(roles, role) {
   return false;
 }
 
-function Sections(roles) {
+function Sections() {
+  const user = useSelector((state) => state.profilePage.user.value);
   return (
     <div className="d-grid gap-3">
     <MDBRow>
@@ -69,7 +71,7 @@ function Sections(roles) {
         />
       </MDBCol>
     </MDBRow>
-    <MDBRow hidden={RolesParser(roles.roles, "treasurer") }>
+    <MDBRow hidden={RolesParser(user.user_roles, "treasurer") }>
       <MDBCol>
         <Section
           md={"100%"}
