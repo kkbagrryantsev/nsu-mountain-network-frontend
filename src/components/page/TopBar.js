@@ -25,9 +25,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { redirect } from "../../utils/RedirectUtils";
 import { getMyProfileAction } from "pages/profile-page/ProfilePageActions";
-import coins from "assets/png/misc/coins.png";
+import coins from "assets/png/misc/money.png";
 import { cartSelectors, clearCart } from "../../pages/cart-page/CartPageSlice";
 import LoadingState from "../../enums/LoadingState";
+import balanceBageImage from "assets/png/misc/balance.jpg";
 
 function BalanceBadge() {
   const isLogged = !!getAccessToken();
@@ -51,6 +52,7 @@ function BalanceBadge() {
         className={`d-flex align-items-center gap-1 ${loadingClass}`}
         pill
         color={"secondary"}
+        style={{backgroundImage: `url(${balanceBageImage})`, backgroundBlendMode: "exclusion"}}
       >
         {user.value.user_money}
         <img src={coins} alt="Баланс"></img>
