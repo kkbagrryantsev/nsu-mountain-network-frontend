@@ -78,6 +78,6 @@ export const apiUpdateItemData = (id, data) =>
 // WAREHOUSEMAN OPTIONS, ITEMS OPERATIONS
 
 // TREASURER OPTIONS
-export const apiModifyUserBalance = (data) =>
-  axios.patch(`/api/models/users/${data.user.user_login}`, data, getAccessTokenHeader());
+export const apiModifyUserBalance = (user_login, data) =>
+  axios.patch(`/api/models/users/${user_login}`, data, getAccessTokenHeader());
 // TREASURER OPTIONS
