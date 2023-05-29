@@ -1,6 +1,5 @@
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import LoadingState from "../../../../enums/LoadingState";
-import { StateWithLoader } from "utils/StoreUtils";
 
 const usersAdapter = createEntityAdapter({
   selectId: (user) => user.user.user_id
@@ -19,9 +18,6 @@ export const treasurerPageSlice = createSlice({
     setAllUsers(state, action) {
       usersAdapter.setAll(state.users, action.payload.data);
       state.users.loading = action.payload.status;
-    },
-    updateUserData: (state, action) => {
-      state.users = new StateWithLoader(action.payload, LoadingState.LOADED);
     },
   },
 });
