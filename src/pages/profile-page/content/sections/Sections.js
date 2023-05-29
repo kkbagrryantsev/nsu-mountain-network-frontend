@@ -42,7 +42,7 @@ function Section({ title, href, image }) {
   );
 }
 
-function RolesParser(roles, role) {
+function rolesParser(roles, role) {
   if(roles.indexOf(role) == -1) {
     return true;
   }
@@ -71,7 +71,7 @@ function Sections() {
         />
       </MDBCol>
     </MDBRow>
-    <MDBRow hidden={RolesParser(user.user_roles, "treasurer") }>
+    <MDBRow hidden={rolesParser(user.user_roles, "treasurer") }>
       <MDBCol>
         <Section
           md={"100%"}
