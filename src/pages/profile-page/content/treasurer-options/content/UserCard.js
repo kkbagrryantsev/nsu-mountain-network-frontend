@@ -18,12 +18,13 @@ import ChangeBalanceDialog from "./ChangeBalanceDialog";
 function UserCard(props) {
   const user = props.user.user;
   const [balance, setBalance] = useState(user.user_money);
+
   const [changeBalanceModal, setChangeBalanceModal] = useState(false);
 
   return (
     <div>
       <ChangeBalanceDialog setBalance={setBalance} isActive={changeBalanceModal} setIsActive={setChangeBalanceModal}
-     currentUserName={user.user_name} currentUserID={user.user_login}/>
+     currentUserName={user.user_name} currentUserLogin={user.user_login}/>
     
       <MDBCol size={"12"} className={"ps-0"}>   
         <h5>
