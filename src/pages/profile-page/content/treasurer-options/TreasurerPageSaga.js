@@ -36,7 +36,7 @@ function* sagaModifyUserBalance(action) {
     }
   };
   yield call(execApiCall, {
-    mainCall: () => apiModifyUserBalance(requestBody),
+    mainCall: () => apiModifyUserBalance(action.payload.currentUserID, requestBody),
     *onSuccess() {
       createSuccessToast("Баланс обновлён");
     },
