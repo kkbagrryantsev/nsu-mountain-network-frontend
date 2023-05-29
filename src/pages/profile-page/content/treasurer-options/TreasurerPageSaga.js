@@ -6,6 +6,7 @@ import { apiGetAllUsers, apiModifyUserBalance } from "../../../../api/models/Api
 import LoadingState from "../../../../enums/LoadingState";
 import { createSuccessToast } from "models/ToastModel";
 import { modifyUserBalanceAction } from "./TreasurerPageActions";
+import { createErrorToast } from "models/ToastModel";
 
 export function* treasurerPageSagaWatcher() {
   yield takeEvery(getAllUsersAction, sagaGetAllUsers);
@@ -21,6 +22,7 @@ function* sagaGetAllUsers(action) {
     },
     *onAnyError() {
       yield put(setAllUsers({ data: [], status: LoadingState.ERROR }));
+      //yield createErrorToast("He удалось загрузить данные пользователей");
     },
   });
 }
@@ -28,14 +30,18 @@ function* sagaGetAllUsers(action) {
 function* sagaModifyUserBalance(action) {
   
   const requestBody = {
-      user_id: action.payload.uid,
-      user_money: parseInt(action.payload.ubal.newBalance, 10),
+    user: {
+      user_login: action.payload.currentUserID,
+      money: parseInt(action.payload.formValue.newBalance, 10),
+    }
   };
-  console.log(requestBody);
   yield call(execApiCall, {
     mainCall: () => apiModifyUserBalance(requestBody),
     *onSuccess() {
       createSuccessToast("Баланс обновлён");
+    },
+    *onAnyError() {
+      yield createErrorToast("He удалось выполнить запрос");
     },
   });
 }
