@@ -54,17 +54,17 @@ function Sections() {
   return (
     <div className="d-grid gap-3">
     <MDBRow>
-      <MDBCol end>
+      <MDBCol md={"5"} lg={"4"}>
         <Section
-          md={"50%"}
+          md={"4"}
           title={"Личные данные"}
           href={"credits"}
           image={credits}
         />
       </MDBCol>
-      <MDBCol end>
+      <MDBCol>
         <Section
-          md={"50%"}
+          md={"8"}
           title={"Моё снаряжение"}
           href={"items"}
           image={items}
