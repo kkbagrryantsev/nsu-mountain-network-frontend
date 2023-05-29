@@ -42,8 +42,6 @@ function Section({ title, href, image }) {
 }
 
 function RolesParser(roles, role) {
-  console.log(roles);
-  console.log(role);
   if(roles.indexOf(role) == -1) {
     return true;
   }
