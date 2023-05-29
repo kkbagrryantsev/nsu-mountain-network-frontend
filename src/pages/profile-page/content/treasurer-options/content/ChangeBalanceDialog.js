@@ -14,7 +14,8 @@ import { useDispatch } from "react-redux";
 import { useState } from "react";
 import { modifyUserBalanceAction } from "../TreasurerPageActions";
 
-function ChangeBalanceDialog({ isActive, setIsActive, currentUserName, currentUserID }) {
+function ChangeBalanceDialog(props) {
+  const { isActive, setIsActive, currentUserName, currentUserID } = props;
   const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
@@ -24,11 +25,6 @@ function ChangeBalanceDialog({ isActive, setIsActive, currentUserName, currentUs
   const onChange = (e) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value });
   };
-
-  const auser = {
-    uid: currentUserID,
-    ubal: formValue
-  }
 
   return (
     <MDBModal show={isActive} setShow={setIsActive} tabIndex="-1">
@@ -49,8 +45,8 @@ function ChangeBalanceDialog({ isActive, setIsActive, currentUserName, currentUs
               className={"d-flex flex-column align-items-center gap-1"}
               onSubmit={() => {
                 setIsActive();
-                //dispatch(modifyUserBalanceAction(formValue || null, currentUserID));
-                dispatch(modifyUserBalanceAction(auser));
+                dispatch(modifyUserBalanceAction({currentUserID, formValue}));
+                props.setBalance(formValue.newBalance);
               }}
               isValidated
             >
