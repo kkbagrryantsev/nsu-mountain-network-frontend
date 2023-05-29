@@ -85,7 +85,7 @@ function ProfilePage() {
                 </MDBCol>
               </MDBRow>
 
-              <Sections />
+              <Sections roles = {user.user_roles}/>
 
               <MDBRow>
                 <MDBTabsContent>
