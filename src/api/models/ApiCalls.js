@@ -79,5 +79,5 @@ export const apiUpdateItemData = (id, data) =>
 
 // TREASURER OPTIONS
 export const apiModifyUserBalance = (data) =>
-  axios.patch(`/api/models/users/${data.user_id}`, data.newValue, getAccessTokenHeader());
+  axios.patch(`/api/models/users/${data.user.user_login}`, data, getAccessTokenHeader());
 // TREASURER OPTIONS
