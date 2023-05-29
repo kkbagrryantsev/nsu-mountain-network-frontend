@@ -28,15 +28,8 @@ function* sagaGetAllUsers(action) {
 }
 
 function* sagaModifyUserBalance(action) {
-  
-  const requestBody = {
-    user: {
-      user_login: action.payload.currentUserID,
-      money: parseInt(action.payload.formValue.newBalance, 10),
-    }
-  };
   yield call(execApiCall, {
-    mainCall: () => apiModifyUserBalance(action.payload.currentUserID, requestBody),
+    mainCall: () => apiModifyUserBalance(action.payload.user.user_login, action.payload),
     *onSuccess() {
       createSuccessToast("Баланс обновлён");
     },
