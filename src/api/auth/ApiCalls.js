@@ -32,6 +32,9 @@ export const apiRejectUserSignUp = (signUpId) =>
 export const apiGetMyProfile = () =>
   axios.get("/api/auth/my_profile/", getAccessTokenHeader());
 
+export const apiGetMyRequestsByType = (type) =>
+  axios.get(`/api/auth/my_profile/requests/${type}`, getAccessTokenHeader());
+
 export const apiConfirmEmailChange = (token) =>
   axios.post(
     `/api/auth/my_profile/settings/confirm/${token}`,

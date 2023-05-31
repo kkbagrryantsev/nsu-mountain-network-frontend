@@ -16,12 +16,16 @@ import { getMyProfileAction } from "./ProfilePageActions";
 import Sections from "./content/sections/Sections";
 import profilePic from "assets/png/profile-page/grinning-cat.png";
 import LoadingStateBlock from "../../components/loading-state-block/LoadingStateBlock";
+import RequestsManagementTab from "./content/requests-management-tab/RequestsManagementTab";
+import { WareEditorTab } from "./content/ware-editor-tab/WareEditorTab";
+import { useEffect } from "react";
+import TreasurerTab from "./content/treasurer-options/TreasurerTab";
 
 function ProfilePage() {
   const dispatch = useDispatch();
-  window.onload = () => {
+  useEffect(() => {
     dispatch(getMyProfileAction());
-  };
+  }, []);
   const loading = useSelector((state) => state.profilePage.user.loading);
   const user = useSelector((state) => state.profilePage.user.value);
   const search = window.location.search;
@@ -32,7 +36,7 @@ function ProfilePage() {
       <MDBContainer fluid>
         <MDBRow center>
           <MDBCol className={"ps-5 pt-5"} sm={"4"} md={"4"} lg={"3"}>
-            <MDBCard>
+            <MDBCard className={"rounded-8"}>
               <MDBContainer>
                 <MDBRow className={"p-3"}>
                   <MDBCol className={"d-flex justify-content-center"}>
@@ -62,7 +66,7 @@ function ProfilePage() {
           </MDBCol>
 
           <MDBCol className={"pt-5 pe-5 pb-5"} md={"6"}>
-            <MDBCard className={"p-3"}>
+            <MDBCard className={"rounded-8 p-3"}>
               <MDBRow>
                 <MDBCol md={"5"}>
                   <a href={window.location.pathname}>
@@ -93,6 +97,15 @@ function ProfilePage() {
                   </MDBTabsPane>
                   <MDBTabsPane show={params.get("tab") === "items"}>
                     <ItemsManagementTab />
+                  </MDBTabsPane>
+                  <MDBTabsPane show={params.get("tab") === "requests"}>
+                    <RequestsManagementTab />
+                  </MDBTabsPane>
+                  <MDBTabsPane show={params.get("tab") === "ware"}>
+                    <WareEditorTab />
+                  </MDBTabsPane>
+                  <MDBTabsPane show={params.get("tab") === "treasurer"}>
+                    <TreasurerTab />
                   </MDBTabsPane>
                 </MDBTabsContent>
               </MDBRow>

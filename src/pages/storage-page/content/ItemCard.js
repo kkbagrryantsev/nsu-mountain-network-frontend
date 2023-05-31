@@ -74,19 +74,20 @@ function ItemCard(props) {
   const image = images[`${category_name}.png`];
 
   return (
-    <MDBCard className={"h-100 p-3"}>
-      <MDBRow>
-        <MDBCol center size={"4"}>
+    <MDBCard className={"rounded-6 h-100 p-3"}>
+      <MDBRow className={"row-cols-2"}>
+        <MDBCol center md={"4"}>
           <MDBCardImage fluid src={image} alt={item.item_name} />
         </MDBCol>
-        <MDBCol size={"8"} className={"ps-0"}>
-          <MDBCardTitle className={"text-truncate"}>
+        <MDBCol md={"8"} className={"ps-0"}>
+          <MDBCardTitle className={"mb-0 text-truncate"}>
             {item.item_name}
           </MDBCardTitle>
           <MDBCardText className={"text-truncate"}>
             {category.category_name}
           </MDBCardText>
           <MDBBtn
+            className={"rounded-5"}
             color={"dark"}
             hidden={cartQuantity !== 0}
             onClick={() => onClickAddToCart(item)}
@@ -94,8 +95,9 @@ function ItemCard(props) {
             В корзину
             <MDBIcon className={"ps-2"} fas size={"lg"} icon={"cart-plus"} />
           </MDBBtn>
-          <MDBBtnGroup shadow={"0"} size={"sm"}>
+          <MDBBtnGroup className={"rounded-5"} shadow={"0"} size={"sm"}>
             <MDBBtn
+              className={"rounded-5 rounded-end"}
               onClick={() => onClickRemoveFromCart(item)}
               hidden={cartQuantity === 0}
               color={"dark"}
@@ -107,6 +109,7 @@ function ItemCard(props) {
               В корзине: {cartQuantity}
             </MDBBtn>
             <MDBBtn
+              className={"rounded-5 rounded-start"}
               hidden={cartQuantity === 0}
               onClick={() => onClickAddToCart(item)}
               color={"dark"}
@@ -116,7 +119,6 @@ function ItemCard(props) {
             </MDBBtn>
           </MDBBtnGroup>
         </MDBCol>
-        <MDBCol></MDBCol>
       </MDBRow>
     </MDBCard>
   );

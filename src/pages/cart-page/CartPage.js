@@ -22,10 +22,11 @@ import { useState } from "react";
 import { EmptyListPlaceholderBlock } from "../profile-page/content/items-management-tab/ItemsList";
 import { redirect } from "../../utils/RedirectUtils";
 import { paths } from "routePaths";
-
-const today = dayjs();
+import { createErrorToast } from "../../models/ToastModel";
 
 function CartPage() {
+  const today = dayjs();
+
   const dispatch = useDispatch();
   const cart = useSelector(cartSelectors.selectAll);
 
@@ -48,14 +49,12 @@ function CartPage() {
     <MDBContainer className={"p-4"} fluid>
       <EmptyListPlaceholderBlock size={cart.length}>
         <MDBRow center>
-          <MDBCol className={"d-grid gap-3"} md={"5"}>
+          <MDBCol className={"d-flex flex-column gap-3"} md={"5"}>
             <MDBRow className={"sticky-top"}>
               <MDBCol>
                 <MDBCard shadow={"0"}>
                   <MDBCardHeader className={"d-flex justify-content-between"}>
-                    <MDBCardTitle>
-                      <h2>Корзина</h2>
-                    </MDBCardTitle>
+                    <MDBCardTitle className={"fs-2"}>Корзина</MDBCardTitle>
                     <MDBBtn
                       floating
                       outline
@@ -86,7 +85,7 @@ function CartPage() {
           <MDBCol md={"3"}>
             <div className={"d-grid gap-3 sticky-top"}>
               <MDBRow>
-                <MDBCard>
+                <MDBCard className={"rounded-8"}>
                   <MDBCardHeader>
                     <MDBCardTitle className={"mb-0"}>
                       Период бронирования
@@ -105,10 +104,18 @@ function CartPage() {
                         </MDBCol>
                         <MDBCol>
                           <DatePicker
+                            onError={(e) => {
+                              if (e === "maxDate") {
+                                createErrorToast(
+                                  "Максимальный срок бронирования - 2 месяца"
+                                );
+                              }
+                            }}
                             format={"DD/MM/YY"}
                             value={endDate}
                             onChange={(v) => setEndDate(v)}
-                            minDate={startDate.add(2, "months")}
+                            maxDate={startDate.add(2, "months")}
+                            disablePast
                           ></DatePicker>
                         </MDBCol>
                       </LocalizationProvider>
@@ -117,7 +124,7 @@ function CartPage() {
                 </MDBCard>
               </MDBRow>
               <MDBRow>
-                <MDBCard>
+                <MDBCard className={"rounded-8"}>
                   <MDBCardHeader>
                     <MDBCardTitle className={"mb-0"}>Итого</MDBCardTitle>
                   </MDBCardHeader>
@@ -134,6 +141,7 @@ function CartPage() {
                     </MDBRow>
                     <MDBRow>
                       <MDBBtn
+                        className={"rounded-8"}
                         color={"primary"}
                         size={"lg"}
                         onClick={() => onClickBookItems(cart)}

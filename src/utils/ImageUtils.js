@@ -16,6 +16,6 @@ export const getItemCategory = (id) => {
   if (item) {
     return item.blobName;
   } else {
-    return "cats";
+    return "carbine";
   }
 };

@@ -4,9 +4,35 @@ import { IoLogoVk, IoLogoYoutube } from "react-icons/io5";
 import { MDBBadge, MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
 
 function Footer() {
+  const freepikBadge = (
+    <a href="https://www.flaticon.com/" title="Freepik Flaticons">
+      <MDBBadge className={"text-dark"} color={"secondary"}>
+        Icons created by Freepik - Flaticon
+      </MDBBadge>
+    </a>
+  );
+
+  const ouchBadge = (
+    <div>
+      <MDBBadge className={"text-dark"} color={"secondary"}>
+        Illustrations by{" "}
+        <a
+          className={"text-black"}
+          href="https://icons8.com/illustrations/author/zD2oqC8lLBBA"
+        >
+          Icons 8
+        </a>{" "}
+        from{" "}
+        <a className={"text-black"} href="https://icons8.com/illustrations">
+          Ouch!
+        </a>
+      </MDBBadge>
+    </div>
+  );
+
   return (
     <MDBContainer className={"p-3"} fluid>
-      <MDBRow>
+      <MDBRow className={"position-relative"}>
         <MDBCol md={"4"}>
           <div className={"d-flex gap-2 align-items-center"}>
             <img src={logoGray} alt="Error" />
@@ -20,33 +46,10 @@ function Footer() {
           </div>
           <p className={styles.copyright}>©NSU mountain network</p>
         </MDBCol>
-        <MDBCol offsetMd={"4"} md={"4"}>
-          <a
-            className={"float-end"}
-            href="https://www.flaticon.com/"
-            title="Freepik Flaticons"
-          >
-            <MDBBadge className={"text-dark"} color={"secondary"}>
-              Icons created by Freepik - Flaticon
-            </MDBBadge>
-          </a>
-          <div className={"float-end me-2"}>
-            <MDBBadge className={"text-dark"} color={"secondary"}>
-              Illustrations by{" "}
-              <a
-                className={"text-black"}
-                href="https://icons8.com/illustrations/author/zD2oqC8lLBBA"
-              >
-                Icons 8
-              </a>{" "}
-              from{" "}
-              <a
-                className={"text-black"}
-                href="https://icons8.com/illustrations"
-              >
-                Ouch!
-              </a>
-            </MDBBadge>
+        <MDBCol>
+          <div className={"me-2 position-absolute top-0 end-0"}>
+            {freepikBadge}
+            {ouchBadge}
           </div>
         </MDBCol>
       </MDBRow>
