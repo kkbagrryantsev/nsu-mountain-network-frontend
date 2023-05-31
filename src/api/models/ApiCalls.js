@@ -11,8 +11,8 @@ export const apiCreateNewUser = (data) =>
 export const apiDeleteUser = (username) =>
   axios.delete(`/api/models/users/${username}`, getAccessTokenHeader());
 
-export const apiGetUserData = (username) =>
-  axios.get(`/api/models/users/${username}`, getAccessTokenHeader());
+export const apiGetUserData = (id) =>
+  axios.get(`/api/models/users/${id}`, getAccessTokenHeader());
 
 export const apiUpdateUserData = (username, data) =>
   axios.patch(`/api/models/users/${username}`, data, getAccessTokenHeader());
@@ -51,14 +51,30 @@ export const apiGetItemData = (id) =>
   axios.get(`/api/models/items/${id}`, getAccessTokenHeader());
 
 export const apiGetItemImage = (id) =>
-  axios.get(`/api/models/items/${id}/image`, getAccessTokenHeader());
+  axios.get(
+    `/api/models/items/${id}/image`,
+    getAccessTokenHeader({ contentType: "image/png" })
+  );
 // USER OPTIONS, ITEMS OPERATIONS
 
 // WAREHOUSEMAN OPTIONS, ITEMS OPERATIONS
+export const apiAddCategory = (data) =>
+  axios.post("/api/models/categories", data, getAccessTokenHeader());
+
+export const apiPatchCategory = (id, data) =>
+  axios.patch(`/api/models/categories/${id}`, data, getAccessTokenHeader());
+
+export const apiGetCategoryImage = (id) => {
+  return axios.get(`/api/models/categories/${id}/avatar`, {
+    headers: getAccessTokenHeader("image/png").headers,
+    responseType: "blob",
+  });
+};
+
 export const apiCreateItem = (data) =>
   axios.post("/api/models/items", data, getAccessTokenHeader());
 
-export const apiApproveBookRequest = (data) =>
+export const apiApproveBookRequests = (data) =>
   axios.post("/api/models/items/use/approve", data, getAccessTokenHeader());
 
 export const apiModifyBookRequest = (data) =>
@@ -67,13 +83,19 @@ export const apiModifyBookRequest = (data) =>
 export const apiFulfillBookRequest = (data) =>
   axios.post("/api/models/items/use/give", data, getAccessTokenHeader());
 
-export const apiRetrieveBookedItems = (data) =>
+export const apiRejectBookRequests = (data) =>
+  axios.post("/api/models/items/use/reject", data, getAccessTokenHeader());
+
+export const apiCommentBookRequest = (id, data) =>
+  axios.post(`/api/models/items/use/${id}`, data, getAccessTokenHeader());
+
+export const apiReturnBookedItems = (data) =>
   axios.post("/api/models/items/use/return", data, getAccessTokenHeader());
 
 export const apiDeleteItem = (id) =>
   axios.delete(`/api/models/items/${id}`, getAccessTokenHeader());
 
-export const apiUpdateItemData = (id, data) =>
+export const apiPatchItem = (id, data) =>
   axios.patch(`/api/models/items/${id}`, data, getAccessTokenHeader());
 // WAREHOUSEMAN OPTIONS, ITEMS OPERATIONS
 

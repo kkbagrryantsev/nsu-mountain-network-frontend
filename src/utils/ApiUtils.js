@@ -2,14 +2,18 @@ import { call } from "redux-saga/effects";
 import { createErrorToast } from "../models/ToastModel";
 import { getAccessToken } from "../api/Cookie";
 
-// TODO Add headers object
-export const getAccessTokenHeader = () => {
+export const getAccessTokenHeader = (args) => {
   const token = getAccessToken();
+
+  if (args === undefined) {
+    args = {};
+  }
 
   return {
     headers: {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
+      restrictAuthConfirm: args.restrictAuthConfirm,
     },
   };
 };
@@ -18,6 +22,7 @@ export const getJSONHeader = () => {
   return {
     headers: {
       "Content-Type": "application/json",
+      restrictAuthConfirm: true,
     },
   };
 };
@@ -78,6 +83,7 @@ export function* execApiCall(args) {
     ) {
       yield call(selectPriority(onAnyError, onFailException));
     } else if (!withoutHandlingResponseStatus) {
+      console.log(e);
       createErrorToast(`Возникла неизвестная ошибка`);
       if (additionalAnyErrorHandling) {
         yield call(additionalAnyErrorHandling);

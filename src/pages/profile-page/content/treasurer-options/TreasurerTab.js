@@ -8,23 +8,26 @@ import {
   MDBInputGroup,
   MDBRow,
 } from "mdb-react-ui-kit";
-import { getAllUsersAction } from "./TreasurerPageActions";
-import { userSelectors } from "./TreasurerPageSlice";
+import { getAllUsersAction } from "./TreasurerTabActions";
+import { userSelectors } from "./TreasurerTabSlice";
 import UserCard from "./content/UserCard";
 import { useEffect } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import { Chip } from "@mui/material";
 import { useState } from "react";
+import { getUserRoles } from "api/Cookie";
 
-function TreasurerPageTab() {
+function TreasurerTab() {
   const dispatch = useDispatch();
+  const roles = getUserRoles().split(", ");
   useEffect(() => {
-    dispatch(getAllUsersAction())
-  }, [])  
-  const usersLoading = useSelector((state) => state.treasurerPage.users.loading);
+    if (roles.indexOf("treasurer") !== -1) {
+      dispatch(getAllUsersAction());
+    }
+  }, []);
+  const usersLoading = useSelector((state) => state.treasurerTab.users.loading);
 
   return (
-
     <LoadingStateBlock loadingState={usersLoading}>
       <MDBRow className={"pb-3"}>
         <SearchBar />
@@ -34,10 +37,8 @@ function TreasurerPageTab() {
           <FilterShipsBlock />
         </MDBCol>
       </MDBRow>
-      <MDBContainer>
-          <MDBCol>
-            <UsersTable />
-          </MDBCol>
+      <MDBContainer className={"p-1"} fluid>
+        <UsersTable />
       </MDBContainer>
     </LoadingStateBlock>
   );
@@ -56,14 +57,16 @@ function UsersTable() {
   }
 
   return (
-    <MDBRow className={"row-cols-1 row-cols-lg-1 g-2"}>
+    <>
       {users.map((i) => (
-        <MDBCol key={i.user.user_id}>
-          <UserCard user={i} />
-          <hr/>
-        </MDBCol>
+        <MDBRow key={i.user.user_id}>
+          <MDBCol end>
+            <UserCard user={i} />
+            <hr />
+          </MDBCol>
+        </MDBRow>
       ))}
-    </MDBRow>
+    </>
   );
 }
 
@@ -75,12 +78,12 @@ function SearchBar() {
   const handleSubmit = (event) => {
     event.preventDefault();
     params.set("search", name);
-    window.location.search = params.toString();
-  }
-  
+    window.location.search = params;
+  };
+
   return (
     <form onSubmit={handleSubmit}>
-      <MDBInputGroup textBefore={<MDBIcon fas icon="search" />} >
+      <MDBInputGroup textBefore={<MDBIcon fas icon="search" />}>
         <input
           className="form-control"
           type="search"
@@ -89,7 +92,7 @@ function SearchBar() {
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
-        <MDBBtn type="submit" >Поиск</MDBBtn>
+        <MDBBtn type="submit">Поиск</MDBBtn>
       </MDBInputGroup>
     </form>
   );
@@ -113,4 +116,4 @@ function FilterShipsBlock() {
   );
 }
 
-export default TreasurerPageTab;
+export default TreasurerTab;

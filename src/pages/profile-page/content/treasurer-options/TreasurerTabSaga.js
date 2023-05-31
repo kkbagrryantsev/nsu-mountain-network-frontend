@@ -1,14 +1,14 @@
 import { call, takeEvery, put } from "redux-saga/effects";
-import { execApiCall } from "../../../../utils/ApiUtils";
-import { setAllUsers } from "./TreasurerPageSlice";
-import { getAllUsersAction } from "./TreasurerPageActions";
-import { apiGetAllUsers, apiModifyUserBalance } from "../../../../api/models/ApiCalls";
-import LoadingState from "../../../../enums/LoadingState";
+import { execApiCall } from "utils/ApiUtils";
+import { setAllUsers } from "./TreasurerTabSlice";
+import { getAllUsersAction } from "./TreasurerTabActions";
+import { apiGetAllUsers, apiModifyUserBalance } from "api/models/ApiCalls";
+import LoadingState from "enums/LoadingState";
 import { createSuccessToast } from "models/ToastModel";
-import { modifyUserBalanceAction } from "./TreasurerPageActions";
+import { modifyUserBalanceAction } from "./TreasurerTabActions";
 import { createErrorToast } from "models/ToastModel";
 
-export function* treasurerPageSagaWatcher() {
+export function* treasurerTabSagaWatcher() {
   yield takeEvery(getAllUsersAction, sagaGetAllUsers);
   yield takeEvery(modifyUserBalanceAction, sagaModifyUserBalance);
 }
@@ -22,15 +22,15 @@ function* sagaGetAllUsers(action) {
     },
     *onAnyError() {
       yield put(setAllUsers({ data: [], status: LoadingState.ERROR }));
-      //yield createErrorToast("He удалось загрузить данные пользователей");
     },
   });
 }
 
 function* sagaModifyUserBalance(action) {
   yield call(execApiCall, {
-    mainCall: () => apiModifyUserBalance(action.payload.user.user_login, action.payload),
-    *onSuccess() {
+    mainCall: () =>
+      apiModifyUserBalance(action.payload.user.user_login, action.payload),
+    onSuccess() {
       createSuccessToast("Баланс обновлён");
     },
     *onAnyError() {

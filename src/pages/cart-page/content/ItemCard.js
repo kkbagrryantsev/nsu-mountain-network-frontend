@@ -56,7 +56,7 @@ function ItemCard(props) {
   const image = images[`${category_name}.png`];
 
   return (
-    <MDBCard className={"h-100 p-3"}>
+    <MDBCard className={"rounded-8 p-3"}>
       <MDBRow>
         <MDBCol center size={"3"}>
           <MDBCardImage fluid src={image} alt={item.item_name} />
@@ -70,7 +70,7 @@ function ItemCard(props) {
           </MDBCardText>
           <MDBBtnGroup shadow={"0"} size={"sm"}>
             <MDBBtn
-              className={"border border-2 border-dark"}
+              className={"rounded-5 rounded-end border border-2 border-dark"}
               onClick={() => onClickDecreaseQuantity(item)}
               disabled={item.quantity === 1}
               color={"dark"}
@@ -82,6 +82,7 @@ function ItemCard(props) {
               В корзине: {item.quantity}
             </MDBBtn>
             <MDBBtn
+              className={"rounded-5 rounded-start"}
               onClick={() => onClickAddToCart(item)}
               color={"dark"}
               outline
@@ -90,16 +91,15 @@ function ItemCard(props) {
             </MDBBtn>
           </MDBBtnGroup>
         </MDBCol>
-        <MDBCol className={"text-center"} size={"2"}>
-          <MDBBtn
-            onClick={() => onClickRemoveFromCart(item)}
-            floating
-            outline
-            color={"tertiary"}
-          >
-            <MDBIcon size={"lg"} far icon={"trash-alt"} />
-          </MDBBtn>
-        </MDBCol>
+        <MDBBtn
+          className={"position-absolute end-0 top-0 m-3"}
+          onClick={() => onClickRemoveFromCart(item)}
+          floating
+          outline
+          color={"tertiary"}
+        >
+          <MDBIcon size={"lg"} far icon={"trash-alt"} />
+        </MDBBtn>
       </MDBRow>
     </MDBCard>
   );

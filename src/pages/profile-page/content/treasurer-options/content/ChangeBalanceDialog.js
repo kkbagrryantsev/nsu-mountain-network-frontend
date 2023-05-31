@@ -12,14 +12,14 @@ import {
 } from "mdb-react-ui-kit";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { modifyUserBalanceAction } from "../TreasurerPageActions";
+import { modifyUserBalanceAction } from "../TreasurerTabActions";
 
 function ChangeBalanceDialog(props) {
   const { isActive, setIsActive, currentUserName, currentUserLogin } = props;
   const dispatch = useDispatch();
 
   const [formValue, setFormValue] = useState({
-    newBalance: ""
+    newBalance: "",
   });
 
   const onChange = (e) => {
@@ -31,7 +31,9 @@ function ChangeBalanceDialog(props) {
       <MDBModalDialog>
         <MDBModalContent>
           <MDBModalHeader>
-            <MDBModalTitle>Обновить баланс пользователя {currentUserName}</MDBModalTitle>
+            <MDBModalTitle>
+              Обновить баланс пользователя {currentUserName}
+            </MDBModalTitle>
             <MDBBtn
               className="btn-close"
               color="none"
@@ -46,7 +48,11 @@ function ChangeBalanceDialog(props) {
               onSubmit={() => {
                 setIsActive();
                 var money = parseInt(formValue.newBalance, 10);
-                dispatch(modifyUserBalanceAction({user:{user_login: currentUserLogin, money}}));
+                dispatch(
+                  modifyUserBalanceAction({
+                    user: { user_login: currentUserLogin, money },
+                  })
+                );
                 props.setBalance(formValue.newBalance);
               }}
               isValidated
@@ -61,7 +67,7 @@ function ChangeBalanceDialog(props) {
                   label="Новое значение"
                 />
               </MDBValidationItem>
-              
+
               <MDBBtn type="submit">Сохранить</MDBBtn>
             </MDBValidation>
           </MDBModalBody>

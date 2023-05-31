@@ -2,17 +2,17 @@ import { createEntityAdapter, createSlice } from "@reduxjs/toolkit";
 import LoadingState from "../../../../enums/LoadingState";
 
 const usersAdapter = createEntityAdapter({
-  selectId: (user) => user.user.user_id
+  selectId: (user) => user.user.user_id,
 });
- 
+
 const initialState = {
   users: usersAdapter.getInitialState({
     loading: LoadingState.LOADING,
   }),
 };
 
-export const treasurerPageSlice = createSlice({
-  name: "TreasurerPage",
+export const treasurerTabSlice = createSlice({
+  name: "TreasurerTab",
   initialState,
   reducers: {
     setAllUsers(state, action) {
@@ -22,8 +22,8 @@ export const treasurerPageSlice = createSlice({
   },
 });
 
-export const { setAllUsers } = treasurerPageSlice.actions;
+export const { setAllUsers } = treasurerTabSlice.actions;
 
 export const userSelectors = usersAdapter.getSelectors(
-  (state) => state.treasurerPage.users
+  (state) => state.treasurerTab.users
 );

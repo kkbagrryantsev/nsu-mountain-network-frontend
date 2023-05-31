@@ -7,21 +7,24 @@ import {
 } from "mdb-react-ui-kit";
 import { useEffect, useState } from "react";
 import {
-  MyBookedItemsList,
-  MyRequestedItemsList,
-  MyTakenItemsList,
+  BookedItemsList,
+  RequestedItemsList,
+  TakenItemsList,
 } from "./ItemsList";
 import { useDispatch } from "react-redux";
-import { getMyRequestsAction } from "./ItemsManagementTabActions";
+import { getItemsInUseByTypeAction } from "./RequestsManagementTabActions";
+import { getUserRoles } from "api/Cookie";
 
-function ItemsManagementTab() {
+function RequestsManagementTab() {
   const dispatch = useDispatch();
+  const roles = getUserRoles().split(", ");
+  const [basicActive, setBasicActive] = useState("requested");
 
   useEffect(() => {
-    dispatch(getMyRequestsAction("requested"));
+    if (roles.indexOf("warehouseman") !== -1) {
+      dispatch(getItemsInUseByTypeAction("requested"));
+    }
   }, []);
-
-  const [basicActive, setBasicActive] = useState("requested");
 
   const handleBasicClick = (value) => {
     if (value === basicActive) {
@@ -38,7 +41,7 @@ function ItemsManagementTab() {
           <MDBTabsLink
             onClick={() => {
               handleBasicClick("requested");
-              dispatch(getMyRequestsAction("requested"));
+              dispatch(getItemsInUseByTypeAction("requested"));
             }}
             active={basicActive === "requested"}
           >
@@ -49,18 +52,18 @@ function ItemsManagementTab() {
           <MDBTabsLink
             onClick={() => {
               handleBasicClick("booked");
-              dispatch(getMyRequestsAction("booked"));
+              dispatch(getItemsInUseByTypeAction("booked"));
             }}
             active={basicActive === "booked"}
           >
-            Забронированное
+            Брони
           </MDBTabsLink>
         </MDBTabsItem>
         <MDBTabsItem>
           <MDBTabsLink
             onClick={() => {
               handleBasicClick("taken");
-              dispatch(getMyRequestsAction("taken"));
+              dispatch(getItemsInUseByTypeAction("taken"));
             }}
             active={basicActive === "taken"}
           >
@@ -71,17 +74,17 @@ function ItemsManagementTab() {
 
       <MDBTabsContent>
         <MDBTabsPane show={basicActive === "requested"}>
-          <MyRequestedItemsList />
+          <RequestedItemsList />
         </MDBTabsPane>
         <MDBTabsPane show={basicActive === "booked"}>
-          <MyBookedItemsList />
+          <BookedItemsList />
         </MDBTabsPane>
         <MDBTabsPane show={basicActive === "taken"}>
-          <MyTakenItemsList />
+          <TakenItemsList />
         </MDBTabsPane>
       </MDBTabsContent>
     </>
   );
 }
 
-export default ItemsManagementTab;
+export default RequestsManagementTab;

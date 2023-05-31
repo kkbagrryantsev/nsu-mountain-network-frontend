@@ -10,7 +10,7 @@ import pros_3 from "assets/png/main-page/pros_3.jpg";
 function HomePage() {
   return (
     <div className={styles.root}>
-      <header className={styles.header}>
+      <header className={`${styles.header}`}>
         <div className={styles.banner}>
           <img src={slogan} alt="..." />
         </div>

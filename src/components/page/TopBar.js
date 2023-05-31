@@ -52,7 +52,10 @@ function BalanceBadge() {
         className={`d-flex align-items-center gap-1 ${loadingClass}`}
         pill
         color={"secondary"}
-        style={{backgroundImage: `url(${balanceBageImage})`, backgroundBlendMode: "exclusion"}}
+        style={{
+          backgroundImage: `url(${balanceBageImage})`,
+          backgroundBlendMode: "exclusion",
+        }}
       >
         {user.value.user_money}
         <img src={coins} alt="Баланс"></img>
@@ -99,7 +102,7 @@ function ProfileDropdownMenu() {
     <>
       {isLogged && (
         <MDBDropdown className={"d-none d-sm-block"}>
-          <MDBDropdownToggle outline>
+          <MDBDropdownToggle className={"rounded-5"} outline>
             <MDBIcon far size={"xl"} icon={"user"} />
           </MDBDropdownToggle>
           <MDBDropdownMenu>
@@ -169,6 +172,7 @@ function TopBar() {
               <MDBNavbarItem>
                 <MDBNavbarLink
                   hidden={!isLogged}
+                  disabled={true}
                   href={`${window.location.origin}/${paths.EXPEDITIONS}`}
                 >
                   Походы

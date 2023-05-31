@@ -3,7 +3,10 @@ import { getAccessTokenHeader } from "utils/ApiUtils";
 
 // USER RIGHTS
 export const apiCheckUserAuthorizationStatus = () =>
-  axios.get("/api/protected/fromAny", getAccessTokenHeader());
+  axios.get(
+    "/api/protected/fromAny",
+    getAccessTokenHeader({ restrictAuthConfirm: true })
+  );
 
 export const apiCheckUserPrivilegeStatus = () =>
   axios.get("/api/protected/fromDefault", getAccessTokenHeader());
